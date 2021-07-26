@@ -1,7 +1,22 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import {globalStyles} from 'twin.macro'
+import type {AppProps} from 'next/app'
 
-function MyApp({ Component, pageProps }: AppProps) {
+import {global} from '../stitches.config'
+
+function useGlobalStyle() {
+  global(globalStyles)()
+
+  global({
+    body: {
+      fontFamily: 'JetBrains Mono, sans-serif',
+    },
+  })()
+}
+
+const App: React.FC<AppProps> = ({Component, pageProps}) => {
+  useGlobalStyle()
+
   return <Component {...pageProps} />
 }
-export default MyApp
+
+export default App
