@@ -80,7 +80,7 @@ export const LinkedListVisualizer: React.FC<IProps> = ({vars}) => {
       <CytoscapeView
         elements={elements}
         layout={{name: layout}}
-        style={{width: '600px', height: '400px'}}
+        style={{width: '100%', height: '100vh'}}
         stylesheet={[
           {
             selector: 'node',
@@ -101,18 +101,6 @@ export const LinkedListVisualizer: React.FC<IProps> = ({vars}) => {
         ]}
         cy={(cy) => (cyRef.current = cy)}
       />
-
-      <div>
-        {nodes.map((node) => (
-          <div key={node.id} tw="p-3 bg-red-400 m-4">
-            {node.id} {node.val}
-          </div>
-        ))}
-      </div>
-
-      {/* <code tw="text-sm text-pink-50">
-        <pre>{JSON.stringify(vars, null, 2)}</pre>
-      </code> */}
     </div>
   )
 }
