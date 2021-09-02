@@ -46,6 +46,8 @@ export class JSRunner {
 
   run(code: string): string {
     try {
+      this.tracked = new Map()
+
       return this.realm.evaluate(code)
     } catch (err) {
       return ''

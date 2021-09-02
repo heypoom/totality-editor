@@ -25,7 +25,7 @@ function generateEdges(nodes: IVisualListNode[]): ElementDefinition[] {
 
     if (!node.next) return
 
-    if (node.id) {
+    if (node.id && node.next._id) {
       edges.push({data: {source: node.id, target: node.next._id}})
     }
 
@@ -45,7 +45,9 @@ export const LinkedListVisualizer: React.FC<IProps> = ({vars}) => {
   const nodes = filterLinkedList(vars) ?? []
 
   const elements = CytoscapeView.normalizeElements({
-    nodes: nodes.map((n) => ({data: {id: n.id, label: `${n.id} = ${n.val}`}})),
+    nodes: nodes
+      .filter((n) => n.id)
+      .map((n) => ({data: {id: n.id, label: `${n.id} = ${n.val}`}})),
     edges: generateEdges(nodes),
   })
 
@@ -55,7 +57,7 @@ export const LinkedListVisualizer: React.FC<IProps> = ({vars}) => {
     <div>
       <CytoscapeView
         elements={elements}
-        layout={{name: 'cose'}}
+        layout={{name: 'circle'}}
         style={{width: '600px', height: '400px'}}
         stylesheet={[
           {
