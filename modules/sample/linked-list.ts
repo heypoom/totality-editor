@@ -7,7 +7,7 @@ class ListNode<T> {
   next: ListNode<T> | null
 
   constructor(val: T, next?: ListNode<T>) {
-    this.val = val
+    this.val = val ?? null
     this.next = next ?? null
   }
 
