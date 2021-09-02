@@ -4,7 +4,6 @@ import CytoscapeView from 'react-cytoscapejs'
 import type {Core, ElementDefinition} from 'cytoscape'
 import {useRef, useState} from 'react'
 import {useEffect} from 'react'
-import {toHex} from 'color2k'
 
 interface IVisualListNode {
   id: string
@@ -12,11 +11,8 @@ interface IVisualListNode {
   next?: any | null
 }
 
-export function filterLinkedList(vars: Record<string, any>): IVisualListNode[] {
-  return Object.entries(vars)
-    .filter(([id, v]) => v.constructor.name === 'ListNode')
-    .map(([id, node]) => ({id, val: node.val, next: node.next}))
-}
+export const toListNode = (vars: Record<string, any>): IVisualListNode[] =>
+  Object.entries(vars).map(([id, node]) => ({id, ...node}))
 
 function generateEdges(nodes: IVisualListNode[]): ElementDefinition[] {
   const edges: ElementDefinition[] = []
@@ -51,7 +47,7 @@ export const LinkedListVisualizer: React.FC<IProps> = ({vars}) => {
   const [layout, setLayout] = useState('cose')
   const cyRef = useRef<Core>()
 
-  const nodes = filterLinkedList(vars) ?? []
+  const nodes = toListNode(vars) ?? []
 
   const elements = CytoscapeView.normalizeElements({
     nodes: nodes
