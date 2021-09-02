@@ -26,6 +26,8 @@ const tsAtom = atom('')
 const useDebounce = (fn: (...args: any[]) => void, time = 100) =>
   useMemo(() => debounce(fn, time), [])
 
+const saveKey = 'code.content'
+
 export default function Home() {
   const [code, setCode] = useAtom(codeAtom)
   const [tsCode, setTsCode] = useAtom(tsAtom)
@@ -37,7 +39,7 @@ export default function Home() {
   }, 100)
 
   const save = useDebounce((code: string) => {
-    localStorage.setItem('code.content', code)
+    localStorage.setItem(saveKey, code)
   }, 1000)
 
   useEffect(() => {
@@ -56,7 +58,7 @@ export default function Home() {
   }, [tsCode])
 
   function onSetup() {
-    setCode(LinkedListExample)
+    setCode(localStorage.getItem(saveKey) || LinkedListExample)
   }
 
   return (

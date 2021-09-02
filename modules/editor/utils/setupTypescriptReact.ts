@@ -1,5 +1,3 @@
-import {LinkedListExample} from '../../sample/linked-list'
-
 import {IEditorContext} from '../../../@types/IMonaco'
 
 export async function setupTypescriptReact({monaco, editor}: IEditorContext) {

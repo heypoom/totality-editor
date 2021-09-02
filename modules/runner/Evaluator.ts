@@ -10,15 +10,15 @@ export class JSRunner {
     const realm = Realm.makeRootRealm()
     realm.global.console = console
 
-    realm.global.track = this.track
-    realm.global.tracks = this.tracks
+    realm.global.track = this.track.bind(this)
+    realm.global.tracks = this.tracks.bind(this)
 
     this.realm = realm
   }
 
   track(id: string, target: any) {
     target._id = id
-    this.tracked.set(id, target)
+    this.tracked?.set(id, target)
 
     return target
   }
