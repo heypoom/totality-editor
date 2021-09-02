@@ -1,4 +1,5 @@
 const withPreact = require('next-plugin-preact')
+const path = require('path')
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
 
 const config = withPreact({
@@ -20,6 +21,12 @@ const config = withPreact({
     })
 
     config.plugins.push(monaco)
+
+    config.module.rules.unshift({
+      test: /\.css$/,
+      use: ['style-loader', 'css-loader'],
+      include: path.resolve(__dirname, './node_modules/monaco-editor'),
+    })
 
     const rule = config.module.rules
       .find((rule) => rule.oneOf)

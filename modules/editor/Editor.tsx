@@ -19,6 +19,7 @@ export const Editor: React.FC<Props> = ({value, onChange}) => {
     detectIndentation: false,
     insertSpaces: true,
     minimap: {enabled: false},
+    cursorStyle: 'block',
   }
 
   return (

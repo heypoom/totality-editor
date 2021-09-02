@@ -1,10 +1,10 @@
-import {DraculaTheme} from './dracula.theme'
-
-import {IEditor, IEditorContext, IMonaco} from '../../@types/IMonaco'
-import {highlightJSX} from './utils/jsxHighlighter'
-import {setupTypescriptReact} from './utils/setupTypescriptReact'
 import {setupTheme} from './utils/setupTheme'
 import {setupWidget} from './utils/setupWidget'
+import {setupVimMode} from './utils/setupVimMode'
+import {highlightJSX} from './utils/jsxHighlighter'
+import {setupTypescriptReact} from './utils/setupTypescriptReact'
+
+import {IEditorContext} from '../../@types/IMonaco'
 
 export class MonacoManager {
   context: IEditorContext
@@ -25,5 +25,8 @@ export class MonacoManager {
 
     // Setup Widgets
     setupWidget(this.context)
+
+    // Setup vim mode
+    setupVimMode(this.context)
   }
 }

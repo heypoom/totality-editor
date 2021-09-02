@@ -2462,15 +2462,25 @@ monaco-editor-webpack-plugin@^4.1.1:
   dependencies:
     loader-utils "^2.0.0"
 
-monaco-editor@*, monaco-editor@0.26.1:
+monaco-editor@*:
   version "0.26.1"
   resolved "https://registry.yarnpkg.com/monaco-editor/-/monaco-editor-0.26.1.tgz#62bb5f658bc95379f8abb64b147632bd1c019d73"
   integrity sha512-mm45nUrBDk0DgZKgbD7+bhDOtcAFNGPJJRAdS6Su1kTGl6XEgC7U3xOmDUW/0RrLf+jlvCGaqLvD4p2VjwuwwQ==
+
+monaco-editor@^0.27.0:
+  version "0.27.0"
+  resolved "https://registry.yarnpkg.com/monaco-editor/-/monaco-editor-0.27.0.tgz#4b69108bb1dc1f60174c5dcdf51bc5306ab5ba26"
+  integrity sha512-UhwP78Wb8w0ZSYoKXQNTV/0CHObp6NS3nCt51QfKE6sKyBo5PBsvuDOHoI2ooBakc6uIwByRLHVeT7+yXQe2fQ==
 
 monaco-jsx-highlighter@^1.1.8:
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/monaco-jsx-highlighter/-/monaco-jsx-highlighter-1.1.8.tgz#8a4a9e0e049f37ef89dbaf41cc333b309e99964a"
   integrity sha512-+j1wVpLs2CWKVRNcnTJghzVs/wCanNxJ1sNY9uurPvX5ZFzExsvObpk6GB10pHYTAHdLIl6g9h6NWljHXjjVCg==
+
+monaco-vim@^0.1.18:
+  version "0.1.18"
+  resolved "https://registry.yarnpkg.com/monaco-vim/-/monaco-vim-0.1.18.tgz#e3745af68440da22355833038a86a0ff954ed5e5"
+  integrity sha512-n/jufIouFluCV1aCordNtiOoeK8uoOX7IZN/TDyiEdkQ0kZwkpgTbbBeb0fNhSVQPNqGmq4KYLNZIumze8FLyw==
 
 ms@2.0.0:
   version "2.0.0"
