@@ -25,7 +25,10 @@ function generateEdges(nodes: IVisualListNode[]): ElementDefinition[] {
 
     if (!node.next) return
 
-    edges.push({data: {source: node.id, target: node.next._id}})
+    if (node.id) {
+      edges.push({data: {source: node.id, target: node.next._id}})
+    }
+
     traverse(node.next)
   }
 
@@ -46,7 +49,7 @@ export const LinkedListVisualizer: React.FC<IProps> = ({vars}) => {
     edges: generateEdges(nodes),
   })
 
-  console.log('Normalised:', elements)
+  window.elements = elements
 
   return (
     <div>
