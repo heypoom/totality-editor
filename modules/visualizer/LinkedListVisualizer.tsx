@@ -1,7 +1,9 @@
 import 'twin.macro'
 
 import CytoscapeView from 'react-cytoscapejs'
-import type {ElementDefinition} from 'cytoscape'
+import type {Core, ElementDefinition} from 'cytoscape'
+import {useRef, useState} from 'react'
+import {useEffect} from 'react'
 
 interface IVisualListNode {
   id: string
@@ -42,6 +44,9 @@ interface IProps {
 }
 
 export const LinkedListVisualizer: React.FC<IProps> = ({vars}) => {
+  const [layout, setLayout] = useState('cose')
+  const cyRef = useRef<Core>()
+
   const nodes = filterLinkedList(vars) ?? []
 
   const elements = CytoscapeView.normalizeElements({
@@ -51,13 +56,24 @@ export const LinkedListVisualizer: React.FC<IProps> = ({vars}) => {
     edges: generateEdges(nodes),
   })
 
+  useEffect(() => {
+    cyRef.current?.layout({name: layout}).run()
+    console.log('layout running..')
+  }, [vars, layout])
+
   window.elements = elements
 
   return (
     <div>
+      <button onClick={() => setLayout('cose')}>cose</button>
+
+      <button onClick={() => setLayout('circle')} tw="ml-2">
+        circle
+      </button>
+
       <CytoscapeView
         elements={elements}
-        layout={{name: 'circle'}}
+        layout={{name: layout}}
         style={{width: '600px', height: '400px'}}
         stylesheet={[
           {
@@ -77,6 +93,7 @@ export const LinkedListVisualizer: React.FC<IProps> = ({vars}) => {
             },
           },
         ]}
+        cy={(cy) => (cyRef.current = cy)}
       />
 
       <div>
