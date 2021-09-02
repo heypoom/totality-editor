@@ -1,3 +1,5 @@
+import {LinkedListExample} from '../../sample/linked-list'
+
 import {IEditorContext} from '../../../@types/IMonaco'
 
 export async function setupTypescriptReact({monaco, editor}: IEditorContext) {
@@ -5,8 +7,8 @@ export async function setupTypescriptReact({monaco, editor}: IEditorContext) {
   const ts = monaco.languages.typescript
   const tsd = ts.typescriptDefaults
 
-  const modelUri = monaco.Uri.file('hello.tsx')
-  const codeModel = ins.createModel('', 'typescript', modelUri)
+  const modelUri = monaco.Uri.file('main.tsx')
+  const codeModel = ins.createModel('//?', 'typescript', modelUri)
 
   async function addTypedef(uri: string, filePath: string) {
     const source = await fetch(uri).then((x) => x.text())

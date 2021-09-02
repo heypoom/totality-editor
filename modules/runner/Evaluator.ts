@@ -4,6 +4,7 @@ export class JSRunner {
   realm: Realm
 
   tracked: Map<string, unknown> = new Map()
+  error = false
 
   constructor() {
     const realm = Realm.makeRootRealm()
@@ -36,7 +37,8 @@ export class JSRunner {
 
       return this.realm.evaluate(code)
     } catch (err) {
-      return ''
+      this.error = err
+      throw err
     }
   }
 
