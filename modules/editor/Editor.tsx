@@ -4,10 +4,15 @@ import {MonacoManager} from './MonacoManager'
 
 import {IMonacoOption} from '../../@types/IMonaco'
 
-export const Editor: React.FC = () => {
+interface Props {
+  value: string
+  onChange: (value: string) => void
+}
+
+export const Editor: React.FC<Props> = ({value, onChange}) => {
   const options: IMonacoOption = {
     selectOnLineNumbers: true,
-    fontSize: 26,
+    fontSize: 21,
     fontFamily: '"JetBrains Mono", monospace',
     fontLigatures: true,
     tabSize: 2,
@@ -22,8 +27,8 @@ export const Editor: React.FC = () => {
         height="500px"
         theme="vs-dark"
         defaultLanguage="typescript"
-        defaultValue="// ok?"
-        options={options}
+        {...{value, options}}
+        onChange={(code) => onChange(code ?? '')}
         onMount={(editor, monaco) => {
           const manager = new MonacoManager({monaco, editor})
           manager.setup()

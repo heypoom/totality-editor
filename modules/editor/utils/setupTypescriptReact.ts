@@ -6,7 +6,7 @@ export async function setupTypescriptReact({monaco, editor}: IEditorContext) {
   const tsd = ts.typescriptDefaults
 
   const modelUri = monaco.Uri.file('hello.tsx')
-  const codeModel = ins.createModel(`//`, 'typescript', modelUri)
+  const codeModel = ins.createModel('', 'typescript', modelUri)
 
   async function addTypedef(uri: string, filePath: string) {
     const source = await fetch(uri).then((x) => x.text())
