@@ -10,31 +10,17 @@ export class JSRunner {
     realm.global.console = console
 
     realm.global.track = (id: string, target: any) => {
-      const key = target?.constructor?.name ?? target
+      target._id = id
+      this.tracked.set(id, target)
 
-      const proxy = new Proxy(target, {
-        get(target, prop, receiver) {
-          // console.log('get tracked:', {id, key, target, prop, receiver})
+      return target
+    }
 
-          return target[prop]
-        },
-
-        set(target, prop, value) {
-          // console.log('set tracked:', {id, key, target, prop, value})
-
-          target[prop] = value
-
-          return true
-        },
-      })
-
-      // tracking id
-      proxy._id = id
-
-      // console.log('[Tracking]', id, proxy)
-      this.tracked.set(id, proxy)
-
-      return proxy
+    realm.global.tracks = (vars: Record<string, any>) => {
+      for (const [id, target] of Object.entries(vars)) {
+        const proxy = realm.global.track(id, target)
+        vars[id] = proxy
+      }
     }
 
     this.realm = realm

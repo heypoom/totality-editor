@@ -4,6 +4,7 @@ import CytoscapeView from 'react-cytoscapejs'
 import type {Core, ElementDefinition} from 'cytoscape'
 import {useRef, useState} from 'react'
 import {useEffect} from 'react'
+import {toHex} from 'color2k'
 
 interface IVisualListNode {
   id: string
@@ -43,6 +44,9 @@ interface IProps {
   vars: Record<string, any>
 }
 
+const hsl = (i = 1, count = 8, s = 90, l = 60) =>
+  `hsl(${i * Math.trunc(360 / count)}, ${s}%, ${l}%)`
+
 export const LinkedListVisualizer: React.FC<IProps> = ({vars}) => {
   const [layout, setLayout] = useState('cose')
   const cyRef = useRef<Core>()
@@ -52,7 +56,13 @@ export const LinkedListVisualizer: React.FC<IProps> = ({vars}) => {
   const elements = CytoscapeView.normalizeElements({
     nodes: nodes
       .filter((n) => n.id)
-      .map((n) => ({data: {id: n.id, label: `${n.id} = ${n.val}`}})),
+      .map((n, i) => ({
+        data: {
+          id: n.id,
+          label: `${n.id} = ${n.val}`,
+          bg: hsl(i, 10),
+        },
+      })),
     edges: generateEdges(nodes),
   })
 
@@ -79,7 +89,7 @@ export const LinkedListVisualizer: React.FC<IProps> = ({vars}) => {
           {
             selector: 'node',
             style: {
-              'background-color': '#686de0',
+              'background-color': 'data(bg)',
               'border-width': '3px',
               'border-color': '#fff',
               color: '#ffffff',
