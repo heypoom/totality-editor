@@ -2,12 +2,20 @@ import React, {useMemo, useState} from 'react'
 import tw from 'twin.macro'
 import {atom, useAtom} from 'jotai'
 import {debounce} from 'lodash'
+import {useEffect} from 'react'
+import loadable from '@loadable/component'
 
 import {Editor} from '../modules/editor/Editor'
-import {tsTranspiler} from '../modules/runner/TypescriptManager'
-import {useEffect} from 'react'
 import {jsRunner} from '../modules/runner/Evaluator'
-import {LinkedListVisualizer} from '../modules/visualizer/LinkedListVisualizer'
+import {tsTranspiler} from '../modules/runner/TypescriptManager'
+
+const LinkedListVisualizer = loadable(async () => {
+  const {LinkedListVisualizer} = await import(
+    '../modules/visualizer/LinkedListVisualizer'
+  )
+
+  return LinkedListVisualizer
+})
 
 const Title = tw.h1`text-4xl`
 
@@ -49,10 +57,6 @@ export default function Home() {
         </div>
         <div tw="w-full">
           <LinkedListVisualizer vars={vars} />
-
-          <code tw="text-sm text-pink-50">
-            <pre>{JSON.stringify(vars, null, 2)}</pre>
-          </code>
         </div>
       </div>
 
