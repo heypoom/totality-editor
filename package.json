@@ -34,6 +34,7 @@
     "react-monaco-editor": "^0.43.0",
     "react-ssr-prepass": "npm:preact-ssr-prepass",
     "realms-shim": "^1.2.2",
+    "ses": "^0.14.2",
     "twin.macro": "^2.6.2"
   },
   "devDependencies": {

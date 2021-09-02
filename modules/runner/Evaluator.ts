@@ -1,24 +1,38 @@
 import Realm from 'realms-shim'
 
+const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
+
 export class JSRunner {
   realm: Realm
 
   tracked: Map<string, unknown> = new Map()
   error = false
 
-  constructor() {
-    const realm = Realm.makeRootRealm()
-    realm.global.console = console
+  handlers: ((id: string, target: any) => void)[] = []
 
+  constructor() {
+    if (typeof window === 'undefined') return
+
+    const realm = Realm.makeRootRealm()
+
+    realm.global.console = console
+    realm.global.setTimeout = window.setTimeout
+    realm.global.delay = delay
     realm.global.track = this.track.bind(this)
     realm.global.tracks = this.tracks.bind(this)
 
     this.realm = realm
   }
 
+  on(type: 'track', handler: (id: string, target: any) => void) {
+    this.handlers.push(handler)
+  }
+
   track(id: string, target: any) {
     target._id = id
     this.tracked?.set(id, target)
+
+    for (const handler of this.handlers) handler(id, target)
 
     return target
   }
@@ -34,11 +48,11 @@ export class JSRunner {
     return Object.fromEntries(this.tracked)
   }
 
-  run(code: string): string {
+  async run(code: string): Promise<string> {
     try {
       this.tracked = new Map()
 
-      return this.realm.evaluate(code)
+      return await this.realm.evaluate(code)
     } catch (err) {
       this.error = err
       throw err

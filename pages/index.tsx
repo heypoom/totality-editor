@@ -8,7 +8,7 @@ import loadable from '@loadable/component'
 import {Editor} from '../modules/editor/Editor'
 import {jsRunner} from '../modules/runner/Evaluator'
 import {tsTranspiler} from '../modules/runner/TypescriptManager'
-import {LinkedListExample} from '../modules/sample/linked-list'
+import {CircleLinkedListExample} from '../modules/sample/circle-linked-list'
 
 const LinkedListVisualizer = loadable(async () => {
   const {LinkedListVisualizer} = await import(
@@ -35,7 +35,11 @@ export default function Home() {
   const [error, setError] = useState<Error | null>(null)
 
   const transpile = useDebounce((code: string) => {
-    tsTranspiler.transpile(code).then(setTsCode)
+    tsTranspiler.transpile(code).then((tsCode) => {
+      // @ts-ignore
+      window.tsCode = tsCode
+      setTsCode(tsCode)
+    })
   }, 100)
 
   const save = useDebounce((code: string) => {
@@ -43,22 +47,36 @@ export default function Home() {
   }, 1000)
 
   useEffect(() => {
+    jsRunner.on('track', () => {
+      setVars(jsRunner.getTracked())
+    })
+  }, [])
+
+  useEffect(() => {
     transpile(code)
     save(code)
   }, [code, transpile, save])
 
   useEffect(() => {
-    try {
-      jsRunner.run(tsCode)
-      setVars(jsRunner.getTracked())
-      setError(null)
-    } catch (err) {
-      setError(err)
+    async function rerun() {
+      try {
+        await jsRunner.run(tsCode)
+
+        setVars(jsRunner.getTracked())
+        setError(null)
+      } catch (err) {
+				// @ts-ignore
+        window.error = err
+
+        setError(err)
+      }
     }
+
+    rerun()
   }, [tsCode])
 
   function onSetup() {
-    setCode(localStorage.getItem(saveKey) || LinkedListExample)
+    setCode(localStorage.getItem(saveKey) || CircleLinkedListExample)
   }
 
   return (

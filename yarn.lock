@@ -3395,6 +3395,11 @@ semver@^7.2.1, semver@^7.3.5:
   dependencies:
     lru-cache "^6.0.0"
 
+ses@^0.14.2:
+  version "0.14.2"
+  resolved "https://registry.yarnpkg.com/ses/-/ses-0.14.2.tgz#3dd62c1779cc9ee5df506d7b1a40fe514ba541e1"
+  integrity sha512-RKAOt8KxkJJyclwfd0mQ6GtmIyYUOrDew7DwKM6DTWY8f9u1eDJccpHXvxDhpXDcWlJ40dtC/FCx12BFZuGPng==
+
 setimmediate@^1.0.4:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/setimmediate/-/setimmediate-1.0.5.tgz#290cbb232e306942d7d7ea9b83732ab7856f8285"
