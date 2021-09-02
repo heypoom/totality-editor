@@ -25,7 +25,7 @@ export const Editor: React.FC<Props> = ({value, onChange}) => {
   return (
     <div>
       <MonacoEditor
-        height="500px"
+        height="100vh"
         theme="vs-dark"
         defaultLanguage="typescript"
         {...{value, options}}
