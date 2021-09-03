@@ -6,8 +6,13 @@ export class JSRunner {
   realm: Realm
 
   tracked: Map<string, unknown> = new Map()
-  error = false
 
+  error = false
+  running = false
+  canceled = false
+  currentRunId = ''
+
+  runs: Map<string, any> = new Map()
   handlers: ((id: string, target: any) => void)[] = []
 
   constructor() {
@@ -17,11 +22,22 @@ export class JSRunner {
 
     realm.global.console = console
     realm.global.setTimeout = window.setTimeout
-    realm.global.delay = delay
+    realm.global.delay = this.delay.bind(this)
     realm.global.track = this.track.bind(this)
     realm.global.tracks = this.tracks.bind(this)
 
     this.realm = realm
+  }
+
+  delay(ms: number) {
+    if (this.canceled) {
+      console.log('[delay::execution_aborted]')
+      this.running = false
+
+      return Promise.reject('Execution Aborted')
+    }
+
+    return delay(ms)
   }
 
   on(type: 'track', handler: (id: string, target: any) => void) {
@@ -49,13 +65,51 @@ export class JSRunner {
   }
 
   async run(code: string): Promise<string> {
+    if (this.canceled) throw new Error('Execution aborted.')
+
+    const runId = Math.random().toString(16).slice(2, 10)
+    this.currentRunId = runId
+
+    let waitLoopCount = 0
+
+    try {
+      // Wait loop: wait until other operation finishes.
+      while (this.running) {
+        this.canceled = true
+        await delay(10)
+
+        waitLoopCount++
+
+        if (runId !== this.currentRunId) throw new Error('Run superseded.')
+
+        if (waitLoopCount > 1000)
+          throw new Error('Wait loop deadline exceeded.')
+
+        console.log(`[wait loop] waiting for ${runId} @ ${waitLoopCount}`)
+      }
+    } catch (err) {
+      console.log(`[wait error] ${err.message}`)
+
+      throw err
+    } finally {
+      this.canceled = false
+    }
+
+    this.canceled = false
+
     try {
       this.tracked = new Map()
+      this.running = true
 
-      return await this.realm.evaluate(code)
+      const result = await this.realm.evaluate(code)
+      console.log(`[run] ${runId} complete`)
+
+      return result
     } catch (err) {
       this.error = err
       throw err
+    } finally {
+      this.running = false
     }
   }
 

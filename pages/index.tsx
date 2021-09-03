@@ -9,6 +9,7 @@ import {Editor} from '../modules/editor/Editor'
 import {jsRunner} from '../modules/runner/Evaluator'
 import {tsTranspiler} from '../modules/runner/TypescriptManager'
 import {CircleLinkedListExample} from '../modules/sample/circle-linked-list'
+import {useDebounce} from '../modules/utils/useDebounce'
 
 const LinkedListVisualizer = loadable(async () => {
   const {LinkedListVisualizer} = await import(
@@ -23,10 +24,14 @@ const Title = tw.h1`text-4xl`
 const codeAtom = atom('')
 const tsAtom = atom('')
 
-const useDebounce = (fn: (...args: any[]) => void, time = 100) =>
-  useMemo(() => debounce(fn, time), [])
-
 const saveKey = 'code.content'
+
+function renderError(error: Error | string) {
+  if (typeof error === 'string') return error
+  if (error instanceof Error) return `${error.name} - ${error.message}`
+
+  return null
+}
 
 export default function Home() {
   const [code, setCode] = useAtom(codeAtom)
@@ -65,7 +70,7 @@ export default function Home() {
         setVars(jsRunner.getTracked())
         setError(null)
       } catch (err) {
-				// @ts-ignore
+        // @ts-ignore
         window.error = err
 
         setError(err)
@@ -88,7 +93,7 @@ export default function Home() {
         <div tw="w-full">
           {error && (
             <div tw="p-2 bg-red-500 text-white shadow-lg m-2">
-              {error.name} - {error.message}
+              {renderError(error)}
             </div>
           )}
 

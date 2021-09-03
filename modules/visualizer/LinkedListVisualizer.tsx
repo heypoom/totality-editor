@@ -4,6 +4,7 @@ import CytoscapeView from 'react-cytoscapejs'
 import type {Core, ElementDefinition} from 'cytoscape'
 import {useRef, useState} from 'react'
 import {useEffect} from 'react'
+import {useDebounce} from '../utils/useDebounce'
 
 interface IVisualListNode {
   id: string
@@ -64,7 +65,6 @@ export const LinkedListVisualizer: React.FC<IProps> = ({vars}) => {
 
   useEffect(() => {
     cyRef.current?.layout({name: layout}).run()
-    console.log('layout running..')
   }, [vars, layout])
 
   window.elements = elements
