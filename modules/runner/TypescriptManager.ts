@@ -1,50 +1,38 @@
-export function createTypeScriptWorker(): string {
-  if (typeof Blob === 'undefined') return ''
+export function createTypeScriptWorker(): Worker | null {
+  if (typeof Worker === 'undefined') return null
+  if (typeof Blob === 'undefined') return null
 
-  const workerSource = `
-			importScripts('https://unpkg.com/typescript@latest')
+  const source = `
+		importScripts('${window.location.href}ts/typescript.js')
 
-			const load = sourceUrl => {
-				const xhr = new XMLHttpRequest()
-				if (!xhr) return ''
-				xhr.open('GET', sourceUrl, false)
-				xhr.overrideMimeType && xhr.overrideMimeType('text/plain')
-				xhr.send(null)
-				return xhr.status == 200 ? xhr.responseText : ''
-			}
+		onmessage = ({data: source}) => {
+			const transpiled = ts.transpile(source)
 
-			onmessage = ({data: [sourceUrl, sourceCode]}) => {
-				const raw = sourceCode ? sourceCode : load(sourceUrl)
-				const transpiled = ts.transpile(raw)
-				postMessage(transpiled)
-			}
-		`
+			postMessage(transpiled)
+		}
+	`
 
-  const blob = new Blob([workerSource], {type: 'text/javascript'})
+  const sourceBlob = new Blob([source], {type: 'text/javascript'})
+  const sourceUrl = window.URL.createObjectURL(sourceBlob)
+  const worker = new Worker(sourceUrl)
 
-  return window.URL.createObjectURL(blob)
+  return worker
 }
 
 export class TypeScriptTranspiler {
-  workerUrl = createTypeScriptWorker()
-  worker: Worker | null = null
+  worker = createTypeScriptWorker()
 
   transpile(source: string): Promise<string> {
-    // console.log('[TS] Transpiling:', source?.slice(0, 20))
-
     return new Promise((resolve) => {
-      if (typeof Worker === 'undefined') return resolve('')
+      if (!this.worker) return resolve('')
 
-      if (!this.worker) this.worker = new Worker(this.workerUrl)
-
-      this.worker.postMessage([null, source])
-
-      this.worker.onmessage = ({data}) => {
-        // console.log('[TS] Transpiled:', data)
-
-        resolve(data)
-      }
+      this.worker.postMessage(source)
+      this.worker.onmessage = ({data}) => resolve(data)
     })
+  }
+
+  cleanup() {
+    this.worker?.terminate()
   }
 }
 
