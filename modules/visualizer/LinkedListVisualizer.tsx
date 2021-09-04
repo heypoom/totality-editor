@@ -86,7 +86,7 @@ export const LinkedListVisualizer: React.FC<IProps> = ({vars}) => {
       <Button
         active={layout === 'cose'}
         onClick={() => setLayout('cose')}
-        tw="ml-2"
+        tw="mr-2"
       >
         COSE
       </Button>
