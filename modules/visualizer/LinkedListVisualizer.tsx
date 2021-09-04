@@ -1,5 +1,3 @@
-import 'twin.macro'
-
 import CytoscapeView from 'react-cytoscapejs'
 import type {Core, ElementDefinition} from 'cytoscape'
 import {useRef, useState} from 'react'
@@ -71,11 +69,17 @@ export const LinkedListVisualizer: React.FC<IProps> = ({vars}) => {
 
   return (
     <div>
-      <button onClick={() => setLayout('cose')}>cose</button>
+      <Button active={layout === 'cose'} onClick={() => setLayout('cose')}>
+        COSE
+      </Button>
 
-      <button onClick={() => setLayout('circle')} tw="ml-2">
-        circle
-      </button>
+      <Button
+        active={layout === 'circle'}
+        onClick={() => setLayout('circle')}
+        tw="ml-2"
+      >
+        Circle
+      </Button>
 
       <CytoscapeView
         elements={elements}

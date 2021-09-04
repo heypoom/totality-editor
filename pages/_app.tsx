@@ -1,27 +1,39 @@
-import {globalStyles} from 'twin.macro'
 import type {AppProps} from 'next/app'
 import {Provider} from 'jotai'
-
-import {global} from '../stitches.config'
 import React, {Suspense} from 'react'
+import {setup, tw} from '@twind/preact'
+import {css} from 'twind/css'
 
-function useGlobalStyle() {
-  global(globalStyles)()
+import {theme, darkMode} from '../tailwind.config'
 
-  global({
+setup({
+  props: {
+    tw: true,
+    css: true,
+    className: true,
+  },
+  darkMode: darkMode,
+  theme: {
+    colors: {...theme.colors},
+  },
+  variants: {},
+})
+
+const globalStyles = css({
+  ':global': {
     body: {
       fontFamily: 'JetBrains Mono, sans-serif',
     },
-  })()
-}
+  },
+})
 
 const App: React.FC<AppProps> = ({Component, pageProps}) => {
-  useGlobalStyle()
-
   return (
     <Provider>
       <Suspense fallback={() => <div>ok</div>}>
-        <Component {...pageProps} />
+        <div className={tw(globalStyles)}>
+          <Component {...pageProps} />
+        </div>
       </Suspense>
     </Provider>
   )

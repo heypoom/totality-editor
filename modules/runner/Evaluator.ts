@@ -1,26 +1,55 @@
 import Realm from 'realms-shim'
 
+import {ExecutionAbortedError} from '../../errors/ExecutionAbortedError'
+
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
+interface Run {
+  id: string | null
+
+  error: Error | null
+  isRunning: boolean
+  isAborted: boolean
+
+  // Cleanup handlers: used for abort and when execution finishes.
+  cleanupHandlers: (() => void | Promise<void>)[]
+
+  latestCompleteRunId: string | null
+}
+
+interface RunnerGlobal {
+  console: Console
+  setTimeout: typeof setTimeout
+
+  delay(ms: number): Promise<void>
+
+  track<T>(id: string, val: T): T
+  tracks(vars: Record<string, any>): void
+}
+
+interface IRealm {
+  global: RunnerGlobal
+}
+
 export class JSRunner {
+  state: Run = {
+    id: null,
+    error: null,
+    isRunning: false,
+    isAborted: false,
+    cleanupHandlers: [],
+
+    latestCompleteRunId: null,
+  }
+
   realm: Realm
-
   tracked: Map<string, unknown> = new Map()
-
-  error = false
-  running = false
-  canceled = false
-  currentRunId = ''
-
-  runs: Map<string, any> = new Map()
   handlers: ((id: string, target: any) => void)[] = []
-
-  timeoutTimers: NodeJS.Timeout[] = []
 
   constructor() {
     if (typeof window === 'undefined') return
 
-    const realm = Realm.makeRootRealm()
+    const realm: IRealm = Realm.makeRootRealm()
 
     realm.global.console = console
     realm.global.setTimeout = window.setTimeout
@@ -31,17 +60,10 @@ export class JSRunner {
     this.realm = realm
   }
 
-  delay(ms: number) {
-    if (this.canceled) {
-      console.log('[delay::execution_aborted]')
-      this.running = false
-
-      return Promise.reject('Execution Aborted')
-    }
-
+  delay(ms: number): Promise<void> {
     return new Promise((resolve) => {
       const timeoutRef = setTimeout(resolve, ms)
-      this.timeoutTimers.push(timeoutRef)
+      this.state.cleanupHandlers.push(() => clearTimeout(timeoutRef))
     })
   }
 
@@ -69,66 +91,50 @@ export class JSRunner {
     return Object.fromEntries(this.tracked)
   }
 
+  // Process all abort and cleanup handlers.
+  async cleanup() {
+    const n = this.state.cleanupHandlers.length
+    if (n === 0) return
+
+    console.log(`[cleanup] processing ${n} cleanup handlers]`)
+
+    await Promise.all(this.state.cleanupHandlers.map((x) => x()))
+    this.state.cleanupHandlers = []
+  }
+
   async run(code: string): Promise<string> {
-    if (this.canceled) throw new Error('Execution aborted.')
-
     const runId = Math.random().toString(16).slice(2, 10)
-    this.currentRunId = runId
-
-    let waitLoopCount = 0
-
-    try {
-      // Clear existing timeout timers for previous runs.
-      console.log('[delay_timers]', this.timeoutTimers)
-      this.timeoutTimers.forEach(clearTimeout)
-      this.timeoutTimers = []
-
-      // Wait loop: wait until other operation finishes.
-      while (this.running) {
-        this.canceled = true
-
-        await delay(10)
-
-        waitLoopCount++
-
-        if (runId !== this.currentRunId) throw new Error('Run superseded.')
-
-        // 1s wait loop
-        if (waitLoopCount > 100) break
-
-        console.log(`[wait loop] waiting for ${runId}`)
-      }
-    } catch (err) {
-      console.log(`[wait error] ${err.message}`)
-      this.running = false
-
-      throw err
-    } finally {
-      this.canceled = false
-    }
+    this.state.id = runId
+    this.realm.global.runId = runId
 
     try {
       this.tracked = new Map()
-      this.running = true
+      this.state.isRunning = true
 
       const result = await this.realm.evaluate(code)
       console.log(`[run] ${runId} complete`)
 
+      this.state.latestCompleteRunId = runId
+
       return result
-    } catch (err) {
-      this.error = err
-      throw err
+    } catch (error) {
+      // Ignore aborted execution.
+      if (error instanceof ExecutionAbortedError) {
+        console.debug('execution aborted')
+        return ''
+      }
+
+      this.state.error = error
+
+      throw error
     } finally {
-      this.running = false
+      console.log('[finally] cleanup')
+
+      // Cleanup handlers
+      await this.cleanup()
+
+      this.state.isRunning = false
     }
-  }
-
-  set(key: string, value: unknown) {
-    this.realm.global[key] = value
-  }
-
-  get(key: string) {
-    return this.realm.global[key]
   }
 }
 

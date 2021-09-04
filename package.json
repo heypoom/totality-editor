@@ -15,6 +15,9 @@
     "@monaco-editor/react": "^4.2.1",
     "@stitches/core": "^0.2.3",
     "@stitches/react": "^0.2.3",
+    "@stitches/tailwind": "^9.0.0-alpha.8",
+    "@twind/preact": "^1.0.5",
+    "@twind/react": "^0.0.4",
     "color2k": "^1.2.4",
     "cytoscape": "^3.19.1",
     "jailed": "^0.3.1",
@@ -35,7 +38,9 @@
     "react-ssr-prepass": "npm:preact-ssr-prepass",
     "realms-shim": "^1.2.2",
     "ses": "^0.14.2",
-    "twin.macro": "^2.6.2"
+    "ts-custom-error": "^3.2.0",
+    "twin.macro": "^2.6.2",
+    "twind": "^0.16.16"
   },
   "devDependencies": {
     "@prefresh/next": "^1.4.6",
@@ -45,6 +50,7 @@
     "@types/node": "^16.4.3",
     "@types/react": "^17.0.15",
     "@types/react-cytoscapejs": "^1.2.2",
+    "@types/tailwindcss": "^2.2.1",
     "babel-plugin-macros": "^3.1.0",
     "css-loader": "^6.2.0",
     "eslint": "7.31.0",
