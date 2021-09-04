@@ -2,11 +2,7 @@ import CytoscapeView from 'react-cytoscapejs'
 import type {Core, ElementDefinition} from 'cytoscape'
 import {useRef, useState} from 'react'
 import {useEffect} from 'react'
-import tw from 'twin.macro'
-
-import {styled} from '@twind/react'
-
-import {useDebounce} from '../utils/useDebounce'
+import tw, {styled, theme} from 'twin.macro'
 
 interface IVisualListNode {
   id: string
@@ -43,14 +39,11 @@ interface IProps {
   vars: Record<string, any>
 }
 
-const Button = styled('button', {
-  base: 'bg-red-200 text-black',
+const Button = styled.button({
+  ...tw`bg-white text-violet-700 px-2 py-1 rounded transform duration-75 outline-none focus:outline-none`,
+  ...tw`hocus:(scale-105)`,
 
-  variants: {
-    active: {
-      true: 'bg-red-500',
-    },
-  },
+  variants: {active: {true: tw`bg-violet-700 text-white`}},
 })
 
 const hsl = (i = 1, count = 8, s = 90, l = 60) =>
