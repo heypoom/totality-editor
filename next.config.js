@@ -25,7 +25,7 @@ const config = withPreact({
     config.module.rules.unshift({
       test: /\.css$/,
       use: ['style-loader', 'css-loader'],
-      include: path.resolve(__dirname, './node_modules/monaco-editor'),
+      include: path.resolve(__dirname, './node_modules/.pnpm'),
     })
 
     const rule = config.module.rules
@@ -40,7 +40,7 @@ const config = withPreact({
       rule.issuer.include = [
         rule.issuer.include,
         // Allow `monaco-editor` to import global CSS:
-        /[\\/]node_modules[\\/]monaco-editor[\\/]/,
+        /[\\/]node_modules[\\/]\.pnpm[\\/]/,
       ]
     }
 
