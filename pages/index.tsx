@@ -1,9 +1,8 @@
-import React, {useMemo, useState} from 'react'
+import React, {useState} from 'react'
 import {atom, useAtom} from 'jotai'
-import {debounce, divide} from 'lodash'
 import {useEffect} from 'react'
 import loadable from '@loadable/component'
-// import 'twin.macro'
+import tw from 'twin.macro'
 
 import {Editor} from '../modules/editor/Editor'
 import {jsRunner} from '../modules/runner/Evaluator'
@@ -71,8 +70,10 @@ export default function Home() {
         // @ts-ignore
         window.error = error
 
-        console.warn('[runner::error]', error.message)
-        setError(error)
+        if (error instanceof Error) {
+          console.warn('[runner::error]', error.message)
+          setError(error)
+        }
       }
     }
 
