@@ -15,6 +15,8 @@ export class JSRunner {
   runs: Map<string, any> = new Map()
   handlers: ((id: string, target: any) => void)[] = []
 
+  timeoutTimers: NodeJS.Timeout[] = []
+
   constructor() {
     if (typeof window === 'undefined') return
 
@@ -37,7 +39,10 @@ export class JSRunner {
       return Promise.reject('Execution Aborted')
     }
 
-    return delay(ms)
+    return new Promise((resolve) => {
+      const timeoutRef = setTimeout(resolve, ms)
+      this.timeoutTimers.push(timeoutRef)
+    })
   }
 
   on(type: 'track', handler: (id: string, target: any) => void) {
@@ -73,29 +78,34 @@ export class JSRunner {
     let waitLoopCount = 0
 
     try {
+      // Clear existing timeout timers for previous runs.
+      console.log('[delay_timers]', this.timeoutTimers)
+      this.timeoutTimers.forEach(clearTimeout)
+      this.timeoutTimers = []
+
       // Wait loop: wait until other operation finishes.
       while (this.running) {
         this.canceled = true
+
         await delay(10)
 
         waitLoopCount++
 
         if (runId !== this.currentRunId) throw new Error('Run superseded.')
 
-        if (waitLoopCount > 1000)
-          throw new Error('Wait loop deadline exceeded.')
+        // 1s wait loop
+        if (waitLoopCount > 100) break
 
-        console.log(`[wait loop] waiting for ${runId} @ ${waitLoopCount}`)
+        console.log(`[wait loop] waiting for ${runId}`)
       }
     } catch (err) {
       console.log(`[wait error] ${err.message}`)
+      this.running = false
 
       throw err
     } finally {
       this.canceled = false
     }
-
-    this.canceled = false
 
     try {
       this.tracked = new Map()
