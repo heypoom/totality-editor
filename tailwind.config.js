@@ -1,4 +1,4 @@
-const colors = require('tailwindcss/colors')
+const {lightBlue, ...colors} = require('tailwindcss/colors')
 
 /** @type {import('tailwindcss/tailwind-config').TailwindConfig} */
 const config = {
