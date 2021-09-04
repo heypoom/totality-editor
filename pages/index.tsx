@@ -1,9 +1,9 @@
 import React, {useMemo, useState} from 'react'
-import tw from 'twin.macro'
 import {atom, useAtom} from 'jotai'
 import {debounce, divide} from 'lodash'
 import {useEffect} from 'react'
 import loadable from '@loadable/component'
+// import 'twin.macro'
 
 import {Editor} from '../modules/editor/Editor'
 import {jsRunner} from '../modules/runner/Evaluator'
@@ -18,8 +18,6 @@ const LinkedListVisualizer = loadable(async () => {
 
   return LinkedListVisualizer
 })
-
-const Title = tw.h1`text-4xl`
 
 const codeAtom = atom('')
 const tsAtom = atom('')
@@ -69,11 +67,12 @@ export default function Home() {
 
         setVars(jsRunner.getTracked())
         setError(null)
-      } catch (err) {
+      } catch (error) {
         // @ts-ignore
-        window.error = err
+        window.error = error
 
-        setError(err)
+        console.warn('[runner::error]', error.message)
+        setError(error)
       }
     }
 

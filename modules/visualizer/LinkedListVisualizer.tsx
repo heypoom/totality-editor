@@ -1,9 +1,10 @@
-import 'twin.macro'
-
 import CytoscapeView from 'react-cytoscapejs'
 import type {Core, ElementDefinition} from 'cytoscape'
 import {useRef, useState} from 'react'
 import {useEffect} from 'react'
+
+import {styled} from '@twind/react'
+
 import {useDebounce} from '../utils/useDebounce'
 
 interface IVisualListNode {
@@ -41,6 +42,16 @@ interface IProps {
   vars: Record<string, any>
 }
 
+const Button = styled('button', {
+  base: 'bg-red-200 text-black',
+
+  variants: {
+    active: {
+      true: 'bg-red-500',
+    },
+  },
+})
+
 const hsl = (i = 1, count = 8, s = 90, l = 60) =>
   `hsl(${i * Math.trunc(360 / count)}, ${s}%, ${l}%)`
 
@@ -71,11 +82,17 @@ export const LinkedListVisualizer: React.FC<IProps> = ({vars}) => {
 
   return (
     <div>
-      <button onClick={() => setLayout('cose')}>cose</button>
+      <Button
+        active={layout === 'cose'}
+        onClick={() => setLayout('cose')}
+        tw="ml-2"
+      >
+        COSE
+      </Button>
 
-      <button onClick={() => setLayout('circle')} tw="ml-2">
-        circle
-      </button>
+      <Button active={layout === 'circle'} onClick={() => setLayout('circle')}>
+        Circle
+      </Button>
 
       <CytoscapeView
         elements={elements}

@@ -1,11 +1,13 @@
-const colors = require('tailwindcss/colors')
+const {lightBlue, ...colors} = require('tailwindcss/colors')
 
-module.exports = {
+/** @type {import('tailwindcss/tailwind-config').TailwindConfig} */
+const config = {
   purge: [],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: false,
   theme: {
     extend: {},
     colors: {
+      ...colors,
       red: colors.rose,
       pink: colors.fuchsia,
       gray: colors.trueGray,
@@ -17,3 +19,5 @@ module.exports = {
   },
   plugins: [],
 }
+
+module.exports = config
