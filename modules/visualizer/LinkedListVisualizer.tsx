@@ -2,7 +2,7 @@ import CytoscapeView from 'react-cytoscapejs'
 import type {Core, ElementDefinition} from 'cytoscape'
 import {useRef, useState} from 'react'
 import {useEffect} from 'react'
-import tw, {styled, theme} from 'twin.macro'
+import tw, {theme, styled} from 'twin.macro'
 
 interface IVisualListNode {
   id: string
