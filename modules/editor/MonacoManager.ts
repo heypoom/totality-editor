@@ -5,6 +5,7 @@ import {highlightJSX} from './utils/jsxHighlighter'
 import {setupTypescriptReact} from './utils/setupTypescriptReact'
 
 import {IEditorContext} from '../../@types/IMonaco'
+import {setupCollaboration} from './utils/setupCollaboration'
 
 export class MonacoManager {
   context: IEditorContext
@@ -28,5 +29,8 @@ export class MonacoManager {
 
     // Setup vim mode
     setupVimMode(this.context)
+
+    // Setup live-editing
+    setupCollaboration(this.context)
   }
 }
