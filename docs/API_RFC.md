@@ -107,9 +107,11 @@ app.store.run('animate/skip', {frame: 10})
 Totality Editor is based on React, so you can write your custom React component
 to display in each parts of the editor, similar to Visual Studio Code.
 
-- Add a custom visualizations or renderers using your React component with the _Renderer & Visualization API_
-- Add a custom editor control inline in your code editor with the _Editor Widget API_
-- Add a knob for people to experiment with different parameters, and tell your stories with the _Knobs API_
+- Add a custom visualizations or renderers using your React component with the _Renderer & Visualization API_: `Renderer.create({component})`
+
+- Add a custom editor control inline in your code editor with the _Editor Control API_: `EditorControl.create({component})`
+
+- Add a knob for people to experiment with different parameters, and tell your stories with the _Knobs API_: `Knobs.create({component})`
 
 # Renderer & Visualization API
 
@@ -125,7 +127,7 @@ const GraphRenderer = Renderer.create({
   component: GraphRendererView,
 })
 
-app.renderer.use(GraphRenderer)
+app.useRenderer(GraphRenderer)
 ```
 
 You can write your renderer as a standard React component.
@@ -141,34 +143,34 @@ const GraphRendererView = () => {
 }
 ```
 
-# Editor Widget API
+# Editor Control API
 
 To enhance the editing and experimentation experience, you
-can add an _Editor Widget_ to present custom value controls,
-such as editing color values, numeric values, domain-specific values and more.
+can add an _Editor Control_ to present custom value controls,
+such as editing color values, numeric values, domain-specific values and more: `app.useEditorControl(ColorControl)`
 
 For example, if you're making a visualization GLSL (GL shader language), you might
 want to add a slider to change a float variable, right in the editor (similar to thebookofshaders.com)
 
-Editor Widgets are show inline in the _Code Editor_ panel.
+Editor Controls are show inline in the _Code Editor_ panel.
 
 Again, you writet this a standard React component, and you can use the `useTotality` hook
 to interact with the simulation editor.
 
 ```ts
-const ColorControl = EditorWidget.create({
+const ColorControl = EditorControl.create({
   component: ColorControlView,
 })
 
-app.editorWidgets.use(ColorControl)
+app.useEditorControl(ColorControl)
 ```
 
 # Knobs API
 
-Aside from editing the variables directly with the editor widget,
+Aside from editing the variables directly with the editor control,
 an even easier way to let people experiment with your simulation.
 
-Knobs are different than Editor Widgets -- Knobs are used to
+Knobs are different than Editor Controls -- Knobs are used to
 present user-friendly controls for people to tinker with different
 parameters and explore data-driven storytelling, without having to
 manually edit the variables in the code editor.
@@ -177,14 +179,14 @@ You could use knobs to let people try out different values,
 or different presets. You could show different knobs for different stages
 of your storytelling or explanation.
 
-In contrast to Editor Widgets, Knobs are show in a different panel.
+In contrast to Editor Controls, Knobs are show in a different panel.
 
 ```ts
 const SliderKnob = Knob.create({
   component: SliderKnobView,
 })
 
-app.knobs.use(SliderKnobs)
+app.useKnob(SliderKnobs)
 ```
 
 # Code Editor Hooks API
@@ -194,22 +196,21 @@ to the Monaco Editor instance, so you can alter the code editor's behaviour.
 
 The `MonacoManager` classes manages and injects custom Monaco behaviour,
 such as theming, language support, web workers support, syntax highlighting,
-editing mode (e.g. vim mode), widgets and more.
+editing mode (e.g. vim mode), controls and more.
 
-You can use `editorHooks.add` to add the handler. Each handler is invoked
+You can use `app.editor.add(fn)` to use the handler. Each handler is invoked
 with the `IEditorContext` object, so you have access to the monaco and editor
 instance.
 
 ```ts
 const setupVimMode = ({monaco, editor}: IEditorContext) => {}
 
-app.editorHooks.add(setupVimMode)
+app.editor.use(setupVimMode)
 ```
 
 # Panel & Window Manager API
 
-Each extension can add their own panels and windows to the editor,
-and alter existing panels.
+Each extension can add their own panels and windows to the editor, and alter existing panels.
 
 ```ts
 app.panel.add({title: 'Knobs Panel'})
@@ -217,8 +218,7 @@ app.panel.add({title: 'Knobs Panel'})
 
 # Commands and Shortcuts API
 
-Each extension can register their commands to the Command Palette, and add
-global shortcuts to the editor.
+Each extension can register their commands to the Command Palette, and add global shortcuts to the editor.
 
 # Runner API
 
