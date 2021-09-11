@@ -48,6 +48,23 @@ export default function Home() {
     localStorage.setItem(saveKey, code)
   }, 1000)
 
+  const exec = useDebounce(async (code: string) => {
+    try {
+      await jsRunner.run(code)
+
+      setVars(jsRunner.getTracked())
+      setError(null)
+    } catch (error) {
+      // @ts-ignore
+      window.error = error
+
+      if (error instanceof Error) {
+        console.warn('[runner::error]', error.message)
+        setError(error)
+      }
+    }
+  }, 50)
+
   useEffect(() => {
     jsRunner.on('track', () => {
       setVars(jsRunner.getTracked())
@@ -60,25 +77,8 @@ export default function Home() {
   }, [code, transpile, save])
 
   useEffect(() => {
-    async function rerun() {
-      try {
-        await jsRunner.run(tsCode)
-
-        setVars(jsRunner.getTracked())
-        setError(null)
-      } catch (error) {
-        // @ts-ignore
-        window.error = error
-
-        if (error instanceof Error) {
-          console.warn('[runner::error]', error.message)
-          setError(error)
-        }
-      }
-    }
-
-    rerun()
-  }, [tsCode])
+    exec(tsCode)
+  }, [exec, tsCode])
 
   function onSetup() {
     setCode(localStorage.getItem(saveKey) || CircleLinkedListExample)
