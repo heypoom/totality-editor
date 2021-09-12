@@ -1,6 +1,7 @@
 import * as Y from 'yjs'
-import {IndexeddbPersistence} from 'y-indexeddb'
+
 import {WebrtcProvider} from 'y-webrtc'
+import {IndexeddbPersistence} from 'y-indexeddb'
 
 export class SyncController {
   key = 'totality'
@@ -30,4 +31,4 @@ export class SyncController {
   }
 }
 
-export const syncManager = new SyncController()
+export const syncController = new SyncController()

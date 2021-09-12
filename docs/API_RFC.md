@@ -12,66 +12,84 @@ Allows you to register a new extension to utilize the totality editor API.
 
     - The Extension tab should support adding custom editor extensions.
 
-  - When the totality editor is embedded in a React app, or in a MDX markdown document:
+  - When the totality editor is embedded in a React app, or in a MDX markdown document.
+
+    - API inspired by react-live
 
     ```tsx
-    import {SortVisualizerExtension} from '@totality/core'
+    import {
+      SortVisualizerExtension,
+      DraculaThemeExtension,
+    } from '@totality/extensions'
 
-    return <Totality extensions={[SortVisualizerExtension]} />
+    return (
+      <Totality
+        extensions={[SortVisualizerExtension, DraculaThemeExtension]}
+        code="const a = MyView"
+        scope={{MyView}}
+        options={options}
+      />
+    )
     ```
 
-  - When the totality editor is invoked externally as markdown tagged component:
+    - Or, specify extensions as a list of extension URLs or keys to fetch from NPM.
 
-    ```totality.typescript
-    	Node.of(5)
+    ```tsx
+    extensions={['language.typescriptreact', 'theme.dracula']}
+    ```
+
+  - When the totality editor is invoked externally as markdown tagged component,
+    using magic comments to load or unload extensions.
+
+    ```js
+    //!ext editor.vim, language.typescriptreact, core.sort-visualizer, theme.dracula
+
+    Node.of(5)
     ```
 
   - Within the totality editor code execution itself.
+
     - Operation should be idempotent; if the extension is already loaded, we skip the registry operation.
 
-```ts
-const Registry = app.registry
+  ```ts
+  const {Registry} = Totality
 
-const SortVisualizerExtension = await Registry.fetch(
-  'https://unpkg.com/totality-sort-visualizer@1'
-)
+  const SortVisualizerExtension = await Registry.fetch(
+    'https://unpkg.com/totality-sort-visualizer@1'
+  )
 
-Registry.useRemote('https://unpkg.com/totality-sort-visualizer@1')
+  Registry.useRemote('https://unpkg.com/totality-sort-visualizer@1')
 
-// Register a new extension
-Registry.use(SortVisualizerExtension)
+  // Register a new extension
+  Registry.use(SortVisualizerExtension)
 
-// Register a new extension with custom configuration
-Registry.use(SortVisualizerExtension, {
-  theme: {pivot: '#2d2d30'},
-})
+  // Register a new extension with custom configuration
+  Registry.use(SortVisualizerExtension, {
+    theme: {pivot: '#2d2d30'},
+  })
 
-// Un-register the extension
-Registry.remove(SortVisualizerExtension)
-Registry.remove('sort-visualizer')
+  // Un-register the extension
+  Registry.remove('sort-visualizer')
+  Registry.remove(SortVisualizerExtension)
 
-// Enable the extension
-Registry.enable('sort-visualizer')
-Registry.enable(SortVisualizerExtension)
+  // Access the extension instance.
+  Registry.of(SortVisualizerExtension)
+  Registry.get('sort-visualizer')
+  ```
 
-// Disable the extension
-Registry.disable('sort-visualizer')
-Registry.disable()
+  - Extension Configuration is globally configured.
 
-// Access the extension instance.
-Registry.of(SortVisualizerExtension)
-Registry.get('sort-visualizer')
-
-// Modify the extension configuration.
-Registry.config('sort-visualizer', {
-  theme: {pivot: '#2d2d30'},
-})
-```
+    ```ts
+    // Modify the extension configuration.
+    App.config({
+      'editor.fontSize': '',
+      'sort-visualizer.theme.pivot': '#2d2d30',
+    })
+    ```
 
 ## Creating an Extension
 
-You can create a Totality extension by creating an extension class,
-which must extends the `Extension` class.
+You can create a Totality extension by creating an extension object.
 
 The following overrideable lifecycle hooks are available:
 
@@ -81,12 +99,12 @@ The following overrideable lifecycle hooks are available:
 You can use `this.app` to reference the extension API
 
 ```ts
-class SortVisualizerExtension extends Extension {
+const SortVisualizerExtension: Extension = {
   // Invoked when the extension is registered.
-  async setup() {}
+  async setup(context) {}
 
-  // Invoked when the extension is unmounted.
-  async cleanup() {}
+  // Invoked when the extension is unregistered.
+  async cleanup(context) {}
 }
 ```
 
@@ -95,11 +113,11 @@ class SortVisualizerExtension extends Extension {
 Listen to the global event store to receive updates from the app.
 
 ```ts
-app.store.on('animate/start', async () => {
+context.store.on('animate/start', async () => {
   // ...
 })
 
-app.store.run('animate/skip', {frame: 10})
+context.store.run('animate/skip', {frame: 10})
 ```
 
 # Writing custom React components for your extension.
@@ -194,17 +212,7 @@ app.useKnob(SliderKnobs)
 You can use the `editor` instance in the Totality app to get access
 to the Monaco Editor instance, so you can alter the code editor's behaviour.
 
-The `MonacoManager` classes manages and injects custom Monaco behaviour,
-such as theming, language support, web workers support, syntax highlighting,
-editing mode (e.g. vim mode), controls and more.
-
-You can use `app.editor.add(fn)` to use the handler. Each handler is invoked
-with the `IEditorContext` object, so you have access to the monaco and editor
-instance.
-
 ```ts
-const setupVimMode = ({monaco, editor}: IEditorContext) => {}
-
 app.editor.use(setupVimMode)
 ```
 

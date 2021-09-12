@@ -1,6 +1,6 @@
 import type monaco from 'monaco-editor/esm/vs/editor/editor.api'
 
-export interface IEditorContext {
+export interface EditorContext {
   monaco: IMonaco
   editor: IEditor
 }
