@@ -30,5 +30,3 @@ export class SyncController {
     window.sync = this
   }
 }
-
-export const syncController = new SyncController()

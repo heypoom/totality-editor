@@ -1,4 +1,4 @@
-import {syncController} from './SyncController'
+import {SyncController} from './SyncController'
 
 import {createExtension} from 'utils/createExtension'
 
@@ -6,11 +6,13 @@ export const LiveCollaborationExtension = createExtension({
   id: 'core.collaboration',
 
   async setup(app) {
+    const sync = new SyncController()
+
     app.editor.setup(async (context) => {
       if (typeof window === 'undefined') return
 
+      const {doc, rtc} = sync
       const {editor} = context
-      const {doc, rtc} = syncController
 
       console.log('> Setting up live collaboration...')
 
