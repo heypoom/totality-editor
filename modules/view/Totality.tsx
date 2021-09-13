@@ -2,16 +2,12 @@ import 'twin.macro'
 import loadable from '@loadable/component'
 import React, {useEffect, useMemo} from 'react'
 
-import {
-  Extension,
-  OptionsFromExtensions,
-  EditorOptions,
-  IMonacoOption,
-} from '@types'
-
-import {Editor} from 'modules/editor/Editor'
 import {useDebounce} from 'utils/useDebounce'
+
+import {Editor, intoEditorOptions} from 'modules/editor'
 import {AppContext, store, useStore} from 'modules/store'
+
+import {EditorOptions, Extension, OptionsFromExtensions} from '@types'
 
 export interface ITotalityProps<E extends readonly Extension<any, any>[]> {
   extensions?: E
@@ -32,13 +28,6 @@ function renderError(error: Error | string) {
 
   return null
 }
-
-const intoEditorOptions = (options: Record<string, any>): IMonacoOption =>
-  Object.fromEntries(
-    Object.entries(options)
-      .filter(([key]) => key.startsWith('editor.'))
-      .map(([k, v]) => [k.replace('editor.', ''), v])
-  )
 
 export const Totality = <E extends readonly Extension<any>[]>(
   props: ITotalityProps<E>
