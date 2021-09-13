@@ -24,6 +24,8 @@ export const JSXHighlighterExtension = createExtension({
     app.editor.setup((context) => {
       const {monaco, editor} = context
 
+      if (!app.options['jsx.highlighter.enabled']) return
+
       const options = {
         parser: 'babel',
         isHighlightGlyph: false,
