@@ -3,6 +3,7 @@ import {ExtensionContext} from './ExtensionContext'
 export interface Extension<Config = Record<string, any>, Instance = unknown> {
   id: string
   meta?: ExtensionMeta
+  enabled?: boolean
   defaultConfig?: Config
 
   setup(

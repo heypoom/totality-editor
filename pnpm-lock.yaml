@@ -45,6 +45,7 @@ specifiers:
   react-ssr-prepass: npm:preact-ssr-prepass
   realms-shim: ^1.2.2
   ses: ^0.14.2
+  storeon: ^3.1.4
   style-loader: ^3.2.1
   tailwindcss: ^2.2.7
   ts-custom-error: ^3.2.0
@@ -91,6 +92,7 @@ dependencies:
   react-ssr-prepass: /preact-ssr-prepass/1.2.0_preact@10.5.14
   realms-shim: 1.2.2
   ses: 0.14.2
+  storeon: 3.1.4_cf9ac77368cb106c5e3bf8ef47049c33
   ts-custom-error: 3.2.0
   twin.macro: 2.7.0
   twind: 0.16.16_typescript@4.4.2
@@ -3990,6 +3992,22 @@ packages:
   /statuses/1.5.0:
     resolution: {integrity: sha1-Fhx9rBd2Wf2YEfQ3cfqZOBR4Yow=}
     engines: {node: '>= 0.6'}
+    dev: false
+
+  /storeon/3.1.4_cf9ac77368cb106c5e3bf8ef47049c33:
+    resolution: {integrity: sha512-GUSyCevVP00T5b5/Z05ZGkrJFh4IbXjCAl+R27pBslamFLS/qSxJoSwYIGbIZOjujRAgUiWIzPDZP6Ma3vSR9Q==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      preact: '>=10.0.0'
+      react: '>=16.8.0'
+    peerDependenciesMeta:
+      preact:
+        optional: true
+      react:
+        optional: true
+    dependencies:
+      preact: 10.5.14
+      react: /@preact/compat/17.0.2_preact@10.5.14
     dev: false
 
   /stream-browserify/2.0.2:
