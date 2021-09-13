@@ -1,6 +1,7 @@
 import {createStoreon} from 'storeon'
 import {createContext} from 'preact'
 import {customContext} from 'storeon/preact'
+import {storeonDevtools} from 'storeon/devtools'
 
 import {codeModule} from './code'
 import {hooksModule} from './hooks'
@@ -14,6 +15,7 @@ export const store = createStoreon<State, Events>([
   hooksModule,
   runnerModule,
   codeModule,
+  storeonDevtools,
 ])
 
 export const AppContext = createContext(store)
