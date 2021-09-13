@@ -2,7 +2,7 @@ import 'twin.macro'
 import loadable from '@loadable/component'
 import React, {useEffect, useMemo} from 'react'
 
-import {useDebounce} from 'utils/useDebounce'
+import {useDebounce} from 'utils'
 
 import {Editor, intoEditorOptions} from 'modules/editor'
 import {AppContext, store, useStore} from 'modules/store'

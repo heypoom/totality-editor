@@ -1,6 +1,6 @@
 import {SyncController} from './SyncController'
 
-import {createExtension} from 'utils/createExtension'
+import {createExtension} from 'utils'
 
 export const LiveCollaborationExtension = createExtension({
   id: 'core.collaboration',

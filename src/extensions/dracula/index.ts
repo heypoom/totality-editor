@@ -1,6 +1,6 @@
 import {DraculaTheme} from './dracula.theme'
 
-import {createExtension} from 'utils/createExtension'
+import {createExtension} from 'utils'
 
 export const DraculaThemeExtension = createExtension({
   id: 'theme.dracula',

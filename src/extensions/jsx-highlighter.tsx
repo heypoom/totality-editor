@@ -1,27 +1,26 @@
-import {parse} from '@babel/parser'
-import traverse from '@babel/traverse'
+import {createExtension} from 'utils'
 
-import {Extension} from '@types'
+export const JSXHighlighterExtension = createExtension({
+  id: 'jsx.highlighter',
 
-// @ts-ignore
-import MonacoJSXHighlighter from 'monaco-jsx-highlighter'
-
-// Minimal Babel setup for React JSX parsing:
-function babelParse(code: string) {
-  try {
-    return parse(code, {
-      sourceType: 'module',
-      plugins: ['jsx'],
-    })
-  } catch (err) {
-    return null
-  }
-}
-
-export const JSXHighlighterExtension: Extension = {
-  id: 'editor.jsx-highlighter',
+  defaultConfig: {
+    'jsx.highlighter.enabled': true,
+  },
 
   async setup(app) {
+    const {parse} = await import('@babel/parser')
+    const traverse = await import('@babel/traverse')
+    const {default: Highlight} = await import('monaco-jsx-highlighter')
+
+    // Minimal Babel setup for React JSX parsing.
+    function babelParse(code: string) {
+      try {
+        return parse(code, {sourceType: 'module', plugins: ['jsx']})
+      } catch (err) {
+        return null
+      }
+    }
+
     app.editor.setup((context) => {
       const {monaco, editor} = context
 
@@ -33,19 +32,13 @@ export const JSXHighlighterExtension: Extension = {
         isThrowJSXParseErrors: false,
       }
 
-      const monacoJSXHighlighter = new MonacoJSXHighlighter(
-        monaco,
-        babelParse,
-        traverse,
-        editor,
-        options
-      )
+      const hi = new Highlight(monaco, babelParse, traverse, editor, options)
 
-      monacoJSXHighlighter.highLightOnDidChangeModelContent(100)
-      monacoJSXHighlighter.addJSXCommentCommand()
+      hi.highLightOnDidChangeModelContent(100)
+      hi.addJSXCommentCommand()
 
       // @ts-ignore
-      window.monacoJSXHighlighter = monacoJSXHighlighter
+      window.monacoJSXHighlighter = hi
     })
   },
-}
+})

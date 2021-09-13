@@ -1,4 +1,4 @@
-import {createExtension} from 'utils/createExtension'
+import {createExtension} from 'utils'
 
 export const VimModeExtension = createExtension({
   id: 'editor.vim',
