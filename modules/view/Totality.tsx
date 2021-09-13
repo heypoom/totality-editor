@@ -1,5 +1,6 @@
 import React, {useEffect, useMemo} from 'react'
 import loadable from '@loadable/component'
+import 'twin.macro'
 
 import {Editor} from 'modules/editor/Editor'
 import {useDebounce} from 'modules/utils/useDebounce'
@@ -111,18 +112,6 @@ export const Totality = <E extends readonly Extension<any>[]>(
 
           <LinkedListVisualizer vars={runner.variables} />
         </div>
-
-        <style>
-          {`
-          .JSXElement.JSXBracket, .JSXElement.JSXText {
-            color: #fff;
-          }
-
-          .JSXElement.JSXIdentifier {
-            color: #ff79c6;
-          }
-        `}
-        </style>
       </div>
     </AppContext.Provider>
   )
