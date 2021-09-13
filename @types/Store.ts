@@ -41,18 +41,20 @@ type HookPayload<T extends keyof ExtensionEventHooks> = {
   extensionId: string
 }
 
-export interface Events {
+export interface Events extends RunnerEvents, ExtensionEvents {
+  'code/set': string
+  'config/set': Partial<CoreOptions>
+  'hooks/add': HookPayload<keyof ExtensionEventHooks>
+}
+
+export interface ExtensionEvents {
   'extension/add': Extension
   'extension/use': Extension
   'extension/setup': Extension
   'extension/use-all': Extension[] | null
+}
 
-  'hooks/add': HookPayload<keyof ExtensionEventHooks>
-
-  'config/set': Partial<CoreOptions>
-
-  'code/set': string
-
+export interface RunnerEvents {
   'runner/run': void
   'runner/setup': void
   'runner/compile': void

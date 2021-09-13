@@ -137,9 +137,3 @@ export class JSRunner {
     }
   }
 }
-
-export const jsRunner = new JSRunner()
-
-if (typeof window !== 'undefined') {
-  window.jsRunner = jsRunner
-}

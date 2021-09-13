@@ -1,13 +1,20 @@
+import {StoreonModule} from 'storeon'
+
 import {createMerge} from './utils/merge'
 
-import {StoreModule} from '../../@types/Store'
+import {RunnerEvents, State} from '../../@types/Store'
 
-import {jsRunner} from 'modules/runner/Evaluator'
-import {tsTranspiler} from 'modules/runner/TypescriptManager'
+import {JSRunner} from 'modules/runner/Evaluator'
+import {TypeScriptTranspiler} from 'modules/runner/TypescriptManager'
 
 const set = createMerge('runner')
 
-export const runnerModule: StoreModule = (store) => {
+type Module = StoreonModule<State, RunnerEvents>
+
+export const runnerModule: Module = (store) => {
+  const jsRunner = new JSRunner()
+  const tsTranspiler = new TypeScriptTranspiler()
+
   store.on('@init', () => ({
     runner: {
       compiled: '',
@@ -38,8 +45,6 @@ export const runnerModule: StoreModule = (store) => {
       })
     } catch (error) {
       if (error instanceof Error) {
-        console.warn('[runner::error]', error.message)
-
         store.dispatch('runner/set', {error})
       }
     }

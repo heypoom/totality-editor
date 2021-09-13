@@ -35,5 +35,3 @@ export class TypeScriptTranspiler {
     this.worker?.terminate()
   }
 }
-
-export const tsTranspiler = new TypeScriptTranspiler()
