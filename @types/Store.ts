@@ -31,6 +31,7 @@ export interface State {
   hooks: ExtensionHooksMap
   options: CoreOptions
 
+  code: string
   runner: RunnerState
 }
 
@@ -51,11 +52,7 @@ export interface Events {
 
   'code/set': string
 
-  'runner/set-compiled': string
-  'runner/set-error': Error | null
-  'runner/set-variables': Record<string, any>
-
-  'runner/override': Partial<RunnerState>
+  'runner/set': Partial<RunnerState>
 }
 
 export type StoreModule = StoreonModule<State, Events>

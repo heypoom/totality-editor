@@ -1,5 +1,3 @@
-import {atom, useAtom} from 'jotai'
-
 import {jsRunner} from 'modules/runner/Evaluator'
 import {tsTranspiler} from 'modules/runner/TypescriptManager'
 import {CircleLinkedListExample} from 'modules/sample/circle-linked-list'
@@ -40,11 +38,6 @@ const LinkedListVisualizer = loadable(async () => {
   return LinkedListVisualizer
 })
 
-const tsAtom = atom('')
-const codeAtom = atom('')
-const varsAtom = atom({})
-const errorsAtom = atom<Error | null>(null)
-
 const saveKey = 'code.content'
 
 function renderError(error: Error | string) {
@@ -66,19 +59,12 @@ export const Totality = <E extends readonly Extension<any>[]>(
 ) => {
   const {extensions, options} = props
 
-  const [code, setCode] = useAtom(codeAtom)
-  const [tsCode, setTsCode] = useAtom(tsAtom)
-  const [vars, setVars] = useAtom(varsAtom)
-  const [error, setError] = useAtom(errorsAtom)
+  const {code, runner, dispatch} = useStore('code', 'runner')
 
-  const {dispatch} = useStore()
+  const transpile = useDebounce(async (code: string) => {
+    const compiled = await tsTranspiler.transpile(code)
 
-  const transpile = useDebounce((code: string) => {
-    tsTranspiler.transpile(code).then((tsCode) => {
-      // @ts-ignore
-      window.tsCode = tsCode
-      setTsCode(tsCode)
-    })
+    dispatch('runner/set', {compiled})
   }, 100)
 
   useEffect(() => {
@@ -103,15 +89,14 @@ export const Totality = <E extends readonly Extension<any>[]>(
     try {
       await jsRunner.run(code)
 
-      setVars(jsRunner.getTracked())
-      setError(null)
+      dispatch('runner/set', {variables: jsRunner.getTracked(), error: null})
     } catch (error) {
       // @ts-ignore
       window.error = error
 
       if (error instanceof Error) {
         console.warn('[runner::error]', error.message)
-        setError(error)
+        dispatch('runner/set', {error})
       }
     }
   }, 50)
@@ -124,9 +109,9 @@ export const Totality = <E extends readonly Extension<any>[]>(
 
   useEffect(() => {
     jsRunner.on('track', () => {
-      setVars(jsRunner.getTracked())
+      dispatch('runner/set', {variables: jsRunner.getTracked()})
     })
-  }, [setVars])
+  }, [dispatch])
 
   useEffect(() => {
     transpile(code)
@@ -134,11 +119,13 @@ export const Totality = <E extends readonly Extension<any>[]>(
   }, [code, transpile, save])
 
   useEffect(() => {
-    exec(tsCode)
-  }, [exec, tsCode])
+    exec(runner.compiled)
+  }, [exec, runner.compiled])
 
   function onSetup() {
-    setCode(localStorage.getItem(saveKey) || CircleLinkedListExample)
+    const sample = localStorage.getItem(saveKey) || CircleLinkedListExample
+
+    dispatch('code/set', sample)
   }
 
   const monacoOptions = useMemo(() => {
@@ -151,20 +138,20 @@ export const Totality = <E extends readonly Extension<any>[]>(
         <div tw="max-w-5xl mx-auto py-6 w-full">
           <Editor
             value={code}
-            onChange={setCode}
+            onChange={(code) => dispatch('code/set', code)}
             onSetup={onSetup}
             options={monacoOptions}
           />
         </div>
 
         <div tw="w-full">
-          {error && (
+          {runner.error && (
             <div tw="p-2 bg-red-500 text-white shadow-lg m-2">
-              {renderError(error)}
+              {renderError(runner.error)}
             </div>
           )}
 
-          <LinkedListVisualizer vars={vars} />
+          <LinkedListVisualizer vars={runner.variables} />
         </div>
 
         <style>
