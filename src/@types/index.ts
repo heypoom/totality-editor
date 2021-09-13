@@ -12,3 +12,5 @@ export type {
   RunnerEvents,
   Dispatch,
 } from './Store'
+
+export type {Run, RunnerGlobal, IRealm} from './Runner'

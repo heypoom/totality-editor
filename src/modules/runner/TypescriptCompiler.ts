@@ -19,7 +19,7 @@ export function createTypeScriptWorker(): Worker | null {
   return worker
 }
 
-export class TypeScriptTranspiler {
+export class TypeScriptCompiler {
   worker = createTypeScriptWorker()
 
   transpile(source: string): Promise<string> {

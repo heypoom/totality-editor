@@ -5,15 +5,15 @@ import {createMerge} from './utils/merge'
 import {RunnerEvents, State} from '@types'
 
 import {JSRunner} from 'modules/runner/Evaluator'
-import {TypeScriptTranspiler} from 'modules/runner/TypescriptManager'
+import {TypeScriptCompiler} from 'modules/runner/TypescriptCompiler'
 
 const set = createMerge('runner')
 
 type Module = StoreonModule<State, RunnerEvents>
 
 export const runnerModule: Module = (store) => {
-  const jsRunner = new JSRunner()
-  const tsTranspiler = new TypeScriptTranspiler()
+  const runner = new JSRunner()
+  const compiler = new TypeScriptCompiler()
 
   store.on('@init', () => ({
     runner: {
@@ -24,24 +24,24 @@ export const runnerModule: Module = (store) => {
   }))
 
   store.on('runner/setup', () => {
-    jsRunner.on('track', () => {
-      store.dispatch('runner/set', {variables: jsRunner.getTracked()})
+    runner.on('track', () => {
+      store.dispatch('runner/set', {variables: runner.getTracked()})
     })
   })
 
   store.on('runner/compile', async (state) => {
-    const compiled = await tsTranspiler.transpile(state.code)
+    const compiled = await compiler.transpile(state.code)
 
     store.dispatch('runner/set', {compiled})
   })
 
   store.on('runner/run', async (state) => {
     try {
-      await jsRunner.run(state.runner.compiled)
+      await runner.run(state.runner.compiled)
 
       store.dispatch('runner/set', {
         error: null,
-        variables: jsRunner.getTracked(),
+        variables: runner.getTracked(),
       })
     } catch (error) {
       if (error instanceof Error) {

@@ -14,10 +14,11 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "rootDir": ".",
-    "baseUrl": ".",
-    "types": ["."],
+    "baseUrl": "src",
+    "types": [],
     "typeRoots": ["node_modules/@types", "./@types"],
     "paths": {
+      "@types": ["@types"],
       "@totality/core": ["modules/index.ts"],
       "@totality/extensions": ["extensions/index.ts"]
     }

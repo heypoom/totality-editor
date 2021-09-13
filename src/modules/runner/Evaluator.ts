@@ -1,35 +1,8 @@
 import Realm from 'realms-shim'
 
+import {Run, RunnerGlobal, IRealm} from '@types'
+
 import {ExecutionAbortedError} from 'errors/ExecutionAbortedError'
-
-const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
-
-interface Run {
-  id: string | null
-
-  error: Error | null
-  isRunning: boolean
-  isAborted: boolean
-
-  // Cleanup handlers: used for abort and when execution finishes.
-  cleanupHandlers: (() => void | Promise<void>)[]
-
-  latestCompleteRunId: string | null
-}
-
-interface RunnerGlobal {
-  console: Console
-  setTimeout: typeof setTimeout
-
-  delay(ms: number): Promise<void>
-
-  track<T>(id: string, val: T): T
-  tracks(vars: Record<string, any>): void
-}
-
-interface IRealm {
-  global: RunnerGlobal
-}
 
 export class JSRunner {
   state: Run = {
@@ -42,22 +15,22 @@ export class JSRunner {
     latestCompleteRunId: null,
   }
 
-  realm: Realm
+  realm = this.createScope()
   tracked: Map<string, unknown> = new Map()
   handlers: ((id: string, target: any) => void)[] = []
 
-  constructor() {
-    if (typeof window === 'undefined') return
-
+  createScope() {
     const realm: IRealm = Realm.makeRootRealm()
 
-    realm.global.console = console
-    realm.global.setTimeout = window.setTimeout
-    realm.global.delay = this.delay.bind(this)
-    realm.global.track = this.track.bind(this)
-    realm.global.tracks = this.tracks.bind(this)
+    if (typeof window !== 'undefined') {
+      realm.global.console = console
+      realm.global.setTimeout = window.setTimeout
+      realm.global.delay = this.delay.bind(this)
+      realm.global.track = this.track.bind(this)
+      realm.global.tracks = this.tracks.bind(this)
+    }
 
-    this.realm = realm
+    return realm
   }
 
   delay(ms: number): Promise<void> {
@@ -116,17 +89,19 @@ export class JSRunner {
 
       this.state.latestCompleteRunId = runId
 
-      return result
+      return String(result)
     } catch (error) {
-      // Ignore aborted execution.
-      if (error instanceof ExecutionAbortedError) {
-        console.debug('execution aborted')
-        return ''
+      if (error instanceof Error) {
+        // Ignore aborted execution.
+        if (error instanceof ExecutionAbortedError) {
+          console.debug('execution aborted')
+          return ''
+        }
+
+        this.state.error = error
+
+        throw error
       }
-
-      this.state.error = error
-
-      throw error
     } finally {
       console.log('[finally] cleanup')
 
@@ -135,5 +110,7 @@ export class JSRunner {
 
       this.state.isRunning = false
     }
+
+    return ''
   }
 }
