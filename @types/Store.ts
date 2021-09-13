@@ -1,4 +1,4 @@
-import {StoreonModule, StoreonStore} from 'storeon'
+import {StoreonModule, StoreonStore, StoreonDispatch} from 'storeon'
 
 import {Extension} from './Extension'
 import {EditorContext} from './EditorContext'
@@ -40,3 +40,4 @@ export interface Events {
 
 export type StoreModule = StoreonModule<State, Events>
 export type Store = StoreonStore<State, Events>
+export type Dispatch = StoreonDispatch<Events>
