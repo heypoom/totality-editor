@@ -1,8 +1,8 @@
 import {DraculaTheme} from './dracula.theme'
 
-import {Extension} from '../../@types/Extension'
+import {createExtension} from 'utils/createExtension'
 
-export const DraculaThemeExtension: Extension = {
+export const DraculaThemeExtension = createExtension({
   id: 'theme.dracula',
 
   setup(app) {
@@ -15,4 +15,4 @@ export const DraculaThemeExtension: Extension = {
       editor.setTheme('dracula')
     })
   },
-}
+})

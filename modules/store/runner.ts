@@ -2,7 +2,7 @@ import {StoreonModule} from 'storeon'
 
 import {createMerge} from './utils/merge'
 
-import {RunnerEvents, State} from '../../@types/Store'
+import {RunnerEvents, State} from '@types'
 
 import {JSRunner} from 'modules/runner/Evaluator'
 import {TypeScriptTranspiler} from 'modules/runner/TypescriptManager'

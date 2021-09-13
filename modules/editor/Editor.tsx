@@ -3,7 +3,7 @@ import {useStore} from 'modules/store'
 
 import {useEffect, useState} from 'react'
 
-import {EditorContext, IMonacoOption} from '../../@types/EditorContext'
+import {EditorContext, IMonacoOption} from '@types'
 
 interface Props {
   value: string

@@ -1,6 +1,4 @@
-import {OptionsFromExtensions} from 'modules/view/Totality'
-
-import {Extension} from '../../@types/Extension'
+import {OptionsFromExtensions, Extension} from '@types'
 
 export const createExtension = <C, I>(
   extension: Extension<C, I>

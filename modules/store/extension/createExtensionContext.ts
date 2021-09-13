@@ -1,6 +1,4 @@
-import {Dispatch} from '../../../@types/Store'
-import {Extension} from '../../../@types/Extension'
-import {ExtensionContext} from '../../../@types/ExtensionContext'
+import {Dispatch, Extension, ExtensionContext} from '@types'
 
 interface Config {
   dispatch: Dispatch

@@ -1,6 +1,6 @@
 import produce from 'immer'
 
-import {StoreModule} from '../../@types/Store'
+import {StoreModule} from '@types'
 
 export const hooksModule: StoreModule = (store) => {
   store.on('@init', () => ({hooks: {'editor.setup': []}}))

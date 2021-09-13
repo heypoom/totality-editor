@@ -1,6 +1,6 @@
 import {createExtensionContext} from './createExtensionContext'
 
-import {StoreModule} from '../../../@types/Store'
+import {StoreModule} from '@types'
 
 export const extensionModule: StoreModule = (store) => {
   store.on('@init', () => ({extensions: []}))

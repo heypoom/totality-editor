@@ -1,6 +1,6 @@
-import {Extension} from '../@types/Extension'
+import {createExtension} from 'utils/createExtension'
 
-export const ExampleWidgetExtension: Extension = {
+export const ExampleWidgetExtension = createExtension({
   id: 'example.widget',
 
   setup(app) {
@@ -47,4 +47,4 @@ export const ExampleWidgetExtension: Extension = {
       })
     })
   },
-}
+})

@@ -1,19 +1,17 @@
-import React, {useEffect, useMemo} from 'react'
-import loadable from '@loadable/component'
 import 'twin.macro'
+import loadable from '@loadable/component'
+import React, {useEffect, useMemo} from 'react'
 
 import {Editor} from 'modules/editor/Editor'
 import {useDebounce} from 'modules/utils/useDebounce'
 import {AppContext, store, useStore} from 'modules/store'
-import {CircleLinkedListExample} from 'modules/sample/circle-linked-list'
 
-import {Extension} from '../../@types/Extension'
-import {IMonacoOption} from '../../@types/EditorContext'
-import {OptionsFromExtensions} from '../../@types/OptionsFromExtensions'
-
-export type EditorOptions = {
-  [K in keyof IMonacoOption as `editor.${K}`]: IMonacoOption[K]
-}
+import {
+  Extension,
+  OptionsFromExtensions,
+  EditorOptions,
+  IMonacoOption,
+} from '@types'
 
 export interface ITotalityProps<E extends readonly Extension<any, any>[]> {
   extensions?: E
@@ -22,13 +20,11 @@ export interface ITotalityProps<E extends readonly Extension<any, any>[]> {
 
 const LinkedListVisualizer = loadable(async () => {
   const {LinkedListVisualizer} = await import(
-    '../visualizer/LinkedListVisualizer'
+    'modules/visualizer/LinkedListVisualizer'
   )
 
   return LinkedListVisualizer
 })
-
-const saveKey = 'code.content'
 
 function renderError(error: Error | string) {
   if (typeof error === 'string') return error
@@ -52,11 +48,10 @@ export const Totality = <E extends readonly Extension<any>[]>(
   const {code, runner, dispatch} = useStore('code', 'runner')
 
   const run = useDebounce(() => dispatch('runner/run'), 50)
+  const save = useDebounce(() => dispatch('code/save'), 1000)
   const transpile = useDebounce(() => dispatch('runner/compile'), 100)
 
-  const save = useDebounce((code: string) => {
-    localStorage.setItem(saveKey, code)
-  }, 1000)
+  const setCode = (code: string) => dispatch('code/set', code)
 
   useEffect(() => {
     dispatch('config/set', options)
@@ -67,23 +62,17 @@ export const Totality = <E extends readonly Extension<any>[]>(
   }, [extensions, dispatch])
 
   useEffect(() => {
-    dispatch('code/set', CircleLinkedListExample)
-    dispatch('runner/setup')
+    dispatch('core/setup')
   }, [dispatch])
 
   useEffect(() => {
-    transpile(code)
     save(code)
+    transpile(code)
   }, [code, transpile, save])
 
   useEffect(() => {
     run()
   }, [run, runner.compiled])
-
-  function onSetup() {
-    // const sample = localStorage.getItem(saveKey) || CircleLinkedListExample
-    // dispatch('code/set', sample)
-  }
 
   const monacoOptions = useMemo(() => {
     return intoEditorOptions(options ?? {})
@@ -93,12 +82,7 @@ export const Totality = <E extends readonly Extension<any>[]>(
     <AppContext.Provider value={store}>
       <div tw="flex">
         <div tw="max-w-5xl mx-auto py-6 w-full">
-          <Editor
-            value={code}
-            onChange={(code) => dispatch('code/set', code)}
-            onSetup={onSetup}
-            options={monacoOptions}
-          />
+          <Editor value={code} onChange={setCode} options={monacoOptions} />
         </div>
 
         <div tw="w-full">

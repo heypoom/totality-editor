@@ -1,4 +1,4 @@
-import {StoreModule} from '../../@types/Store'
+import {StoreModule} from '@types'
 
 export const configModule: StoreModule = (store) => {
   store.on('@init', () => ({options: {}}))

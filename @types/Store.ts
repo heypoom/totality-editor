@@ -3,7 +3,7 @@ import {StoreonModule, StoreonStore, StoreonDispatch} from 'storeon'
 import {Extension} from './Extension'
 import {EditorContext} from './EditorContext'
 
-import {EditorOptions} from 'modules/view/Totality'
+import {EditorOptions} from '@types'
 
 export type EditorSetupHook = (context: EditorContext) => Promise<void> | void
 
@@ -42,7 +42,12 @@ type HookPayload<T extends keyof ExtensionEventHooks> = {
 }
 
 export interface Events extends RunnerEvents, ExtensionEvents {
+  'core/setup': void
+
   'code/set': string
+  'code/save': void
+  'code/load': void
+
   'config/set': Partial<CoreOptions>
   'hooks/add': HookPayload<keyof ExtensionEventHooks>
 }

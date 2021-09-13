@@ -9,7 +9,7 @@ import {runnerModule} from './runner'
 import {configModule} from './config'
 import {extensionModule} from './extension'
 
-import {Events, State} from '../../@types/Store'
+import {Events, State} from '@types'
 
 export const store = createStoreon<State, Events>([
   extensionModule,

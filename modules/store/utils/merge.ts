@@ -1,4 +1,4 @@
-import {State} from '../../../@types/Store'
+import {State} from '@types'
 
 export const createMerge =
   <K extends keyof State>(key: K) =>

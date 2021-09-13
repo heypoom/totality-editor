@@ -1,8 +1,8 @@
 import {syncController} from './SyncController'
 
-import {Extension} from '../../@types/Extension'
+import {createExtension} from 'utils/createExtension'
 
-export const LiveCollaborationExtension: Extension = {
+export const LiveCollaborationExtension = createExtension({
   id: 'core.collaboration',
 
   async setup(app) {
@@ -29,4 +29,4 @@ export const LiveCollaborationExtension: Extension = {
       window.monacoYBinding = binding
     })
   },
-}
+})

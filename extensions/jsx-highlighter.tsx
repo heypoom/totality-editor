@@ -1,7 +1,7 @@
 import {parse} from '@babel/parser'
 import traverse from '@babel/traverse'
 
-import {Extension} from '../@types/Extension'
+import {Extension} from '@types'
 
 // @ts-ignore
 import MonacoJSXHighlighter from 'monaco-jsx-highlighter'

@@ -1,4 +1,4 @@
-import {createExtension} from 'modules/utils/createExtension'
+import {createExtension} from 'utils/createExtension'
 
 export const TypeScriptReactExtension = createExtension({
   id: 'language.typescriptreact',

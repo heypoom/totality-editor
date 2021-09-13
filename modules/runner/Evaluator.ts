@@ -1,6 +1,6 @@
 import Realm from 'realms-shim'
 
-import {ExecutionAbortedError} from '../../errors/ExecutionAbortedError'
+import {ExecutionAbortedError} from 'errors/ExecutionAbortedError'
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
