@@ -45,6 +45,7 @@ export interface Events {
   'extension/add': Extension
   'extension/use': Extension
   'extension/setup': Extension
+  'extension/use-all': Extension[] | null
 
   'hooks/add': HookPayload<keyof ExtensionEventHooks>
 
@@ -52,6 +53,9 @@ export interface Events {
 
   'code/set': string
 
+  'runner/run': void
+  'runner/setup': void
+  'runner/compile': void
   'runner/set': Partial<RunnerState>
 }
 

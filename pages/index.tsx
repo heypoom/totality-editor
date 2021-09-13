@@ -17,7 +17,7 @@ export default function Home() {
     <div tw="min-h-screen bg-gray-900 text-white">
       <Totality
         extensions={extensions}
-        options={{'vim.enabled': true, 'editor.fontSize': 12}}
+        options={{'vim.enabled': true, 'editor.fontSize': 20}}
       />
     </div>
   )

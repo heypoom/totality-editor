@@ -1,25 +1,14 @@
-import {jsRunner} from 'modules/runner/Evaluator'
-import {tsTranspiler} from 'modules/runner/TypescriptManager'
-import {CircleLinkedListExample} from 'modules/sample/circle-linked-list'
-import {useDebounce} from 'modules/utils/useDebounce'
 import React, {useEffect, useMemo} from 'react'
-import tw from 'twin.macro'
 import loadable from '@loadable/component'
-import {UnionToIntersection} from 'type-fest'
+
+import {Editor} from 'modules/editor/Editor'
+import {useDebounce} from 'modules/utils/useDebounce'
+import {AppContext, store, useStore} from 'modules/store'
+import {CircleLinkedListExample} from 'modules/sample/circle-linked-list'
 
 import {Extension} from '../../@types/Extension'
-import {Editor} from 'modules/editor/Editor'
 import {IMonacoOption} from '../../@types/EditorContext'
-
-import {AppContext, store, useStore} from 'modules/store'
-
-/** Construct the options object from the extensions. */
-export type OptionsFromExtensions<E extends readonly Extension<any, any>[]> =
-  UnionToIntersection<
-    {
-      [K in keyof E]: E[K] extends Extension<infer Config> ? Config : never
-    }[number]
-  >
+import {OptionsFromExtensions} from '../../@types/OptionsFromExtensions'
 
 export type EditorOptions = {
   [K in keyof IMonacoOption as `editor.${K}`]: IMonacoOption[K]
@@ -61,45 +50,16 @@ export const Totality = <E extends readonly Extension<any>[]>(
 
   const {code, runner, dispatch} = useStore('code', 'runner')
 
-  const transpile = useDebounce(async (code: string) => {
-    const compiled = await tsTranspiler.transpile(code)
-
-    dispatch('runner/set', {compiled})
-  }, 100)
-
-  useEffect(() => {
-    async function register() {
-      console.time('register extension')
-
-      for (const extension of extensions!) {
-        await dispatch('extension/use', extension)
-      }
-
-      console.timeEnd('register extension')
-    }
-
-    register()
-  }, [extensions, dispatch])
+  const run = useDebounce(() => dispatch('runner/run'), 50)
+  const transpile = useDebounce(() => dispatch('runner/compile'), 100)
 
   const save = useDebounce((code: string) => {
     localStorage.setItem(saveKey, code)
   }, 1000)
 
-  const exec = useDebounce(async (code: string) => {
-    try {
-      await jsRunner.run(code)
-
-      dispatch('runner/set', {variables: jsRunner.getTracked(), error: null})
-    } catch (error) {
-      // @ts-ignore
-      window.error = error
-
-      if (error instanceof Error) {
-        console.warn('[runner::error]', error.message)
-        dispatch('runner/set', {error})
-      }
-    }
-  }, 50)
+  useEffect(() => {
+    dispatch('extension/use-all', (extensions ?? []) as Extension[])
+  }, [extensions, dispatch])
 
   useEffect(() => {
     if (!options) return
@@ -108,9 +68,7 @@ export const Totality = <E extends readonly Extension<any>[]>(
   }, [options, dispatch])
 
   useEffect(() => {
-    jsRunner.on('track', () => {
-      dispatch('runner/set', {variables: jsRunner.getTracked()})
-    })
+    dispatch('runner/setup')
   }, [dispatch])
 
   useEffect(() => {
@@ -119,8 +77,8 @@ export const Totality = <E extends readonly Extension<any>[]>(
   }, [code, transpile, save])
 
   useEffect(() => {
-    exec(runner.compiled)
-  }, [exec, runner.compiled])
+    run()
+  }, [run, runner.compiled])
 
   function onSetup() {
     const sample = localStorage.getItem(saveKey) || CircleLinkedListExample
