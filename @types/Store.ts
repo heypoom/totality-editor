@@ -1,4 +1,4 @@
-import {StoreonModule} from 'storeon'
+import {StoreonModule, StoreonStore} from 'storeon'
 
 import {Extension} from './Extension'
 import {EditorContext} from './EditorContext'
@@ -33,8 +33,10 @@ type HookPayload<T extends keyof ExtensionEventHooks> = {
 export interface Events {
   'extension/add': Extension
   'extension/use': Extension
+  'extension/setup': Extension
 
   'hooks/add': HookPayload<keyof ExtensionEventHooks>
 }
 
 export type StoreModule = StoreonModule<State, Events>
+export type Store = StoreonStore<State, Events>
