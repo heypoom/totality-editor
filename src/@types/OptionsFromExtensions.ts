@@ -6,6 +6,8 @@ import {Extension} from './Extension'
 export type OptionsFromExtensions<E extends readonly Extension<any, any>[]> =
   UnionToIntersection<
     {
-      [K in keyof E]: E[K] extends Extension<infer Config> ? Config : never
+      [K in keyof E]: E[K] extends Extension<infer Config> ? Config : {}
     }[number]
   >
+
+type K = true extends unknown ? 'yes' : 'no'

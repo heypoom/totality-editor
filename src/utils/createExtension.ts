@@ -1,6 +1,6 @@
 import {OptionsFromExtensions, Extension} from '@types'
 
-export const createExtension = <C, I>(
+export const createExtension = <C = {}, I = void>(
   extension: Extension<C, I>
 ): Extension<C, I> => extension
 

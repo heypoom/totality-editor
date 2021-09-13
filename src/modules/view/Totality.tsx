@@ -11,7 +11,7 @@ import {EditorOptions, Extension, OptionsFromExtensions} from '@types'
 
 export interface ITotalityProps<E extends readonly Extension<any, any>[]> {
   extensions?: E
-  options?: Partial<OptionsFromExtensions<E> & EditorOptions>
+  options?: Partial<OptionsFromExtensions<E>> & EditorOptions
 }
 
 const LinkedListVisualizer = loadable(async () => {
