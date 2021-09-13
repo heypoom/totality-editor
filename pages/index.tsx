@@ -1,21 +1,19 @@
 import 'twin.macro'
 
-import {Totality} from 'modules/view/Totality'
+import {Totality} from '@totality/core'
 
-import {VimModeExtension} from 'extensions/vim'
-import {DraculaThemeExtension} from 'extensions/dracula'
-import {ExampleWidgetExtension} from 'extensions/example-widget'
-import {JSXHighlighterExtension} from 'extensions/jsx-highlighter'
-import {TypeScriptReactExtension} from 'extensions/typescript-react'
-import {LiveCollaborationExtension} from 'extensions/collaboration'
+import {
+  DraculaThemeExtension,
+  ExampleWidgetExtension,
+  TypeScriptReactExtension,
+  VimModeExtension,
+} from '@totality/extensions'
 
 const extensions = [
   DraculaThemeExtension,
   ExampleWidgetExtension,
   VimModeExtension,
-  // JSXHighlighterExtension,
   TypeScriptReactExtension,
-  // LiveCollaborationExtension,
 ] as const
 
 export default function Home() {

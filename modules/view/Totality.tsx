@@ -2,16 +2,16 @@ import 'twin.macro'
 import loadable from '@loadable/component'
 import React, {useEffect, useMemo} from 'react'
 
-import {Editor} from 'modules/editor/Editor'
-import {useDebounce} from 'modules/utils/useDebounce'
-import {AppContext, store, useStore} from 'modules/store'
-
 import {
   Extension,
   OptionsFromExtensions,
   EditorOptions,
   IMonacoOption,
 } from '@types'
+
+import {Editor} from 'modules/editor/Editor'
+import {useDebounce} from 'utils/useDebounce'
+import {AppContext, store, useStore} from 'modules/store'
 
 export interface ITotalityProps<E extends readonly Extension<any, any>[]> {
   extensions?: E

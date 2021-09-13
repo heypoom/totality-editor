@@ -16,7 +16,11 @@
     "rootDir": ".",
     "baseUrl": ".",
     "types": ["."],
-    "typeRoots": ["node_modules/@types", "./@types"]
+    "typeRoots": ["node_modules/@types", "./@types"],
+    "paths": {
+      "@totality/core": ["modules/index.ts"],
+      "@totality/extensions": ["extensions/index.ts"]
+    }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "@types/*.d.ts"],
   "exclude": ["node_modules"]
