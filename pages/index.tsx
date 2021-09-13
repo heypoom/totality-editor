@@ -10,11 +10,11 @@ import {TypeScriptReactExtension} from 'extensions/typescript-react'
 import {LiveCollaborationExtension} from 'extensions/collaboration'
 
 const extensions = [
-  VimModeExtension,
   DraculaThemeExtension,
   ExampleWidgetExtension,
+  VimModeExtension,
   // JSXHighlighterExtension,
-  // TypeScriptReactExtension,
+  TypeScriptReactExtension,
   // LiveCollaborationExtension,
 ] as const
 
@@ -23,7 +23,11 @@ export default function Home() {
     <div tw="min-h-screen bg-gray-900 text-white">
       <Totality
         extensions={extensions}
-        options={{'vim.enabled': true, 'editor.fontSize': 20}}
+        options={{
+          'vim.enabled': true,
+          'editor.fontSize': 20,
+          'language.typescriptreact.typeDefs': false,
+        }}
       />
     </div>
   )

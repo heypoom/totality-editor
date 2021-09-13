@@ -1,17 +1,18 @@
-import {Extension} from '../@types/Extension'
+import {createExtension} from 'modules/utils/createExtension'
 
-export const TypeScriptReactExtension: Extension = {
+export const TypeScriptReactExtension = createExtension({
   id: 'language.typescriptreact',
+
+  defaultConfig: {
+    'language.typescriptreact.typeDefs': true,
+  },
 
   async setup(app) {
     app.editor.setup(async (context) => {
-      const {monaco, editor} = context
+      const {monaco} = context
 
       const ts = monaco.languages.typescript
       const tsd = ts.typescriptDefaults
-
-      const modelUri = monaco.Uri.file('main.tsx')
-      const codeModel = monaco.editor.createModel('//?', 'typescript', modelUri)
 
       async function addTypedef(uri: string, filePath: string) {
         const source = await fetch(uri).then((x) => x.text())
@@ -37,12 +38,12 @@ export const TypeScriptReactExtension: Extension = {
         noSyntaxValidation: false,
       })
 
-      await addTypedef(
-        'https://cdn.jsdelivr.net/npm/@types/react@17.0.14/index.d.ts',
-        'react.d.ts'
-      )
-
-      editor.setModel(codeModel)
+      if (app.options['language.typescriptreact.typeDefs']) {
+        await addTypedef(
+          'https://cdn.jsdelivr.net/npm/@types/react@17.0.14/index.d.ts',
+          'react.d.ts'
+        )
+      }
     })
   },
-}
+})

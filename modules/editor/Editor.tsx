@@ -29,9 +29,9 @@ export function useSetupEditorExtension({onSetup}: SetupHookConfig) {
 
       // Setup the editor.
       for (const hook of setupHooks) {
-        console.time(`setup handler ${hook.ext}`)
+        console.time(`editor hook ${hook.ext}`)
         await hook.handler(monacoContext)
-        console.timeEnd(`setup handler ${hook.ext}`)
+        console.timeEnd(`editor hook ${hook.ext}`)
       }
 
       onSetup?.()

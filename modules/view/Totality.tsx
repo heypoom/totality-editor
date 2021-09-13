@@ -17,7 +17,7 @@ export type EditorOptions = {
 
 export interface ITotalityProps<E extends readonly Extension<any, any>[]> {
   extensions?: E
-  options?: OptionsFromExtensions<E> & EditorOptions
+  options?: Partial<OptionsFromExtensions<E> & EditorOptions>
 }
 
 const LinkedListVisualizer = loadable(async () => {
@@ -59,16 +59,15 @@ export const Totality = <E extends readonly Extension<any>[]>(
   }, 1000)
 
   useEffect(() => {
-    dispatch('extension/use-all', (extensions ?? []) as Extension[])
-  }, [extensions, dispatch])
-
-  useEffect(() => {
-    if (!options) return
-
     dispatch('config/set', options)
   }, [options, dispatch])
 
   useEffect(() => {
+    dispatch('extension/use-all', (extensions ?? []) as Extension[])
+  }, [extensions, dispatch])
+
+  useEffect(() => {
+    dispatch('code/set', CircleLinkedListExample)
     dispatch('runner/setup')
   }, [dispatch])
 
@@ -82,9 +81,8 @@ export const Totality = <E extends readonly Extension<any>[]>(
   }, [run, runner.compiled])
 
   function onSetup() {
-    const sample = localStorage.getItem(saveKey) || CircleLinkedListExample
-
-    dispatch('code/set', sample)
+    // const sample = localStorage.getItem(saveKey) || CircleLinkedListExample
+    // dispatch('code/set', sample)
   }
 
   const monacoOptions = useMemo(() => {
