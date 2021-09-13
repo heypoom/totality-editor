@@ -1,8 +1,7 @@
 import MonacoEditor from '@monaco-editor/react'
-import {useAtom} from 'jotai'
+import {useStore} from 'modules/store'
 
-import {contextAtom, useApp} from 'modules/context'
-import {useCallback, useEffect, useRef, useState} from 'react'
+import {useEffect, useState} from 'react'
 
 import {EditorContext, IMonacoOption} from '../../@types/EditorContext'
 
@@ -16,30 +15,30 @@ interface Props {
 type SetupHookConfig = {onSetup?: () => void}
 
 export function useSetupEditorExtension({onSetup}: SetupHookConfig) {
-  const [{handlers}] = useAtom(contextAtom)
+  const {hooks} = useStore('hooks')
 
-  const [editorContext, setEditorContext] = useState<EditorContext | null>(null)
+  const [monacoContext, setMonacoContext] = useState<EditorContext | null>(null)
 
-  const register = (context: EditorContext) => setEditorContext(context)
+  const register = (context: EditorContext) => setMonacoContext(context)
 
-  const setupHandlers = handlers['editor.setup']
+  const setupHooks = hooks['editor.setup']
 
   useEffect(() => {
     async function setup() {
-      if (!editorContext) return
+      if (!monacoContext) return
 
       // Setup the editor.
-      for (const handle of setupHandlers) {
-        console.time(`setup handler ${handle.ext}`)
-        await handle.handler(editorContext)
-        console.timeEnd(`setup handler ${handle.ext}`)
+      for (const hook of setupHooks) {
+        console.time(`setup handler ${hook.ext}`)
+        await hook.handler(monacoContext)
+        console.timeEnd(`setup handler ${hook.ext}`)
       }
 
       onSetup?.()
     }
 
     setup()
-  }, [editorContext, setupHandlers])
+  }, [monacoContext, setupHooks])
 
   return {register}
 }

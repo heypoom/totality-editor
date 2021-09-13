@@ -18,10 +18,20 @@ export type ExtensionHooksMap = {
   }[]
 }
 
+type CoreOptions = Record<string, any> & EditorOptions
+
+export interface RunnerState {
+  compiled: string
+  variables: Record<string, any>
+  error: Error | null
+}
+
 export interface State {
   extensions: Extension[]
   hooks: ExtensionHooksMap
-  options: Record<string, any> & EditorOptions
+  options: CoreOptions
+
+  runner: RunnerState
 }
 
 type HookPayload<T extends keyof ExtensionEventHooks> = {
@@ -36,6 +46,16 @@ export interface Events {
   'extension/setup': Extension
 
   'hooks/add': HookPayload<keyof ExtensionEventHooks>
+
+  'config/set': Partial<CoreOptions>
+
+  'code/set': string
+
+  'runner/set-compiled': string
+  'runner/set-error': Error | null
+  'runner/set-variables': Record<string, any>
+
+  'runner/override': Partial<RunnerState>
 }
 
 export type StoreModule = StoreonModule<State, Events>

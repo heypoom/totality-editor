@@ -1,10 +1,10 @@
 import {atom, useAtom} from 'jotai'
-import {useApp} from 'modules/context'
+
 import {jsRunner} from 'modules/runner/Evaluator'
 import {tsTranspiler} from 'modules/runner/TypescriptManager'
 import {CircleLinkedListExample} from 'modules/sample/circle-linked-list'
 import {useDebounce} from 'modules/utils/useDebounce'
-import React, {useState, useEffect, useMemo} from 'react'
+import React, {useEffect, useMemo} from 'react'
 import tw from 'twin.macro'
 import loadable from '@loadable/component'
 import {UnionToIntersection} from 'type-fest'
@@ -12,6 +12,8 @@ import {UnionToIntersection} from 'type-fest'
 import {Extension} from '../../@types/Extension'
 import {Editor} from 'modules/editor/Editor'
 import {IMonacoOption} from '../../@types/EditorContext'
+
+import {AppContext, store, useStore} from 'modules/store'
 
 /** Construct the options object from the extensions. */
 export type OptionsFromExtensions<E extends readonly Extension<any, any>[]> =
@@ -69,7 +71,7 @@ export const Totality = <E extends readonly Extension<any>[]>(
   const [vars, setVars] = useAtom(varsAtom)
   const [error, setError] = useAtom(errorsAtom)
 
-  const {setup, register} = useApp()
+  const {dispatch} = useStore()
 
   const transpile = useDebounce((code: string) => {
     tsTranspiler.transpile(code).then((tsCode) => {
@@ -80,18 +82,18 @@ export const Totality = <E extends readonly Extension<any>[]>(
   }, 100)
 
   useEffect(() => {
-    async function registerAll() {
+    async function register() {
       console.time('register extension')
 
       for (const extension of extensions!) {
-        await register(extension)
+        await dispatch('extension/use', extension)
       }
 
       console.timeEnd('register extension')
     }
 
-    registerAll()
-  }, [extensions])
+    register()
+  }, [extensions, dispatch])
 
   const save = useDebounce((code: string) => {
     localStorage.setItem(saveKey, code)
@@ -117,14 +119,14 @@ export const Totality = <E extends readonly Extension<any>[]>(
   useEffect(() => {
     if (!options) return
 
-    setup({options})
-  }, [options])
+    dispatch('config/set', options)
+  }, [options, dispatch])
 
   useEffect(() => {
     jsRunner.on('track', () => {
       setVars(jsRunner.getTracked())
     })
-  }, [])
+  }, [setVars])
 
   useEffect(() => {
     transpile(code)
@@ -144,28 +146,29 @@ export const Totality = <E extends readonly Extension<any>[]>(
   }, [options])
 
   return (
-    <div tw="flex">
-      <div tw="max-w-5xl mx-auto py-6 w-full">
-        <Editor
-          value={code}
-          onChange={setCode}
-          onSetup={onSetup}
-          options={monacoOptions}
-        />
-      </div>
+    <AppContext.Provider value={store}>
+      <div tw="flex">
+        <div tw="max-w-5xl mx-auto py-6 w-full">
+          <Editor
+            value={code}
+            onChange={setCode}
+            onSetup={onSetup}
+            options={monacoOptions}
+          />
+        </div>
 
-      <div tw="w-full">
-        {error && (
-          <div tw="p-2 bg-red-500 text-white shadow-lg m-2">
-            {renderError(error)}
-          </div>
-        )}
+        <div tw="w-full">
+          {error && (
+            <div tw="p-2 bg-red-500 text-white shadow-lg m-2">
+              {renderError(error)}
+            </div>
+          )}
 
-        <LinkedListVisualizer vars={vars} />
-      </div>
+          <LinkedListVisualizer vars={vars} />
+        </div>
 
-      <style>
-        {`
+        <style>
+          {`
           .JSXElement.JSXBracket, .JSXElement.JSXText {
             color: #fff;
           }
@@ -174,7 +177,8 @@ export const Totality = <E extends readonly Extension<any>[]>(
             color: #ff79c6;
           }
         `}
-      </style>
-    </div>
+        </style>
+      </div>
+    </AppContext.Provider>
   )
 }
