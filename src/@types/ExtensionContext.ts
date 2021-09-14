@@ -9,7 +9,10 @@ import {Store} from '@types'
  * renderers, panels and more.
  **/
 export interface ExtensionContext<Config = Record<string, any>> {
+  /** The internal storeon store instance in use by the app. Allows full access to the editor's state. */
   store: Store
+
+  /** Options that are initially supplied to the app. */
   options: Config & Record<string, any>
 
   /** Customize the monaco editor instances. */
