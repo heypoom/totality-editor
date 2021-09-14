@@ -1,3 +1,4 @@
+import {debounce} from 'lodash'
 import {StoreonModule} from 'storeon'
 
 import {createMerge} from './utils/merge'
@@ -15,6 +16,8 @@ export const runnerModule: Module = (store) => {
   const runner = new JSRunner()
   const compiler = new TypeScriptCompiler()
 
+  const run = debounce(() => store.dispatch('runner/run'), 50)
+
   store.on('@init', () => ({
     runner: {
       compiled: '',
@@ -31,8 +34,9 @@ export const runnerModule: Module = (store) => {
 
   store.on('runner/compile', async (state) => {
     const compiled = await compiler.transpile(state.code)
+    await store.dispatch('runner/set', {compiled})
 
-    store.dispatch('runner/set', {compiled})
+    run()
   })
 
   store.on('runner/run', async (state) => {

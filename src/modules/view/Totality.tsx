@@ -1,10 +1,9 @@
 import 'twin.macro'
-import loadable from '@loadable/component'
-import React, {useEffect, useMemo} from 'react'
 
-import {useDebounce} from 'utils'
+import React, {useEffect} from 'react'
 
-import {Editor, intoEditorOptions} from 'modules/editor'
+import {Editor} from 'modules/editor'
+import {PreviewPanel} from 'modules/panel/PreviewPanel'
 import {AppContext, store, useStore} from 'modules/store'
 
 import {EditorOptions, Extension, OptionsFromExtensions} from '@types'
@@ -14,31 +13,12 @@ export interface ITotalityProps<E extends readonly Extension<any, any>[]> {
   options?: Partial<OptionsFromExtensions<E>> & EditorOptions
 }
 
-const LinkedListVisualizer = loadable(async () => {
-  const {LinkedListVisualizer} = await import(
-    'modules/visualizer/LinkedListVisualizer'
-  )
-
-  return LinkedListVisualizer
-})
-
-function renderError(error: Error | string) {
-  if (typeof error === 'string') return error
-  if (error instanceof Error) return `${error.name} - ${error.message}`
-
-  return null
-}
-
 export const Totality = <E extends readonly Extension<any>[]>(
   props: ITotalityProps<E>
 ) => {
   const {extensions, options} = props
 
-  const {runner, dispatch} = useStore('code', 'runner')
-
-  const run = useDebounce(() => dispatch('runner/run'), 50)
-  const save = useDebounce(() => dispatch('code/save'), 1000)
-  const transpile = useDebounce(() => dispatch('runner/compile'), 100)
+  const {dispatch} = useStore('code', 'runner')
 
   useEffect(() => {
     dispatch('config/set', options)
@@ -52,30 +32,15 @@ export const Totality = <E extends readonly Extension<any>[]>(
     dispatch('core/setup')
   }, [dispatch])
 
-  useEffect(() => {
-    run()
-  }, [run, runner.compiled])
-
-  function handleChange() {
-    save()
-    transpile()
-  }
-
   return (
     <AppContext.Provider value={store}>
       <div tw="flex">
         <div tw="max-w-5xl mx-auto py-6 w-full">
-          <Editor onChange={handleChange} />
+          <Editor />
         </div>
 
         <div tw="w-full">
-          {runner.error && (
-            <div tw="p-2 bg-red-500 text-white shadow-lg m-2">
-              {renderError(runner.error)}
-            </div>
-          )}
-
-          <LinkedListVisualizer vars={runner.variables} />
+          <PreviewPanel />
         </div>
       </div>
     </AppContext.Provider>

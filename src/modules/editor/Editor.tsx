@@ -1,18 +1,15 @@
 import {useMemo} from 'react'
 import MonacoEditor from '@monaco-editor/react'
 
-import {IMonacoOption} from '@types'
+import {useStore} from 'modules/store'
 
 import {intoEditorOptions} from '.'
 import {defaultMonacoOptions} from './constants/monacoOption'
 import {useSetupEditorHooks} from './hooks/useSetupEditorHooks'
-import {useStore} from 'modules/store'
 
-interface Props {
-  onChange?(): void
-}
+import {IMonacoOption} from '@types'
 
-export const Editor: React.FC<Props> = (props) => {
+export const Editor: React.FC = () => {
   const {register} = useSetupEditorHooks()
   const {code, options, dispatch} = useStore('code', 'options')
 
@@ -22,8 +19,6 @@ export const Editor: React.FC<Props> = (props) => {
 
   function handleChange(code?: string) {
     dispatch('code/set', code ?? '')
-
-    props.onChange?.()
   }
 
   return (
