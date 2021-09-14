@@ -1,5 +1,5 @@
 export type LayoutPreset =
-  | 'vertical'
+  | 'vertical-split'
   | 'horizontal-split'
   | 'visual-in-background'
 
