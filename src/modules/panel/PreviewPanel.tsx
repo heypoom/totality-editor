@@ -1,3 +1,4 @@
+import 'twin.macro'
 import loadable from '@loadable/component'
 
 import {useStore} from 'modules/store'
