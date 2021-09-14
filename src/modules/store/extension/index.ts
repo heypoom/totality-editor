@@ -7,12 +7,13 @@ export const extensionModule: StoreModule = (store) => {
 
   store.on('extension/add', (state, extension) => ({
     extensions: [...state.extensions, extension],
+    options: {...extension.defaultConfig, ...state.options},
   }))
 
   store.on('extension/use', async (state, extension) => {
-    await store.dispatch('extension/setup', extension)
+    await store.dispatch('extension/add', {...extension, enabled: true})
 
-    store.dispatch('extension/add', {...extension, enabled: true})
+    await store.dispatch('extension/setup', extension)
   })
 
   store.on('extension/setup', async (state, extension) => {

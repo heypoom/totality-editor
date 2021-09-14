@@ -11,7 +11,6 @@ export default function Home() {
       <Totality
         extensions={extensions}
         options={{
-          'vim.enabled': true,
           'editor.fontSize': 20,
         }}
       />
