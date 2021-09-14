@@ -3,19 +3,27 @@ import {EditorContext} from './EditorContext'
 
 import {Store} from '@types'
 
+/**
+ * The extension context allows totality extensions
+ * to contribute new features, such as editor modifications,
+ * renderers, panels and more.
+ **/
 export interface ExtensionContext<Config = Record<string, any>> {
   store: Store
   options: Config & Record<string, any>
 
-  /** Contains the Monaco Editor instances. */
+  /** Customize the monaco editor instances. */
   editor: {
-    /** Customize the monaco editor. */
+    /** Injects an editor hook, which runs when the monaco editor is initialized. */
     setup(handler: (context: EditorContext) => void): void
   }
 
   /** Create and use custom renderers and visualizers. */
   renderer: {
+    /** Create a renderer. */
     create(id: string, renderer: Renderer): void
+
+    /** Activate a renderer. */
     use(id: string): void
   }
 }
