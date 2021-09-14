@@ -1,20 +1,9 @@
 import 'twin.macro'
 
 import {Totality} from '@totality/core'
+import {DraculaThemeExtension, VimModeExtension} from '@totality/extensions'
 
-import {
-  DraculaThemeExtension,
-  ExampleWidgetExtension,
-  TypeScriptReactExtension,
-  VimModeExtension,
-} from '@totality/extensions'
-
-const extensions = [
-  DraculaThemeExtension,
-  ExampleWidgetExtension,
-  VimModeExtension,
-  TypeScriptReactExtension,
-] as const
+const extensions = [DraculaThemeExtension, VimModeExtension] as const
 
 export default function Home() {
   return (
@@ -24,7 +13,6 @@ export default function Home() {
         options={{
           'vim.enabled': true,
           'editor.fontSize': 20,
-          'language.typescriptreact.typeDefs': false,
         }}
       />
     </div>

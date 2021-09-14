@@ -6,7 +6,7 @@ import {EditorContext} from '@types'
 
 type SetupHookConfig = {onSetup?: () => void}
 
-export function useSetupEditorHooks({onSetup}: SetupHookConfig) {
+export function useSetupEditorHooks({onSetup}: SetupHookConfig = {}) {
   const {hooks} = useStore('hooks')
 
   const [monacoContext, setMonacoContext] = useState<EditorContext | null>(null)

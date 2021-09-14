@@ -34,13 +34,11 @@ export const Totality = <E extends readonly Extension<any>[]>(
 ) => {
   const {extensions, options} = props
 
-  const {code, runner, dispatch} = useStore('code', 'runner')
+  const {runner, dispatch} = useStore('code', 'runner')
 
   const run = useDebounce(() => dispatch('runner/run'), 50)
   const save = useDebounce(() => dispatch('code/save'), 1000)
   const transpile = useDebounce(() => dispatch('runner/compile'), 100)
-
-  const setCode = (code: string) => dispatch('code/set', code)
 
   useEffect(() => {
     dispatch('config/set', options)
@@ -55,23 +53,19 @@ export const Totality = <E extends readonly Extension<any>[]>(
   }, [dispatch])
 
   useEffect(() => {
-    save(code)
-    transpile(code)
-  }, [code, transpile, save])
-
-  useEffect(() => {
     run()
   }, [run, runner.compiled])
 
-  const monacoOptions = useMemo(() => {
-    return intoEditorOptions(options ?? {})
-  }, [options])
+  function handleChange() {
+    save()
+    transpile()
+  }
 
   return (
     <AppContext.Provider value={store}>
       <div tw="flex">
         <div tw="max-w-5xl mx-auto py-6 w-full">
-          <Editor value={code} onChange={setCode} options={monacoOptions} />
+          <Editor onChange={handleChange} />
         </div>
 
         <div tw="w-full">

@@ -1,15 +1,15 @@
 import {IMonacoOption} from '@types'
 
 export const defaultMonacoOptions: IMonacoOption = {
-  selectOnLineNumbers: true,
-  fontSize: 21,
+  cursorStyle: 'block',
+  detectIndentation: false,
   fontFamily: '"JetBrains Mono", monospace',
   fontLigatures: true,
-  tabSize: 2,
-  detectIndentation: false,
+  fontSize: 21,
   insertSpaces: true,
-  minimap: {enabled: false},
-  cursorStyle: 'block',
   language: 'typescript',
+  minimap: {enabled: false},
+  selectOnLineNumbers: true,
+  tabSize: 2,
   theme: 'vs-dark',
 }
