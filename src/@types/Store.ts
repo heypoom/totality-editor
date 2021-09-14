@@ -3,6 +3,7 @@ import {StoreonModule, StoreonStore, StoreonDispatch} from 'storeon'
 import {Renderer} from './Renderer'
 import {Extension} from './Extension'
 import {EditorContext} from './EditorContext'
+import {LayoutPreset, LayoutState, Panel} from './LayoutState'
 
 import {EditorOptions} from '@types'
 
@@ -34,6 +35,7 @@ export interface State {
 
   code: string
   runner: RunnerState
+  layout: LayoutState
 
   renderer: {
     current: string | null
@@ -68,6 +70,11 @@ export interface ExtensionEvents {
 export interface RendererEvents {
   'renderer/add': {id: string; renderer: Renderer}
   'renderer/use': string
+}
+
+export interface LayoutEvents {
+  'panel/add': Panel
+  'layout/use': LayoutPreset
 }
 
 export interface RunnerEvents {
