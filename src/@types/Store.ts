@@ -1,5 +1,6 @@
 import {StoreonModule, StoreonStore, StoreonDispatch} from 'storeon'
 
+import {Renderer} from './Renderer'
 import {Extension} from './Extension'
 import {EditorContext} from './EditorContext'
 
@@ -33,6 +34,11 @@ export interface State {
 
   code: string
   runner: RunnerState
+
+  renderer: {
+    current: string | null
+    renderers: Record<string, Renderer>
+  }
 }
 
 type HookPayload<T extends keyof ExtensionEventHooks> = {
@@ -41,7 +47,7 @@ type HookPayload<T extends keyof ExtensionEventHooks> = {
   extensionId: string
 }
 
-export interface Events extends RunnerEvents, ExtensionEvents {
+export interface Events extends RunnerEvents, ExtensionEvents, RendererEvents {
   'core/setup': void
 
   'code/set': string
@@ -57,6 +63,11 @@ export interface ExtensionEvents {
   'extension/use': Extension
   'extension/setup': Extension
   'extension/use-all': Extension[] | null
+}
+
+export interface RendererEvents {
+  'renderer/add': {id: string; renderer: Renderer}
+  'renderer/use': string
 }
 
 export interface RunnerEvents {

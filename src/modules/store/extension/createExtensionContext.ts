@@ -20,6 +20,11 @@ export const createExtensionContext = (config: Config): ExtensionContext => {
       },
     },
 
+    renderer: {
+      create: (id, renderer) => dispatch('renderer/add', {id, renderer}),
+      use: (id) => dispatch('renderer/use', id),
+    },
+
     options,
   }
 }

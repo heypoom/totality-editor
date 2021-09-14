@@ -2,7 +2,9 @@ import CytoscapeView from 'react-cytoscapejs'
 import type {Core, ElementDefinition} from 'cytoscape'
 import {useRef, useState} from 'react'
 import {useEffect} from 'react'
-import tw, {theme, styled} from 'twin.macro'
+import tw, {styled} from 'twin.macro'
+
+import {useStore} from '@totality/core'
 
 interface IVisualListNode {
   id: string
@@ -35,10 +37,6 @@ function generateEdges(nodes: IVisualListNode[]): ElementDefinition[] {
   return edges
 }
 
-interface IProps {
-  vars: Record<string, any>
-}
-
 const Button = styled.button({
   ...tw`bg-white text-violet-700 px-2 py-1 rounded transform duration-75 outline-none focus:outline-none`,
   ...tw`hocus:(scale-105)`,
@@ -49,11 +47,13 @@ const Button = styled.button({
 const hsl = (i = 1, count = 8, s = 90, l = 60) =>
   `hsl(${i * Math.trunc(360 / count)}, ${s}%, ${l}%)`
 
-export const LinkedListVisualizer: React.FC<IProps> = ({vars}) => {
+export const LinkedListVisualizer: React.FC = () => {
+  const {runner} = useStore('runner')
+
   const [layout, setLayout] = useState('cose')
   const cyRef = useRef<Core>()
 
-  const nodes = toListNode(vars) ?? []
+  const nodes = toListNode(runner.variables) ?? []
 
   const elements = CytoscapeView.normalizeElements({
     nodes: nodes
@@ -70,9 +70,7 @@ export const LinkedListVisualizer: React.FC<IProps> = ({vars}) => {
 
   useEffect(() => {
     cyRef.current?.layout({name: layout}).run()
-  }, [vars, layout])
-
-  window.elements = elements
+  }, [runner.variables, layout])
 
   return (
     <div>

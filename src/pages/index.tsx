@@ -1,9 +1,18 @@
 import 'twin.macro'
 
 import {Totality} from '@totality/core'
-import {DraculaThemeExtension, VimModeExtension} from '@totality/extensions'
 
-const extensions = [DraculaThemeExtension, VimModeExtension] as const
+import {
+  VimModeExtension,
+  DraculaThemeExtension,
+  LinkedListVisualizerExtension,
+} from '@totality/extensions'
+
+const extensions = [
+  DraculaThemeExtension,
+  LinkedListVisualizerExtension,
+  VimModeExtension,
+] as const
 
 export default function Home() {
   return (

@@ -1,15 +1,6 @@
 import 'twin.macro'
-import loadable from '@loadable/component'
 
 import {useStore} from 'modules/store'
-
-const LinkedListVisualizer = loadable(async () => {
-  const {LinkedListVisualizer} = await import(
-    'modules/visualizer/LinkedListVisualizer'
-  )
-
-  return LinkedListVisualizer
-})
 
 function renderError(error: Error | string) {
   if (typeof error === 'string') return error
@@ -19,7 +10,11 @@ function renderError(error: Error | string) {
 }
 
 export const PreviewPanel: React.FC = () => {
-  const {runner} = useStore('runner')
+  const {runner, renderer} = useStore('runner', 'renderer')
+  if (!renderer.current) return null
+
+  const {component: Renderer} = renderer.renderers[renderer.current]
+  if (!Renderer) return null
 
   return (
     <div>
@@ -29,7 +24,7 @@ export const PreviewPanel: React.FC = () => {
         </div>
       )}
 
-      <LinkedListVisualizer vars={runner.variables} />
+      <Renderer />
     </div>
   )
 }
