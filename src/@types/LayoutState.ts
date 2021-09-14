@@ -1,4 +1,6 @@
 export type LayoutPreset =
+  | 'focused'
+  | 'maximized'
   | 'vertical-split'
   | 'horizontal-split'
   | 'visual-in-background'
@@ -12,7 +14,15 @@ type EditorPanel = {type: 'editor'; uri: string}
 /** Controls Panel allows you to tweak each parameters and interact with the simulation. */
 type ControlsPanel = {type: 'controls'}
 
-export type Panel = RendererPanel | EditorPanel | ControlsPanel
+interface PanelState {
+  // Is this panel currently visible?
+  visible: boolean
+
+  // Is this panel being focused on?
+  focused: boolean
+}
+
+export type Panel = (RendererPanel | EditorPanel | ControlsPanel) & PanelState
 
 export interface LayoutState {
   preset: LayoutPreset
