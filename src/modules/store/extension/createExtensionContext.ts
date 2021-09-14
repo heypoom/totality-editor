@@ -1,15 +1,19 @@
-import {Dispatch, Extension, ExtensionContext} from '@types'
+import {Store, Extension, ExtensionContext} from '@types'
 
 interface Config {
-  dispatch: Dispatch
+  store: Store
   extension: Extension
   options: Record<string, any>
 }
 
 export const createExtensionContext = (config: Config): ExtensionContext => {
-  const {extension, options, dispatch} = config
+  const {store, extension, options} = config
+  const {dispatch} = store
 
   return {
+    store,
+    options,
+
     editor: {
       setup(handler) {
         dispatch('hooks/add', {
@@ -24,7 +28,5 @@ export const createExtensionContext = (config: Config): ExtensionContext => {
       create: (id, renderer) => dispatch('renderer/add', {id, renderer}),
       use: (id) => dispatch('renderer/use', id),
     },
-
-    options,
   }
 }

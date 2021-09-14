@@ -18,9 +18,9 @@ export const extensionModule: StoreModule = (store) => {
 
   store.on('extension/setup', async (state, extension) => {
     const context = createExtensionContext({
+      store,
       extension,
       options: state.options,
-      dispatch: store.dispatch,
     })
 
     await extension.setup(context)
