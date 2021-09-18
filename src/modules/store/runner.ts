@@ -3,7 +3,7 @@ import {StoreonModule} from 'storeon'
 
 import {createMerge} from './utils/merge'
 
-import {RunnerEvents, State} from '@types'
+import {RunnerEvents, State, TrackListener} from '@types'
 
 import {JSRunner} from 'modules/runner/Evaluator'
 import {TypeScriptCompiler} from 'modules/runner/TypescriptCompiler'
@@ -23,12 +23,20 @@ export const runnerModule: Module = (store) => {
       compiled: '',
       variables: {},
       error: null,
+      listeners: [],
     },
   }))
 
   store.on('runner/setup', () => {
-    runner.on('track', () => {
-      store.dispatch('runner/set', {variables: runner.getTracked()})
+    runner.on('track', async () => {
+      const state = store.get()
+      const {listeners} = state.runner
+
+      const variables = runner.getTracked()
+
+      for (const listener of listeners) {
+        await listener(variables, runner)
+      }
     })
   })
 
@@ -40,18 +48,21 @@ export const runnerModule: Module = (store) => {
   })
 
   store.on('runner/run', async (state) => {
-    try {
-      await runner.run(state.runner.compiled)
+    const {compiled} = state.runner
 
-      store.dispatch('runner/set', {
-        error: null,
-        variables: runner.getTracked(),
-      })
+    try {
+      await runner.run(compiled)
     } catch (error) {
       if (error instanceof Error) {
         store.dispatch('runner/set', {error})
       }
     }
+  })
+
+  store.on('runner/listen', (s, listener: TrackListener) => {
+    return set(s, {
+      listeners: [...s.runner.listeners, listener],
+    })
   })
 
   store.on('runner/set', (s, data) => set(s, data))

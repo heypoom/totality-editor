@@ -5,6 +5,8 @@ import {Extension} from './Extension'
 import {EditorContext} from './EditorContext'
 import {LayoutPreset, LayoutState, Panel} from './LayoutState'
 
+import type {JSRunner} from 'modules/runner/Evaluator'
+
 import {EditorOptions} from '@types'
 
 export type EditorSetupHook = (context: EditorContext) => Promise<void> | void
@@ -29,10 +31,17 @@ export interface TotalityOptions {
   'theme.background': string
 }
 
+export type TrackListener = (
+  variables: Record<string, any>,
+  runner: JSRunner
+) => void | Promise<void>
+
 export interface RunnerState {
   compiled: string
   variables: Record<string, any>
   error: Error | null
+
+  listeners: TrackListener[]
 }
 
 export interface State {
@@ -90,6 +99,7 @@ export interface RunnerEvents {
   'runner/setup': void
   'runner/compile': void
   'runner/set': Partial<RunnerState>
+  'runner/listen': TrackListener
 }
 
 export type StoreModule = StoreonModule<State, Events>

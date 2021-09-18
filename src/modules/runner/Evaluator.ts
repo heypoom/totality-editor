@@ -17,6 +17,7 @@ export class JSRunner {
 
   realm = this.createScope()
   tracked: Map<string, unknown> = new Map()
+
   handlers: ((id: string, target: any) => void)[] = []
 
   createScope() {

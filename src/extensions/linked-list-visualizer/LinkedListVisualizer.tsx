@@ -1,40 +1,45 @@
+import tw, {styled} from 'twin.macro'
+import {useEffect, useMemo, useRef, useState} from 'react'
+
 import CytoscapeView from 'react-cytoscapejs'
 import type {Core, ElementDefinition} from 'cytoscape'
-import {useRef, useState} from 'react'
-import {useEffect} from 'react'
-import tw, {styled} from 'twin.macro'
 
 import {useStore} from '@totality/core'
 
-interface IVisualListNode {
+interface Node {
   id: string
-  val?: unknown | null
-  next?: any | null
+  nodes: string[]
 }
 
-export const toListNode = (vars: Record<string, any>): IVisualListNode[] =>
-  Object.entries(vars).map(([id, node]) => ({id, ...node}))
+export const toListNode = (graph: Record<string, string[]>): Node[] =>
+  graph && Object.entries(graph).map(([id, nodes]) => ({id, nodes}))
 
-function generateEdges(nodes: IVisualListNode[]): ElementDefinition[] {
+function generateEdges(nodes: Node[]) {
   const edges: ElementDefinition[] = []
-  let visited: Record<string, boolean> = {}
 
-  function traverse(node: IVisualListNode) {
-    if (visited[node.id]) return
-    visited[node.id] = true
-
-    if (!node.next) return
-
-    if (node.id && node.next._id) {
-      edges.push({data: {source: node.id, target: node.next._id}})
-    }
-
-    traverse(node.next)
-  }
-
-  nodes.forEach(traverse)
+  nodes.forEach((source) => {
+    source.nodes.forEach((target) => {
+      edges.push({data: {source: source.id, target}})
+    })
+  })
 
   return edges
+}
+
+const generateNodes = (nodes: Node[]): ElementDefinition[] => {
+  nodes = nodes.filter((n) => n.id)
+
+  const set = new Set<string>()
+
+  for (const node of nodes) {
+    set.add(node.id)
+
+    for (const dst of node.nodes) set.add(dst)
+  }
+
+  return Array.from(set).map((id, i) => ({
+    data: {id, label: id, bg: hsl(i, 10)},
+  }))
 }
 
 const Button = styled.button({
@@ -53,24 +58,22 @@ export const LinkedListVisualizer: React.FC = () => {
   const [layout, setLayout] = useState('cose')
   const cyRef = useRef<Core>()
 
-  const nodes = toListNode(runner.variables) ?? []
+  const {graph} = runner.variables ?? {}
 
-  const elements = CytoscapeView.normalizeElements({
-    nodes: nodes
-      .filter((n) => n.id)
-      .map((n, i) => ({
-        data: {
-          id: n.id,
-          label: `${n.id} = ${n.val}`,
-          bg: hsl(i, 10),
-        },
-      })),
-    edges: generateEdges(nodes),
-  })
+  const elements = useMemo(() => {
+    const lists = toListNode(graph) ?? []
+
+    const nodes = generateNodes(lists) ?? []
+    const edges = generateEdges(lists) ?? []
+
+    return CytoscapeView.normalizeElements({nodes, edges})
+  }, [graph])
 
   useEffect(() => {
+    if (!graph || !cyRef.current) return
+
     cyRef.current?.layout({name: layout}).run()
-  }, [runner.variables, layout])
+  }, [graph, layout])
 
   return (
     <div tw="w-full h-screen">
