@@ -11,8 +11,10 @@ export class JSRunner {
     isRunning: false,
     isAborted: false,
 
-    frameHandlers: [],
-    cleanupHandlers: [],
+    handlers: {
+      frame: [],
+      cleanup: [],
+    },
 
     latestCompleteRunId: null,
   }
@@ -40,14 +42,14 @@ export class JSRunner {
   delay(ms: number): Promise<void> {
     return new Promise((resolve) => {
       const timeoutRef = setTimeout(resolve, ms)
-      this.state.cleanupHandlers.push(() => clearTimeout(timeoutRef))
+      this.state.handlers.cleanup.push(() => clearTimeout(timeoutRef))
     })
   }
 
   tick(): Promise<void> {
     return new Promise((resolve) => {
       requestAnimationFrame(() => {
-        for (const handler of this.state.frameHandlers) {
+        for (const handler of this.state.handlers.frame) {
           handler(this)
         }
 
@@ -82,13 +84,15 @@ export class JSRunner {
 
   // Process all abort and cleanup handlers.
   async cleanup() {
-    const n = this.state.cleanupHandlers.length
+    const {cleanup} = this.state.handlers
+
+    const n = cleanup.length
     if (n === 0) return
 
     console.log(`[cleanup] processing ${n} cleanup handlers]`)
 
-    await Promise.all(this.state.cleanupHandlers.map((x) => x()))
-    this.state.cleanupHandlers = []
+    await Promise.all(cleanup.map((x) => x()))
+    this.state.handlers.cleanup = []
   }
 
   async run(code: string): Promise<string> {
