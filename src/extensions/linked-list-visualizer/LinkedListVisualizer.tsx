@@ -55,10 +55,9 @@ const hsl = (i = 1, count = 8, s = 90, l = 60) =>
 export const LinkedListVisualizer: React.FC = () => {
   const {runner, dispatch} = useStore('runner')
 
-  const [layout, setLayout] = useState('cose')
   const cyRef = useRef<Core>()
 
-  const {graph} = runner.shared ?? {}
+  const {graph, layout = 'circle'} = runner.shared ?? {}
 
   const elements = useMemo(() => {
     const lists = toListNode(graph) ?? []
@@ -72,9 +71,9 @@ export const LinkedListVisualizer: React.FC = () => {
   useEffect(() => {
     console.log('on-frame handler added.')
 
-    dispatch('runner/on-frame', (runner) => {
+    dispatch('runner/on-frame', (shared) => {
       const Core = cyRef.current
-      const Layout = Core?.layout({name: 'concentric', animate: true})
+      const Layout = Core?.layout({name: shared?.layout, animate: true})
 
       Layout?.run()
     })
@@ -82,22 +81,10 @@ export const LinkedListVisualizer: React.FC = () => {
 
   return (
     <div tw="w-full h-screen">
-      <Button
-        active={layout === 'cose'}
-        onClick={() => setLayout('cose')}
-        tw="mr-2"
-      >
-        COSE
-      </Button>
-
-      <Button active={layout === 'circle'} onClick={() => setLayout('circle')}>
-        Circle
-      </Button>
-
       <CytoscapeView
         headless={false}
         elements={elements}
-        layout={{name: 'concentric'}}
+        layout={{name: layout}}
         style={{width: '100%', height: '100%'}}
         stylesheet={[
           {

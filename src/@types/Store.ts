@@ -31,12 +31,13 @@ export interface TotalityOptions {
   'theme.background': string
 }
 
-export type TrackListener = (
+type BaseListener = (
   shared: Record<string, any>,
   runner: JSRunner
 ) => void | Promise<void>
 
-export type FrameListener = (runner: JSRunner) => void | Promise<void>
+export type TrackListener = BaseListener
+export type FrameListener = BaseListener
 
 export interface RunnerState {
   compiled: string
@@ -100,9 +101,14 @@ export interface RunnerEvents {
   'runner/run': void
   'runner/setup': void
   'runner/compile': void
-  'runner/set': Partial<RunnerState>
+
+  // Listeners
   'runner/listen': TrackListener
   'runner/on-frame': FrameListener
+
+  // Setters
+  'runner/set': Partial<RunnerState>
+  'runner/set-shared': Record<string, any>
 }
 
 export type StoreModule = StoreonModule<State, Events>

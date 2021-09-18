@@ -69,5 +69,12 @@ export const runnerModule: Module = (store) => {
     runner.on('frame', listener)
   })
 
+  store.on('runner/set-shared', (s, shared) => {
+    return set(s, {
+      error: null,
+      shared: {...s.runner?.shared, ...shared},
+    })
+  })
+
   store.on('runner/set', (s, data) => set(s, data))
 }

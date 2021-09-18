@@ -2,6 +2,7 @@ import Realm from 'realms-shim'
 
 import {Run, RunHandlers, RunHandlerMap, IRealm} from '@types'
 
+import {store} from 'modules/store'
 import {ExecutionAbortedError} from 'errors/ExecutionAbortedError'
 
 export class JSRunner {
@@ -48,8 +49,12 @@ export class JSRunner {
   tick(): Promise<void> {
     return new Promise((resolve) => {
       requestAnimationFrame(() => {
+        // HACK: Access the shared value.
+        const state = store.get()
+        const {shared} = state.runner ?? {}
+
         for (const handler of this.handlers.frame) {
-          handler(this)
+          handler(shared, this)
         }
 
         resolve()
