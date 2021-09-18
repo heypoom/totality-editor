@@ -2,7 +2,7 @@ import type {editor as EditorAPI} from 'monaco-editor/esm/vs/editor/editor.api'
 
 const Palette = {
   BLACK: '#21222d',
-  DARK_PURPLE: '#bd93f9',
+  COMMENT: '#7970A9',
   YELLOW: '#ffff80',
   PURPLE: '#bd93f9',
   ORANGE: '#FFCA80',
@@ -31,7 +31,7 @@ export const DraculaTheme: EditorAPI.IStandaloneThemeData = {
       token: '',
     },
     {
-      foreground: Palette.DARK_PURPLE,
+      foreground: Palette.COMMENT,
       token: 'comment',
     },
     {
@@ -160,11 +160,11 @@ export const DraculaTheme: EditorAPI.IStandaloneThemeData = {
       token: 'meta.structure.dictionary.json string.quoted.double.json',
     },
     {
-      foreground: Palette.DARK_PURPLE,
+      foreground: Palette.COMMENT,
       token: 'meta.diff',
     },
     {
-      foreground: Palette.DARK_PURPLE,
+      foreground: Palette.COMMENT,
       token: 'meta.diff.header',
     },
     {
