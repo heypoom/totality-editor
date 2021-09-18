@@ -31,13 +31,13 @@ export interface TotalityOptions {
   'theme.background': string
 }
 
-type BaseListener = (
+type RunnerListener = (
   shared: Record<string, any>,
   runner: JSRunner
 ) => void | Promise<void>
 
-export type TrackListener = BaseListener
-export type FrameListener = BaseListener
+export type TrackListener = RunnerListener
+export type FrameListener = RunnerListener
 
 export interface RunnerState {
   compiled: string
