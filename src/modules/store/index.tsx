@@ -8,6 +8,7 @@ import {codeModule} from './code'
 import {hooksModule} from './hooks'
 import {runnerModule} from './runner'
 import {configModule} from './config'
+import {layoutModule} from './layout'
 import {rendererModule} from './renderer'
 import {extensionModule} from './extension'
 
@@ -21,6 +22,7 @@ export const store = createStoreon<State, Events>([
   hooksModule,
   rendererModule,
   runnerModule,
+  layoutModule,
   storeonDevtools,
 ])
 

@@ -15,6 +15,9 @@ type EditorPanel = {type: 'editor'; uri: string}
 type ControlsPanel = {type: 'controls'}
 
 interface PanelState {
+  // Panel Identifier
+  id: string
+
   // Is this panel currently visible?
   visible: boolean
 
@@ -22,7 +25,14 @@ interface PanelState {
   focused: boolean
 }
 
-export type Panel = (RendererPanel | EditorPanel | ControlsPanel) & PanelState
+export type PanelConfig = RendererPanel | EditorPanel | ControlsPanel
+export type Panel = PanelConfig & PanelState
+export type PanelType = Panel['type']
+
+export interface PanelProps {
+  /** State of the current panel. */
+  panel: Panel
+}
 
 export interface LayoutState {
   preset: LayoutPreset

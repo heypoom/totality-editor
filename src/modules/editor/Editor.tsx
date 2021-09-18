@@ -17,14 +17,14 @@ export const Editor: React.FC = () => {
     return {...defaultMonacoOptions, ...intoEditorOptions(options ?? {})}
   }, [options])
 
-  function handleChange(code?: string) {
-    dispatch('code/set', code ?? '')
-  }
+  const height = options['layout.height'] ?? '100vh'
+
+  const handleChange = (code?: string) => dispatch('code/set', code ?? '')
 
   return (
     <MonacoEditor
       value={code}
-      height="100vh"
+      height={height}
       options={config}
       theme={config.theme}
       onChange={handleChange}

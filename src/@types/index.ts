@@ -14,3 +14,12 @@ export type {
 } from './Store'
 
 export type {Run, RunnerGlobal, IRealm} from './Runner'
+
+export type {
+  Panel,
+  PanelType,
+  PanelProps,
+  PanelConfig,
+  LayoutState,
+  LayoutPreset,
+} from './LayoutState'

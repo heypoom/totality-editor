@@ -3,10 +3,11 @@ import 'twin.macro'
 import React, {useEffect} from 'react'
 
 import {Editor} from 'modules/editor'
-import {PreviewPanel} from 'modules/panel/PreviewPanel'
+import {RendererPanel} from 'modules/panel/RendererPanel'
 import {AppContext, store, useStore} from 'modules/store'
 
 import {EditorOptions, Extension, OptionsFromExtensions} from '@types'
+import {WindowManagerView} from './WindowManagerView'
 
 export interface ITotalityProps<E extends readonly Extension<any, any>[]> {
   extensions?: E
@@ -18,7 +19,7 @@ export const Totality = <E extends readonly Extension<any>[]>(
 ) => {
   const {extensions, options} = props
 
-  const {dispatch} = useStore('code', 'runner')
+  const {dispatch} = useStore()
 
   useEffect(() => {
     dispatch('config/set', options)
@@ -34,15 +35,7 @@ export const Totality = <E extends readonly Extension<any>[]>(
 
   return (
     <AppContext.Provider value={store}>
-      <div tw="flex">
-        <div tw="max-w-5xl mx-auto py-6 w-full">
-          <Editor />
-        </div>
-
-        <div tw="w-full">
-          <PreviewPanel />
-        </div>
-      </div>
+      <WindowManagerView />
     </AppContext.Provider>
   )
 }

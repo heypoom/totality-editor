@@ -73,7 +73,7 @@ export const LinkedListVisualizer: React.FC = () => {
   }, [runner.variables, layout])
 
   return (
-    <div>
+    <div tw="h-screen">
       <Button
         active={layout === 'cose'}
         onClick={() => setLayout('cose')}
@@ -89,7 +89,7 @@ export const LinkedListVisualizer: React.FC = () => {
       <CytoscapeView
         elements={elements}
         layout={{name: layout}}
-        style={{width: '100%', height: '100vh'}}
+        style={{width: '100%', height: '100%'}}
         stylesheet={[
           {
             selector: 'node',

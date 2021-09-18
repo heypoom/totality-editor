@@ -20,7 +20,13 @@ export type ExtensionHooksMap = {
   }[]
 }
 
-type CoreOptions = Record<string, any> & EditorOptions
+type CoreOptions = Record<string, any> &
+  EditorOptions &
+  Partial<TotalityOptions>
+
+export interface TotalityOptions {
+  'layout.height': string
+}
 
 export interface RunnerState {
   compiled: string
@@ -38,7 +44,6 @@ export interface State {
   layout: LayoutState
 
   renderer: {
-    current: string | null
     renderers: Record<string, Renderer>
   }
 }
@@ -58,6 +63,8 @@ export interface Events extends RunnerEvents, ExtensionEvents, RendererEvents {
 
   'config/set': Partial<CoreOptions>
   'hooks/add': HookPayload<keyof ExtensionEventHooks>
+
+  'layout/set': Partial<LayoutState>
 }
 
 export interface ExtensionEvents {

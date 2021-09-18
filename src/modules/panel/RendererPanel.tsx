@@ -2,6 +2,8 @@ import 'twin.macro'
 
 import {useStore} from 'modules/store'
 
+import {PanelProps} from '@types'
+
 function renderError(error: Error | string) {
   if (typeof error === 'string') return error
   if (error instanceof Error) return `${error.name} - ${error.message}`
@@ -9,11 +11,12 @@ function renderError(error: Error | string) {
   return null
 }
 
-export const PreviewPanel: React.FC = () => {
+export const RendererPanel: React.FC<PanelProps> = ({panel}) => {
   const {runner, renderer} = useStore('runner', 'renderer')
-  if (!renderer.current) return null
 
-  const {component: Renderer} = renderer.renderers[renderer.current]
+  if (!panel || panel.type !== 'renderer' || !panel.renderer) return null
+
+  const {component: Renderer} = renderer.renderers[panel.renderer] ?? {}
   if (!Renderer) return null
 
   return (
