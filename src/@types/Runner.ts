@@ -4,6 +4,8 @@ export interface Run {
   id: string | null
 
   error: Error | null
+
+  isAsync: boolean
   isRunning: boolean
   isAborted: boolean
 

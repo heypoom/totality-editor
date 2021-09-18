@@ -9,6 +9,7 @@ export class JSRunner {
   state: Run = {
     id: null,
     error: null,
+    isAsync: false,
     isRunning: false,
     isAborted: false,
 
@@ -21,6 +22,7 @@ export class JSRunner {
     track: [],
   }
 
+  frame = 0
   realm = this.createScope()
   tracked: Map<string, unknown> = new Map()
 
@@ -46,16 +48,24 @@ export class JSRunner {
     })
   }
 
+  updateFrame() {
+    // HACK: Access the shared value.
+    const state = store.get()
+    const {shared} = state.runner ?? {}
+
+    for (const handler of this.handlers.frame) {
+      handler(shared, this)
+    }
+
+    this.frame++
+  }
+
   tick(): Promise<void> {
+    this.state.isAsync = true
+
     return new Promise((resolve) => {
       requestAnimationFrame(() => {
-        // HACK: Access the shared value.
-        const state = store.get()
-        const {shared} = state.runner ?? {}
-
-        for (const handler of this.handlers.frame) {
-          handler(shared, this)
-        }
+        this.updateFrame()
 
         resolve()
       })
@@ -105,6 +115,7 @@ export class JSRunner {
   async run(code: string): Promise<string> {
     const runId = Math.random().toString(16).slice(2, 10)
     this.state.id = runId
+    this.state.isAsync = false
     this.realm.global.runId = runId
 
     try {
@@ -112,6 +123,10 @@ export class JSRunner {
       this.state.isRunning = true
 
       const result = await this.realm.evaluate(code)
+
+      // HACK: Manually rerender if not in async run.
+      if (!this.state.isAsync) this.updateFrame()
+
       console.log(`[run] ${runId} complete`)
 
       this.state.latestCompleteRunId = runId
