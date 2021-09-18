@@ -22,6 +22,8 @@ export default function Home() {
         options={{
           'editor.fontSize': 24,
           'editor.fontFamily': 'JetBrains Mono',
+          'editor.fontWeight': '500',
+          'editor.fontLigatures': true,
         }}
       />
     </div>
