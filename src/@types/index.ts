@@ -16,7 +16,13 @@ export type {
   FrameListener,
 } from './Store'
 
-export type {Run, RunnerGlobal, RunHandlers, IRealm} from './Runner'
+export type {
+  Run,
+  RunnerGlobal,
+  RunHandlers,
+  RunHandlerMap,
+  IRealm,
+} from './Runner'
 
 export type {
   Panel,

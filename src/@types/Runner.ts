@@ -12,14 +12,18 @@ export interface Run {
 
 export interface RunHandlers {
   /** Cleanup handlers are used for abort and when execution finishes. */
-  cleanup: (() => void | Promise<void>)[]
+  cleanup: () => void | Promise<void>
 
   /** Frame handlers run when next animation frame is ready.
    * All frame handlers must run faster than 4ms. */
-  frame: FrameListener[]
+  frame: FrameListener
 
   /** Track handlers run when a variable is tracked. */
-  track: ((id: string, target: any) => void)[]
+  track: (id: string, target: any) => void
+}
+
+export type RunHandlerMap = {
+  [K in keyof RunHandlers]: RunHandlers[K][]
 }
 
 export interface RunnerGlobal {

@@ -1,6 +1,6 @@
 import Realm from 'realms-shim'
 
-import {Run, RunHandlers, IRealm} from '@types'
+import {Run, RunHandlers, RunHandlerMap, IRealm} from '@types'
 
 import {ExecutionAbortedError} from 'errors/ExecutionAbortedError'
 
@@ -14,7 +14,7 @@ export class JSRunner {
     latestCompleteRunId: null,
   }
 
-  handlers: RunHandlers = {
+  handlers: RunHandlerMap = {
     frame: [],
     cleanup: [],
     track: [],
@@ -57,8 +57,9 @@ export class JSRunner {
     })
   }
 
-  on(type: 'track', handler: (id: string, target: any) => void) {
-    this.handlers.track.push(handler)
+  on<T extends keyof RunHandlers>(type: T, handler: RunHandlers[T]) {
+    const handlers = this.handlers[type]
+    handlers.push(handler as any)
   }
 
   track(id: string, target: any) {

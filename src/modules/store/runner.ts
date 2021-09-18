@@ -66,7 +66,7 @@ export const runnerModule: Module = (store) => {
   })
 
   store.on('runner/on-frame', (s, listener: FrameListener) => {
-    runner.state.frameHandlers.push(listener)
+    runner.on('frame', listener)
   })
 
   store.on('runner/set', (s, data) => set(s, data))
