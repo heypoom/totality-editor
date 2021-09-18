@@ -42,12 +42,7 @@ export const WindowManagerView: React.FC = () => {
         initialValue={{
           direction: 'row',
           first: a,
-          second: {
-            direction: 'column',
-            first: b,
-            second: c,
-            splitPercentage: 70,
-          },
+          second: b,
           splitPercentage: 70,
         }}
       />
