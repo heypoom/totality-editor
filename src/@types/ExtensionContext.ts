@@ -1,5 +1,5 @@
 import {Renderer} from './Renderer'
-import {TotalityOptions} from './Store'
+import {TotalityOptions} from './store'
 import {EditorContext} from './EditorContext'
 
 import {Store} from '@types'

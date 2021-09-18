@@ -8,6 +8,7 @@ import {panelViews} from 'modules/panel'
 const Mosaic = loadable(async () => {
   const {Mosaic} = await import('react-mosaic-component')
 
+  // @ts-ignore
   await import('react-mosaic-component/react-mosaic-component.css')
 
   return Mosaic

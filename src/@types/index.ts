@@ -1,20 +1,13 @@
 export type {Extension} from './Extension'
-export type {EditorOptions} from './EditorOptions'
 export type {ExtensionContext} from './ExtensionContext'
 export type {IMonacoOption, EditorContext} from './EditorContext'
 export type {OptionsFromExtensions} from './OptionsFromExtensions'
 
-export type {
-  Store,
-  StoreModule,
-  State,
-  Events,
-  RunnerEvents,
-  Dispatch,
-  TotalityOptions,
-  TrackListener,
-  FrameListener,
-} from './Store'
+export type {Store, State, Events, Dispatch, StoreModule} from './store'
+
+export type {EditorOptions, CoreOptions, TotalityOptions} from './EditorOptions'
+
+export type {TrackListener, FrameListener} from './store/runner'
 
 export type {
   Run,
