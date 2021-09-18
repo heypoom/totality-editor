@@ -19,9 +19,6 @@ export function linkedListToAdjList(vars: NodeMap) {
         adj[src].add(dst)
       }
     }
-
-    // Delete local key
-    // adj[key]?.delete(key)
   })
 
   const map: Record<string, string[]> = {}
