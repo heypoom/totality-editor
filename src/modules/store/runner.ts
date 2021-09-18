@@ -3,7 +3,7 @@ import {StoreonModule} from 'storeon'
 
 import {createMerge} from './utils/merge'
 
-import {RunnerEvents, State, TrackListener} from '@types'
+import {FrameListener, RunnerEvents, State, TrackListener} from '@types'
 
 import {JSRunner} from 'modules/runner/Evaluator'
 import {TypeScriptCompiler} from 'modules/runner/TypescriptCompiler'
@@ -63,6 +63,10 @@ export const runnerModule: Module = (store) => {
     return set(s, {
       listeners: [...s.runner.listeners, listener],
     })
+  })
+
+  store.on('runner/on-frame', (s, listener: FrameListener) => {
+    runner.state.frameHandlers.push(listener)
   })
 
   store.on('runner/set', (s, data) => set(s, data))

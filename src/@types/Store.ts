@@ -36,6 +36,8 @@ export type TrackListener = (
   runner: JSRunner
 ) => void | Promise<void>
 
+export type FrameListener = (runner: JSRunner) => void | Promise<void>
+
 export interface RunnerState {
   compiled: string
   variables: Record<string, any>
@@ -100,6 +102,7 @@ export interface RunnerEvents {
   'runner/compile': void
   'runner/set': Partial<RunnerState>
   'runner/listen': TrackListener
+  'runner/on-frame': FrameListener
 }
 
 export type StoreModule = StoreonModule<State, Events>

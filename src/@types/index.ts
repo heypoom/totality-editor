@@ -13,6 +13,7 @@ export type {
   Dispatch,
   TotalityOptions,
   TrackListener,
+  FrameListener,
 } from './Store'
 
 export type {Run, RunnerGlobal, IRealm} from './Runner'

@@ -10,6 +10,8 @@ export class JSRunner {
     error: null,
     isRunning: false,
     isAborted: false,
+
+    frameHandlers: [],
     cleanupHandlers: [],
 
     latestCompleteRunId: null,
@@ -29,6 +31,7 @@ export class JSRunner {
       realm.global.delay = this.delay.bind(this)
       realm.global.track = this.track.bind(this)
       realm.global.tracks = this.tracks.bind(this)
+      realm.global.tick = this.tick.bind(this)
     }
 
     return realm
@@ -38,6 +41,18 @@ export class JSRunner {
     return new Promise((resolve) => {
       const timeoutRef = setTimeout(resolve, ms)
       this.state.cleanupHandlers.push(() => clearTimeout(timeoutRef))
+    })
+  }
+
+  tick(): Promise<void> {
+    return new Promise((resolve) => {
+      requestAnimationFrame(() => {
+        for (const handler of this.state.frameHandlers) {
+          handler(this)
+        }
+
+        resolve()
+      })
     })
   }
 
