@@ -42,8 +42,14 @@ export class JSRunner {
   }
 
   delay(ms: number): Promise<void> {
+    this.state.isAsync = true
+
     return new Promise((resolve) => {
-      const timeoutRef = setTimeout(resolve, ms)
+      const timeoutRef = setTimeout(() => {
+        this.updateFrame()
+        resolve()
+      }, ms)
+
       this.handlers.cleanup.push(() => clearTimeout(timeoutRef))
     })
   }
