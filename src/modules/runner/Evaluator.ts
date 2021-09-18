@@ -1,6 +1,6 @@
 import Realm from 'realms-shim'
 
-import {Run, RunnerGlobal, IRealm} from '@types'
+import {Run, RunHandlers, IRealm} from '@types'
 
 import {ExecutionAbortedError} from 'errors/ExecutionAbortedError'
 
@@ -11,18 +11,17 @@ export class JSRunner {
     isRunning: false,
     isAborted: false,
 
-    handlers: {
-      frame: [],
-      cleanup: [],
-    },
-
     latestCompleteRunId: null,
+  }
+
+  handlers: RunHandlers = {
+    frame: [],
+    cleanup: [],
+    track: [],
   }
 
   realm = this.createScope()
   tracked: Map<string, unknown> = new Map()
-
-  handlers: ((id: string, target: any) => void)[] = []
 
   createScope() {
     const realm: IRealm = Realm.makeRootRealm()
@@ -42,14 +41,14 @@ export class JSRunner {
   delay(ms: number): Promise<void> {
     return new Promise((resolve) => {
       const timeoutRef = setTimeout(resolve, ms)
-      this.state.handlers.cleanup.push(() => clearTimeout(timeoutRef))
+      this.handlers.cleanup.push(() => clearTimeout(timeoutRef))
     })
   }
 
   tick(): Promise<void> {
     return new Promise((resolve) => {
       requestAnimationFrame(() => {
-        for (const handler of this.state.handlers.frame) {
+        for (const handler of this.handlers.frame) {
           handler(this)
         }
 
@@ -59,14 +58,16 @@ export class JSRunner {
   }
 
   on(type: 'track', handler: (id: string, target: any) => void) {
-    this.handlers.push(handler)
+    this.handlers.track.push(handler)
   }
 
   track(id: string, target: any) {
     target._id = id
     this.tracked?.set(id, target)
 
-    for (const handler of this.handlers) handler(id, target)
+    for (const handler of this.handlers.track) {
+      handler(id, target)
+    }
 
     return target
   }
@@ -84,15 +85,15 @@ export class JSRunner {
 
   // Process all abort and cleanup handlers.
   async cleanup() {
-    const {cleanup} = this.state.handlers
+    const {cleanup} = this.handlers
 
     const n = cleanup.length
     if (n === 0) return
 
     console.log(`[cleanup] processing ${n} cleanup handlers]`)
-
     await Promise.all(cleanup.map((x) => x()))
-    this.state.handlers.cleanup = []
+
+    this.handlers.cleanup = []
   }
 
   async run(code: string): Promise<string> {

@@ -7,16 +7,19 @@ export interface Run {
   isRunning: boolean
   isAborted: boolean
 
-  handlers: {
-    // Cleanup handlers: used for abort and when execution finishes.
-    cleanup: (() => void | Promise<void>)[]
-
-    // Frame handlers: run when next animation frame is ready.
-    // All frame handlers must run faster than 4ms.
-    frame: FrameListener[]
-  }
-
   latestCompleteRunId: string | null
+}
+
+export interface RunHandlers {
+  // Cleanup handlers: used for abort and when execution finishes.
+  cleanup: (() => void | Promise<void>)[]
+
+  // Frame handlers: run when next animation frame is ready.
+  // All frame handlers must run faster than 4ms.
+  frame: FrameListener[]
+
+  // Track handlers.
+  track: ((id: string, target: any) => void)[]
 }
 
 export interface RunnerGlobal {
