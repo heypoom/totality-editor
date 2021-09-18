@@ -11,14 +11,14 @@ export interface Run {
 }
 
 export interface RunHandlers {
-  // Cleanup handlers: used for abort and when execution finishes.
+  /** Cleanup handlers are used for abort and when execution finishes. */
   cleanup: (() => void | Promise<void>)[]
 
-  // Frame handlers: run when next animation frame is ready.
-  // All frame handlers must run faster than 4ms.
+  /** Frame handlers run when next animation frame is ready.
+   * All frame handlers must run faster than 4ms. */
   frame: FrameListener[]
 
-  // Track handlers.
+  /** Track handlers run when a variable is tracked. */
   track: ((id: string, target: any) => void)[]
 }
 
