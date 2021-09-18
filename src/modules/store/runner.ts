@@ -21,7 +21,7 @@ export const runnerModule: Module = (store) => {
   store.on('@init', () => ({
     runner: {
       compiled: '',
-      variables: {},
+      shared: {},
       error: null,
       listeners: [],
     },

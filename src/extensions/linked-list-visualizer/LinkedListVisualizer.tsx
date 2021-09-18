@@ -58,7 +58,7 @@ export const LinkedListVisualizer: React.FC = () => {
   const [layout, setLayout] = useState('cose')
   const cyRef = useRef<Core>()
 
-  const {graph} = runner.variables ?? {}
+  const {graph} = runner.shared ?? {}
 
   const elements = useMemo(() => {
     const lists = toListNode(graph) ?? []

@@ -32,7 +32,7 @@ export interface TotalityOptions {
 }
 
 export type TrackListener = (
-  variables: Record<string, any>,
+  shared: Record<string, any>,
   runner: JSRunner
 ) => void | Promise<void>
 
@@ -40,7 +40,7 @@ export type FrameListener = (runner: JSRunner) => void | Promise<void>
 
 export interface RunnerState {
   compiled: string
-  variables: Record<string, any>
+  shared: Record<string, any>
   error: Error | null
 
   listeners: TrackListener[]
