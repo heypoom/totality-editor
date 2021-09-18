@@ -2,16 +2,22 @@ import 'twin.macro'
 
 import React, {useEffect} from 'react'
 
-import {Editor} from 'modules/editor'
-import {RendererPanel} from 'modules/panel/RendererPanel'
 import {AppContext, store, useStore} from 'modules/store'
 
-import {EditorOptions, Extension, OptionsFromExtensions} from '@types'
 import {WindowManagerView} from './WindowManagerView'
+
+import {
+  EditorOptions,
+  Extension,
+  OptionsFromExtensions,
+  TotalityOptions,
+} from '@types'
 
 export interface ITotalityProps<E extends readonly Extension<any, any>[]> {
   extensions?: E
-  options?: Partial<OptionsFromExtensions<E>> & EditorOptions
+  options?: Partial<OptionsFromExtensions<E>> &
+    EditorOptions &
+    Partial<TotalityOptions>
 }
 
 export const Totality = <E extends readonly Extension<any>[]>(

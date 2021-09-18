@@ -11,6 +11,10 @@ export const DraculaThemeExtension = createExtension({
 
       console.log('Configuring dracula theme...')
 
+      // Override the background colors, if present.
+      const bg = app.options['theme.background']
+      if (bg) DraculaTheme.colors['editor.background'] = bg
+
       editor.defineTheme('dracula', DraculaTheme)
       editor.setTheme('dracula')
     })

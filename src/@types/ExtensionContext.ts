@@ -1,4 +1,5 @@
 import {Renderer} from './Renderer'
+import {TotalityOptions} from './Store'
 import {EditorContext} from './EditorContext'
 
 import {Store} from '@types'
@@ -13,7 +14,7 @@ export interface ExtensionContext<Config = Record<string, any>> {
   store: Store
 
   /** Options that are initially supplied to the app. */
-  options: Config & Record<string, any>
+  options: Config & TotalityOptions & Record<string, any>
 
   /** Customize the monaco editor instances. */
   editor: {

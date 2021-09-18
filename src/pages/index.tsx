@@ -16,11 +16,12 @@ const extensions = [
 
 export default function Home() {
   return (
-    <div tw="min-h-screen bg-gray-900 text-white">
+    <div tw="bg-gray-900 text-white">
       <Totality
         extensions={extensions}
         options={{
-          'editor.fontSize': 20,
+          'editor.fontSize': 24,
+          'editor.fontFamily': 'JetBrains Mono',
         }}
       />
     </div>

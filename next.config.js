@@ -25,7 +25,10 @@ const config = withPreact({
     config.module.rules.unshift({
       test: /\.css$/,
       use: ['style-loader', 'css-loader'],
-      include: path.resolve(__dirname, './node_modules/.pnpm'),
+      include: [
+        path.resolve(__dirname, './node_modules/.pnpm'),
+        // path.resolve(__dirname, './src'),
+      ],
     })
 
     const rule = config.module.rules

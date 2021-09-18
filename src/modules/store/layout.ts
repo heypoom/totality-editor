@@ -11,6 +11,7 @@ export const layoutModule: StoreModule = (store) => {
       panels: [
         createPanelState({type: 'editor', uri: ''}),
         createPanelState({type: 'renderer', renderer: ''}),
+        createPanelState({type: 'controls'}),
       ],
       preset: 'horizontal-split',
     },

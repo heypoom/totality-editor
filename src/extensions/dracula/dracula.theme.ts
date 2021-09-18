@@ -1,213 +1,248 @@
 import type {editor as EditorAPI} from 'monaco-editor/esm/vs/editor/editor.api'
 
+const Palette = {
+  BLACK: '#21222d',
+  DARK_PURPLE: '#bd93f9',
+  YELLOW: '#ffff80',
+  PURPLE: '#bd93f9',
+  ORANGE: '#FFCA80',
+  PINK: '#FF80BF',
+  CYAN: '#80FFEA',
+  GREEN: '#8AFF80',
+  CYAN_A: '#80FFEA',
+  CYAN_B: '#80FFEA',
+  WHITE: '#f8f8f2',
+  YELLOW_A: '#FFFF80',
+  RED: '#ff9580',
+  GREY: '#eeeeee',
+  DARK_GREY: '#f8f8f2',
+  FG: '#f8f8f2',
+  BG: '#21222d',
+  HL: '#454158',
+  CURSOR: '#f8f8f0',
+}
+
 export const DraculaTheme: EditorAPI.IStandaloneThemeData = {
   base: 'vs-dark',
   inherit: true,
   rules: [
     {
-      background: '21222d',
+      background: Palette.BLACK,
       token: '',
     },
     {
-      foreground: '6272a4',
+      foreground: Palette.DARK_PURPLE,
       token: 'comment',
     },
     {
-      foreground: 'f1fa8c',
+      foreground: Palette.YELLOW,
       token: 'string',
     },
     {
-      foreground: 'bd93f9',
+      foreground: Palette.PURPLE,
       token: 'constant.numeric',
     },
     {
-      foreground: 'bd93f9',
+      foreground: Palette.PURPLE,
       token: 'constant.language',
     },
     {
-      foreground: 'bd93f9',
+      foreground: Palette.PURPLE,
       token: 'constant.character',
     },
     {
-      foreground: 'bd93f9',
+      foreground: Palette.PURPLE,
       token: 'constant.other',
     },
     {
-      foreground: 'ffb86c',
+      foreground: Palette.ORANGE,
       token: 'variable.other.readwrite.instance',
     },
     {
-      foreground: 'ff79c6',
+      foreground: Palette.PINK,
       token: 'constant.character.escaped',
     },
     {
-      foreground: 'ff79c6',
+      foreground: Palette.PINK,
       token: 'constant.character.escape',
     },
     {
-      foreground: 'ff79c6',
+      foreground: Palette.PINK,
       token: 'string source',
     },
     {
-      foreground: 'ff79c6',
+      foreground: Palette.PINK,
       token: 'string source.ruby',
     },
     {
-      foreground: 'ff79c6',
+      foreground: Palette.PINK,
       token: 'keyword',
     },
     {
-      foreground: 'ff79c6',
+      foreground: Palette.PINK,
       token: 'storage',
     },
     {
-      foreground: '8be9fd',
+      foreground: Palette.PURPLE,
+      token: 'number.ts',
+    },
+    {
+      foreground: Palette.CYAN,
       fontStyle: 'italic',
       token: 'storage.type',
     },
     {
-      foreground: '50fa7b',
+      foreground: Palette.GREEN,
       fontStyle: 'underline',
       token: 'entity.name.class',
     },
     {
-      foreground: '50fa7b',
+      foreground: Palette.CYAN,
+      token: 'type.identifier',
+    },
+    {
+      foreground: Palette.GREEN,
+      fontStyle: 'underline',
+      token: 'entity.name.type.class',
+    },
+    {
+      foreground: Palette.GREEN,
       fontStyle: 'italic underline',
       token: 'entity.other.inherited-class',
     },
     {
-      foreground: '50fa7b',
+      foreground: Palette.GREEN,
       token: 'entity.name.function',
     },
     {
-      foreground: 'ffb86c',
+      foreground: Palette.ORANGE,
       fontStyle: 'italic',
       token: 'variable.parameter',
     },
     {
-      foreground: 'ff79c6',
+      foreground: Palette.PINK,
       token: 'entity.name.tag',
     },
     {
-      foreground: '50fa7b',
+      foreground: Palette.GREEN,
       token: 'entity.other.attribute-name',
     },
     {
-      foreground: '8be9fd',
+      foreground: Palette.CYAN,
       token: 'support.function',
     },
     {
-      foreground: '6be5fd',
+      foreground: Palette.CYAN_A,
       token: 'support.constant',
     },
     {
-      foreground: '66d9ef',
+      foreground: Palette.CYAN_B,
       fontStyle: ' italic',
       token: 'support.type',
     },
     {
-      foreground: '66d9ef',
+      foreground: Palette.CYAN_B,
       fontStyle: ' italic',
       token: 'support.class',
     },
     {
-      foreground: 'f8f8f0',
-      background: 'ff79c6',
+      foreground: Palette.WHITE,
+      background: Palette.PINK,
       token: 'invalid',
     },
     {
-      foreground: 'f8f8f0',
-      background: 'bd93f9',
+      foreground: Palette.WHITE,
+      background: Palette.PURPLE,
       token: 'invalid.deprecated',
     },
     {
-      foreground: 'cfcfc2',
+      foreground: Palette.DARK_GREY,
       token: 'meta.structure.dictionary.json string.quoted.double.json',
     },
     {
-      foreground: '6272a4',
+      foreground: Palette.DARK_PURPLE,
       token: 'meta.diff',
     },
     {
-      foreground: '6272a4',
+      foreground: Palette.DARK_PURPLE,
       token: 'meta.diff.header',
     },
     {
-      foreground: 'ff79c6',
+      foreground: Palette.PINK,
       token: 'markup.deleted',
     },
     {
-      foreground: '50fa7b',
+      foreground: Palette.GREEN,
       token: 'markup.inserted',
     },
     {
-      foreground: 'e6db74',
+      foreground: Palette.YELLOW_A,
       token: 'markup.changed',
     },
     {
-      foreground: 'bd93f9',
+      foreground: Palette.PURPLE,
       token: 'constant.numeric.line-number.find-in-files - match',
     },
     {
-      foreground: 'e6db74',
+      foreground: Palette.YELLOW_A,
       token: 'entity.name.filename',
     },
     {
-      foreground: 'f83333',
+      foreground: Palette.RED,
       token: 'message.error',
     },
     {
-      foreground: 'eeeeee',
+      foreground: Palette.GREY,
       token:
         'punctuation.definition.string.begin.json - meta.structure.dictionary.value.json',
     },
     {
-      foreground: 'eeeeee',
+      foreground: Palette.GREY,
       token:
         'punctuation.definition.string.end.json - meta.structure.dictionary.value.json',
     },
     {
-      foreground: '8be9fd',
+      foreground: Palette.CYAN,
       token: 'meta.structure.dictionary.json string.quoted.double.json',
     },
     {
-      foreground: 'f1fa8c',
+      foreground: Palette.YELLOW,
       token: 'meta.structure.dictionary.value.json string.quoted.double.json',
     },
     {
-      foreground: '50fa7b',
+      foreground: Palette.GREEN,
       token:
         'meta meta meta meta meta meta meta.structure.dictionary.value string',
     },
     {
-      foreground: 'ffb86c',
+      foreground: Palette.ORANGE,
       token: 'meta meta meta meta meta meta.structure.dictionary.value string',
     },
     {
-      foreground: 'ff79c6',
+      foreground: Palette.PINK,
       token: 'meta meta meta meta meta.structure.dictionary.value string',
     },
     {
-      foreground: 'bd93f9',
+      foreground: Palette.PURPLE,
       token: 'meta meta meta meta.structure.dictionary.value string',
     },
     {
-      foreground: '50fa7b',
+      foreground: Palette.GREEN,
       token: 'meta meta meta.structure.dictionary.value string',
     },
     {
-      foreground: 'ffb86c',
+      foreground: Palette.ORANGE,
       token: 'meta meta.structure.dictionary.value string',
     },
   ],
   colors: {
-    'editor.foreground': '#f8f8f2',
-    'editor.background': '#171717',
-    'editor.selectionBackground': '#21222d',
-    'editor.lineHighlightBackground': '#21222d',
-    'editorCursor.foreground': '#f8f8f0',
-    'editorWhitespace.foreground': '#21222d',
-    'editorIndentGuide.activeBackground': '#21222d',
-    'editor.selectionHighlightBorder': '#21222d',
+    'editor.foreground': Palette.FG,
+    'editor.background': Palette.BG,
+    'editor.selectionBackground': Palette.HL,
+    'editor.lineHighlightBackground': Palette.HL,
+    'editorCursor.foreground': Palette.CURSOR,
+    'editorWhitespace.foreground': Palette.HL,
+    'editorIndentGuide.activeBackground': Palette.HL,
+    'editor.selectionHighlightBorder': Palette.HL,
   },
 }

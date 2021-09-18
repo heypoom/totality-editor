@@ -73,7 +73,7 @@ export const LinkedListVisualizer: React.FC = () => {
   }, [runner.variables, layout])
 
   return (
-    <div tw="h-screen">
+    <div tw="w-full h-screen">
       <Button
         active={layout === 'cose'}
         onClick={() => setLayout('cose')}

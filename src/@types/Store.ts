@@ -26,6 +26,7 @@ type CoreOptions = Record<string, any> &
 
 export interface TotalityOptions {
   'layout.height': string
+  'theme.background': string
 }
 
 export interface RunnerState {

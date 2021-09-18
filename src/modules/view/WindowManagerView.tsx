@@ -1,32 +1,62 @@
 import 'twin.macro'
 
+import loadable from '@loadable/component'
+
 import {useStore} from 'modules/store'
+import {panelViews} from 'modules/panel'
 
-import {Editor} from 'modules/editor'
-import {RendererPanel} from 'modules/panel/RendererPanel'
+const Mosaic = loadable(async () => {
+  const {Mosaic} = await import('react-mosaic-component')
 
-import {PanelProps, PanelType} from '@types'
+  await import('react-mosaic-component/react-mosaic-component.css')
 
-export const panelViews: Record<PanelType, React.FC<PanelProps>> = {
-  editor: Editor,
-  renderer: RendererPanel,
-  controls: () => null,
-}
+  return Mosaic
+})
 
 export const WindowManagerView: React.FC = () => {
-  const {layout} = useStore('layout')
+  const {layout, options} = useStore('layout', 'options')
+
+  const bgColor = options['theme.background']
+  const style = {background: bgColor}
+
+  if (typeof window === 'undefined') return null
+
+  const [a, b, c] = layout?.panels?.map((p) => p.id)
 
   return (
-    <div tw="flex items-center justify-center h-full">
-      {layout?.panels?.map((panel) => {
-        const View = panelViews[panel.type]
+    <div tw="flex items-center justify-center h-screen" style={style}>
+      <Mosaic
+        renderTile={(id) => {
+          const panel = layout?.panels?.find((p) => p.id === id)
+          if (!panel) return <div />
 
-        return (
-          <div key={panel.id} tw="w-full h-screen">
-            <View panel={panel} />
-          </div>
-        )
-      })}
+          const View = panelViews[panel.type]
+
+          const background =
+            panel.type === 'renderer'
+              ? '#21222d'
+              : panel.type === 'editor'
+              ? '#21222d'
+              : 'violet'
+
+          return (
+            <div tw="w-full" style={{background}}>
+              <View panel={panel} />
+            </div>
+          )
+        }}
+        initialValue={{
+          direction: 'row',
+          first: a,
+          second: {
+            direction: 'column',
+            first: b,
+            second: c,
+            splitPercentage: 70,
+          },
+          splitPercentage: 70,
+        }}
+      />
     </div>
   )
 }
