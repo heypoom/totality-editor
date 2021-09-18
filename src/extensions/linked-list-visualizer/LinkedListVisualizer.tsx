@@ -74,7 +74,7 @@ export const LinkedListVisualizer: React.FC = () => {
 
     dispatch('runner/on-frame', (runner) => {
       const Core = cyRef.current
-      const Layout = Core?.layout({name: 'circle', animate: true})
+      const Layout = Core?.layout({name: 'concentric', animate: true})
 
       Layout?.run()
     })
@@ -97,7 +97,7 @@ export const LinkedListVisualizer: React.FC = () => {
       <CytoscapeView
         headless={false}
         elements={elements}
-        layout={{name: 'circle'}}
+        layout={{name: 'concentric'}}
         style={{width: '100%', height: '100%'}}
         stylesheet={[
           {

@@ -32,15 +32,8 @@ export const WindowManagerView: React.FC = () => {
 
           const View = panelViews[panel.type]
 
-          const background =
-            panel.type === 'renderer'
-              ? '#21222d'
-              : panel.type === 'editor'
-              ? '#21222d'
-              : 'violet'
-
           return (
-            <div tw="w-full" style={{background}}>
+            <div tw="w-full">
               <View panel={panel} />
             </div>
           )

@@ -20,7 +20,7 @@ export const LinkedListVisualizerExtension = createExtension({
     store.dispatch('runner/listen', (variables) => {
       const graph = linkedListToAdjList(variables)
 
-      store.dispatch('runner/set', {shared: {graph}})
+      store.dispatch('runner/set', {shared: {graph}, error: null})
     })
   },
 })
