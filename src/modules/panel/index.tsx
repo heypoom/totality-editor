@@ -1,14 +1,17 @@
-import React from 'react'
+import React, {ReactNode} from 'react'
 import loadable, {LoadableComponent} from '@loadable/component'
 
 import {PanelProps, PanelType} from '@types'
 import {LoadingSkeleton} from 'modules/editor/LoadingSkeleton'
 
-const load = (panel: () => Promise<React.FC<PanelProps>>) =>
-  loadable(panel, {fallback: <LoadingSkeleton />})
+const load = (
+  panel: () => Promise<React.FC<PanelProps>>,
+  fallback?: JSX.Element
+) => loadable(panel, {fallback})
 
 const EditorPanel = load(
-  async () => (await import('./EditorPanel')).EditorPanel
+  async () => (await import('./EditorPanel')).EditorPanel,
+  <LoadingSkeleton />
 )
 
 const RendererPanel = load(
