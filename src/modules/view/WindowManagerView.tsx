@@ -5,12 +5,15 @@ import Split from 'react-split'
 import {useStore} from 'modules/store'
 import {panelViews} from 'modules/panel'
 
+const handlerImage = `url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==')`
+
 const gutterStyle = {
-  backgroundRepeat: 'no-repeat',
-  backgroundPosition: '50%',
-  backgroundImage: `url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==')`,
-  cursor: 'col-resize',
+  zIndex: 10,
   width: '8px',
+  cursor: 'col-resize',
+  backgroundPosition: '50%',
+  backgroundRepeat: 'no-repeat',
+  backgroundImage: handlerImage,
 }
 
 export const WindowManagerView: React.FC = () => {
