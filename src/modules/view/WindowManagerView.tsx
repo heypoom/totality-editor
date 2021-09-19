@@ -27,7 +27,17 @@ export const WindowManagerView: React.FC = () => {
 
   return (
     <div style={style}>
-      <Split sizes={[70, 30]} tw="flex flex-row">
+      <Split
+        sizes={[70, 30]}
+        tw="flex flex-row"
+        gutterStyle={() => ({
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: '50%',
+          backgroundImage: `url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==')`,
+          cursor: 'col-resize',
+          width: '8px',
+        })}
+      >
         <div tw="flex">{renderPanelById(a)}</div>
         <div tw="flex " style={{height}}>
           {renderPanelById(b)}
