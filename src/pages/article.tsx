@@ -28,13 +28,13 @@ export default function Article() {
         </h1>
 
         <TotalityWindow
-          width="900px"
+          width="600px"
           extensions={extensions}
           options={{
             'editor.fontSize': 16,
             'editor.fontFamily': 'JetBrains Mono',
             'editor.fontWeight': '500',
-            'layout.height': '500px',
+            'layout.height': '280px',
             'editor.fontLigatures': true,
             'theme.background': '#21222d',
           }}
