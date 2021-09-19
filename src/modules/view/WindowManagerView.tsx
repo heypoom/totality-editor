@@ -8,7 +8,7 @@ import {panelViews} from 'modules/panel'
 const handlerImage = `url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==')`
 
 const gutterStyle = {
-  zIndex: 10,
+  zIndex: '10',
   width: '8px',
   cursor: 'col-resize',
   backgroundPosition: '50%',
