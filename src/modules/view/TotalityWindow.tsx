@@ -7,11 +7,16 @@ import {Extension} from '@types'
 
 interface Props {
   width: string
+  height: string
 }
 
 export const TotalityWindow = <E extends readonly Extension<any>[]>(
   props: ITotalityProps<E> & Props
 ) => {
+  const {width, height, options, ...totalityProps} = props
+
+  if (options) options['layout.height'] = height
+
   return (
     <div
       tw="shadow-2xl p-2 bg-gray-900 rounded-lg"
@@ -23,7 +28,7 @@ export const TotalityWindow = <E extends readonly Extension<any>[]>(
         <div tw="w-3 h-3 bg-green-400 rounded-lg shadow-2xl" />
       </div>
 
-      <Totality {...props} />
+      <Totality {...totalityProps} options={options} />
     </div>
   )
 }
