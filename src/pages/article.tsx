@@ -22,7 +22,11 @@ export default function Article() {
       tw="bg-purple-400 text-gray-800 min-h-screen"
       style={{background: '#a55eea'}}
     >
-      <div tw="flex items-center justify-center w-full min-h-screen">
+      <div tw="flex flex-col items-center justify-center w-full min-h-screen">
+        <h1 tw="text-white text-4xl mb-6 font-semibold">
+          Visualizing Linked List.
+        </h1>
+
         <TotalityWindow
           width="900px"
           extensions={extensions}
