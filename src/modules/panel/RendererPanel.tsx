@@ -20,7 +20,7 @@ export const RendererPanel: React.FC<PanelProps> = ({panel}) => {
   if (!Renderer) return null
 
   return (
-    <div>
+    <>
       {runner.error && (
         <div tw="p-2 bg-red-500 text-white shadow-lg m-2">
           {renderError(runner.error)}
@@ -28,6 +28,6 @@ export const RendererPanel: React.FC<PanelProps> = ({panel}) => {
       )}
 
       <Renderer />
-    </div>
+    </>
   )
 }

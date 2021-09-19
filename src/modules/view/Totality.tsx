@@ -1,10 +1,9 @@
 import 'twin.macro'
 
 import React, {useEffect} from 'react'
+import loadable from '@loadable/component'
 
 import {AppContext, store, useStore} from 'modules/store'
-
-import {WindowManagerView} from './WindowManagerView'
 
 import {
   EditorOptions,
@@ -19,6 +18,11 @@ export interface ITotalityProps<E extends readonly Extension<any, any>[]> {
     EditorOptions &
     Partial<TotalityOptions>
 }
+
+const WindowManagerView = loadable(
+  async () => (await import('./WindowManagerView')).WindowManagerView,
+  {fallback: <div>loading</div>}
+)
 
 export const Totality = <E extends readonly Extension<any>[]>(
   props: ITotalityProps<E>

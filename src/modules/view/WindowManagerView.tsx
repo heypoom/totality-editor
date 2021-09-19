@@ -1,5 +1,7 @@
 import 'twin.macro'
 
+import Split from 'react-split'
+
 import {useStore} from 'modules/store'
 import {panelViews} from 'modules/panel'
 
@@ -24,9 +26,13 @@ export const WindowManagerView: React.FC = () => {
   }
 
   return (
-    <div tw="flex items-center justify-center" style={style}>
-      <div tw="w-3/4">{renderPanelById(a)}</div>
-      <div tw="w-1/4">{renderPanelById(b)}</div>
+    <div style={style}>
+      <Split sizes={[70, 30]} tw="flex flex-row">
+        <div tw="flex">{renderPanelById(a)}</div>
+        <div tw="flex " style={{height}}>
+          {renderPanelById(b)}
+        </div>
+      </Split>
     </div>
   )
 }

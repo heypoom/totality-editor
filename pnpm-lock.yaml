@@ -44,6 +44,8 @@ specifiers:
   react-cytoscapejs: ^1.2.1
   react-dom: npm:@preact/compat@^17.0.2
   react-monaco-editor: ^0.44.0
+  react-split: ^2.0.13
+  react-split-grid: ^1.0.3
   react-ssr-prepass: npm:preact-ssr-prepass@^1.2.0
   realms-shim: ^1.2.2
   ses: ^0.14.2
@@ -93,6 +95,8 @@ dependencies:
   react-cytoscapejs: 1.2.1_82cb9fd171153d2c613334009d54eb8b
   react-dom: /@preact/compat/17.0.2_preact@10.5.14
   react-monaco-editor: 0.44.0_11ecc7a031cb7de80eb837e8a057d4f1
+  react-split: 2.0.13_@preact+compat@17.0.2
+  react-split-grid: 1.0.3_@preact+compat@17.0.2
   react-ssr-prepass: /preact-ssr-prepass/1.2.0_preact@10.5.14
   realms-shim: 1.2.2
   ses: 0.14.2
@@ -3736,6 +3740,26 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
+  /react-split-grid/1.0.3_@preact+compat@17.0.2:
+    resolution: {integrity: sha512-iE7R7Ne6KOIstKH4hROG3pwPod3LGJ4TB1P2jmPY2/oYI9+Jw8K7Rj0z7C2ZkfDLgMK2vTc+vpYOkFzr/+eaIg==}
+    peerDependencies:
+      react: '>=15.4.2 || >= 16.0.0'
+    dependencies:
+      prop-types: 15.7.2
+      react: /@preact/compat/17.0.2_preact@10.5.14
+      split-grid: 1.0.11
+    dev: false
+
+  /react-split/2.0.13_@preact+compat@17.0.2:
+    resolution: {integrity: sha512-suq/UH4epMu2aF4NBh+imlpUvntsIvU3li9EBBLdxqNtYEg+nY7TGl8Ij65mD1qYyhs3dQhA1Pv3rLXd1s5/lQ==}
+    peerDependencies:
+      react: '*'
+    dependencies:
+      prop-types: 15.7.2
+      react: /@preact/compat/17.0.2_preact@10.5.14
+      split.js: 1.6.4
+    dev: false
+
   /read-pkg-up/3.0.0:
     resolution: {integrity: sha1-PtSWaF26D4/hGNBpHcUfSh/5bwc=}
     engines: {node: '>=4'}
@@ -4020,6 +4044,14 @@ packages:
   /spdx-license-ids/3.0.10:
     resolution: {integrity: sha512-oie3/+gKf7QtpitB0LYLETe+k8SifzsX4KixvpOsbI6S0kRiRQ5MKOio8eMSAKQ17N06+wdEOXRiId+zOxo0hA==}
     dev: true
+
+  /split-grid/1.0.11:
+    resolution: {integrity: sha512-ELtFtxc3r5we5GZfe6Fi0BFFxIi2M6BY1YEntBscKRDD3zx4JVHqx2VnTRSQu1BixCYSTH3MTjKd4esI2R7EgQ==}
+    dev: false
+
+  /split.js/1.6.4:
+    resolution: {integrity: sha512-kYmQZprRJrF1IOjg/E+gdBEsKFv5kbgUE6RJVJZvrIzTOK/IHzKSqIeiJnWs7IP5D9TnpTQ2CbanuDuIWcyDUQ==}
+    dev: false
 
   /sprintf-js/1.0.3:
     resolution: {integrity: sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=}
