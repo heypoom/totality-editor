@@ -3,7 +3,7 @@ export function createTypeScriptWorker(): Worker | null {
   if (typeof Blob === 'undefined') return null
 
   const source = `
-		importScripts('${window.location.href}ts/typescript.js')
+		importScripts('${window.location.origin}/ts/typescript.js')
 
 		onmessage = ({data: source}) => {
 			const transpiled = ts.transpile(source)

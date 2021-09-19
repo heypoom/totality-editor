@@ -53,7 +53,7 @@ const hsl = (i = 1, count = 8, s = 90, l = 60) =>
   `hsl(${i * Math.trunc(360 / count)}, ${s}%, ${l}%)`
 
 export const LinkedListVisualizer: React.FC = () => {
-  const {runner, dispatch} = useStore('runner')
+  const {runner, options, dispatch} = useStore('runner', 'options')
 
   const cyRef = useRef<Core>()
 
@@ -72,15 +72,21 @@ export const LinkedListVisualizer: React.FC = () => {
     console.log('on-frame handler added.')
 
     dispatch('runner/on-frame', (shared) => {
-      const Core = cyRef.current
-      const Layout = Core?.layout({name: shared?.layout, animate: true})
+      try {
+        const Core = cyRef.current
+        if (!Core) return
 
-      Layout?.run()
+        const Layout = Core.layout({name: shared?.layout, animate: true})
+
+        Layout?.run()
+      } catch (err) {}
     })
   }, [])
 
+  const height = options['layout.height'] ?? '100vh'
+
   return (
-    <div tw="w-full h-screen">
+    <div tw="w-full" style={{height}}>
       <CytoscapeView
         headless={false}
         elements={elements}

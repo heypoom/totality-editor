@@ -1,17 +1,14 @@
 import 'twin.macro'
 
-import loadable from '@loadable/component'
-
 import {useStore} from 'modules/store'
 import {panelViews} from 'modules/panel'
-
-import {LoadingSkeleton} from 'modules/editor/LoadingSkeleton'
 
 export const WindowManagerView: React.FC = () => {
   const {layout, options} = useStore('layout', 'options')
 
   const bgColor = options['theme.background']
-  const style = {background: bgColor}
+  const height = options['layout.height']
+  const style = {background: bgColor, height}
 
   if (typeof window === 'undefined') return null
 
@@ -27,7 +24,7 @@ export const WindowManagerView: React.FC = () => {
   }
 
   return (
-    <div tw="flex items-center justify-center h-screen" style={style}>
+    <div tw="flex items-center justify-center" style={style}>
       <div tw="w-3/4">{renderPanelById(a)}</div>
       <div tw="w-1/4">{renderPanelById(b)}</div>
     </div>
