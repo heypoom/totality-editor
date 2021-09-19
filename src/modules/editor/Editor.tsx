@@ -1,9 +1,10 @@
-import {useMemo} from 'react'
+import React, {useMemo} from 'react'
 import MonacoEditor from '@monaco-editor/react'
 
 import {useStore} from 'modules/store'
 
 import {intoEditorOptions} from '.'
+import {LoadingSkeleton} from './LoadingSkeleton'
 import {defaultMonacoOptions} from './constants/monacoOption'
 import {useSetupEditorHooks} from './hooks/useSetupEditorHooks'
 
@@ -29,6 +30,7 @@ export const Editor: React.FC = () => {
       theme={config.theme}
       onChange={handleChange}
       defaultLanguage={config.language}
+      loading={<LoadingSkeleton />}
       onMount={(editor, monaco) => register({editor, monaco})}
     />
   )

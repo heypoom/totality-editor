@@ -1,12 +1,15 @@
+import React from 'react'
 import loadable from '@loadable/component'
-
-import {createExtension} from 'utils'
 
 import {linkedListToAdjList} from './utils/linkedListToAdjList'
 
-const LinkedListVisualizer = loadable(async () => {
-  return (await import('./LinkedListVisualizer')).LinkedListVisualizer
-})
+import {createExtension} from 'utils'
+import {LoadingSkeleton} from 'modules/editor/LoadingSkeleton'
+
+const LinkedListVisualizer = loadable(
+  async () => (await import('./LinkedListVisualizer')).LinkedListVisualizer,
+  {fallback: <LoadingSkeleton />}
+)
 
 export const LinkedListVisualizerExtension = createExtension({
   id: 'visualizer.linked-list',

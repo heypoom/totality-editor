@@ -4,6 +4,8 @@ export const TypeScriptExtension = createExtension({
   id: 'language.typescript',
 
   async setup(app) {
+    console.log('setup:', app)
+
     // Add TypeScript type definitions for the totality runtime.
     app.editor.setup(async (context) => {
       const {monaco} = context

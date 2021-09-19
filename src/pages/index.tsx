@@ -26,6 +26,7 @@ export default function Home() {
           'editor.fontFamily': 'JetBrains Mono',
           'editor.fontWeight': '500',
           'editor.fontLigatures': true,
+          'theme.background': '#21222d',
         }}
       />
     </div>

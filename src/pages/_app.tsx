@@ -7,7 +7,7 @@ const App: React.FC<AppProps> = ({Component, pageProps}) => {
   useGlobalStyle()
 
   return (
-    <Suspense fallback={() => <div>loading...</div>}>
+    <Suspense fallback={() => <div>suspense fallback</div>}>
       <Component {...pageProps} />
     </Suspense>
   )

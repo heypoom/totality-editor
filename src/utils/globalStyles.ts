@@ -8,9 +8,6 @@ const customStyles = {
     ...tw`antialiased`,
     fontFamily: 'JetBrains Mono',
   },
-  '.mosaic-blueprint-theme.mosaic.mosaic-drop-target': {
-    background: '#21222d',
-  },
 }
 
 const customStyle = globalCss(customStyles)
