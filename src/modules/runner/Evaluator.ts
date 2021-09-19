@@ -133,8 +133,6 @@ export class JSRunner {
       // HACK: Manually rerender if not in async run.
       if (!this.state.isAsync) this.updateFrame()
 
-      console.log(`[run] ${runId} complete`)
-
       this.state.latestCompleteRunId = runId
 
       return String(result)
@@ -151,8 +149,6 @@ export class JSRunner {
         throw error
       }
     } finally {
-      console.log('[finally] cleanup')
-
       // Cleanup handlers
       await this.cleanup()
 

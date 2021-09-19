@@ -5,11 +5,13 @@ import {Totality} from '@totality/core'
 import {
   VimModeExtension,
   DraculaThemeExtension,
+  TypeScriptExtension,
   LinkedListVisualizerExtension,
 } from '@totality/extensions'
 
 const extensions = [
   DraculaThemeExtension,
+  TypeScriptExtension,
   LinkedListVisualizerExtension,
   VimModeExtension,
 ] as const
@@ -20,7 +22,6 @@ export default function Home() {
       <Totality
         extensions={extensions}
         options={{
-          'vim.enabled': true,
           'editor.fontSize': 24,
           'editor.fontFamily': 'JetBrains Mono',
           'editor.fontWeight': '500',
