@@ -11,6 +11,8 @@ export const TypeScriptReactExtension = createExtension({
     app.editor.setup(async (context) => {
       const {monaco} = context
 
+      console.log('tsx:', context)
+
       const ts = monaco.languages.typescript
       const tsd = ts.typescriptDefaults
 
@@ -20,12 +22,20 @@ export const TypeScriptReactExtension = createExtension({
         tsd.addExtraLib(source, filePath)
       }
 
+      if (app.options['language.typesciptreact.typeDefs']) {
+        await addTypedef(
+          'https://cdn.jsdelivr.net/npm/@types/react@17.0.14/index.d.ts',
+          'react.d.ts'
+        )
+      }
+
       tsd.setCompilerOptions({
         jsx: ts.JsxEmit.React,
         strict: true,
 
         noEmit: true,
         target: ts.ScriptTarget.ES2016,
+        allowJs: true,
         allowNonTsExtensions: true,
         moduleResolution: ts.ModuleResolutionKind.NodeJs,
         module: ts.ModuleKind.CommonJS,
@@ -37,13 +47,6 @@ export const TypeScriptReactExtension = createExtension({
         noSemanticValidation: false,
         noSyntaxValidation: false,
       })
-
-      if (app.options['language.typesciptreact.typeDefs']) {
-        await addTypedef(
-          'https://cdn.jsdelivr.net/npm/@types/react@17.0.14/index.d.ts',
-          'react.d.ts'
-        )
-      }
     })
   },
 })

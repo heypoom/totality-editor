@@ -19,7 +19,7 @@ export const TotalityWindow = <E extends readonly Extension<any>[]>(
 
   return (
     <div
-      tw="p-2 bg-gray-900 rounded-lg shadow-carbon overflow-hidden"
+      tw="p-2 bg-gray-900 rounded-lg shadow-carbon"
       css={{background: '#21222d', width: props.width}}
     >
       <div tw="flex p-1 pb-2">

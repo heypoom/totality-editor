@@ -57,7 +57,7 @@ export const LinkedListVisualizer: React.FC<RendererProps> = (props) => {
       headless={false}
       elements={elements}
       layout={{name: layout}}
-      style={{width: '100%', height: '100%'}}
+      style={{width: '100%', height: '100%', overflow: 'hidden'}}
       stylesheet={stylesheet}
       cy={(cy) => (cyRef.current = cy)}
     />

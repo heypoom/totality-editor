@@ -9,7 +9,7 @@ export const JSXHighlighterExtension = createExtension({
 
   async setup(app) {
     const {parse} = await import('@babel/parser')
-    const traverse = await import('@babel/traverse')
+    const {default: traverse} = await import('@babel/traverse')
     const {default: Highlight} = await import('monaco-jsx-highlighter')
 
     // Minimal Babel setup for React JSX parsing.
@@ -28,9 +28,9 @@ export const JSXHighlighterExtension = createExtension({
 
       const options = {
         parser: 'babel',
-        isHighlightGlyph: false,
-        isShowHover: false,
-        isUseSeparateElementStyles: false,
+        isHighlightGlyph: true,
+        isShowHover: true,
+        isUseSeparateElementStyles: true,
         isThrowJSXParseErrors: false,
       }
 
