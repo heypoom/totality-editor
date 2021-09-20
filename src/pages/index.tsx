@@ -28,7 +28,7 @@ export default function Article() {
         </h1>
 
         <TotalityWindow
-          width="680px"
+          width="760px"
           height="320px"
           extensions={extensions}
           options={{
