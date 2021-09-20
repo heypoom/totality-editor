@@ -1,6 +1,6 @@
 import 'twin.macro'
 
-import {Totality} from '@totality/core'
+import {Totality, TotalityWindow} from '@totality/core'
 
 import {
   VimModeExtension,
@@ -16,19 +16,30 @@ const extensions = [
   VimModeExtension,
 ] as const
 
-export default function Home() {
+export default function Article() {
   return (
-    <div tw="bg-gray-900 text-white">
-      <Totality
-        extensions={extensions}
-        options={{
-          'editor.fontSize': 24,
-          'editor.fontFamily': 'JetBrains Mono',
-          'editor.fontWeight': '500',
-          'editor.fontLigatures': true,
-          'theme.background': '#21222d',
-        }}
-      />
+    <div
+      tw="bg-purple-400 text-gray-800 min-h-screen"
+      style={{background: '#a55eea'}}
+    >
+      <div tw="flex flex-col items-center justify-center w-full min-h-screen">
+        <h1 tw="text-white text-4xl mb-6 font-semibold">
+          Visualizing Linked List.
+        </h1>
+
+        <TotalityWindow
+          width="680px"
+          height="320px"
+          extensions={extensions}
+          options={{
+            'editor.fontSize': 16,
+            'editor.fontFamily': 'JetBrains Mono',
+            'editor.fontWeight': '500',
+            'editor.fontLigatures': true,
+            'theme.background': '#21222d',
+          }}
+        />
+      </div>
     </div>
   )
 }
