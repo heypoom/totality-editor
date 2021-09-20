@@ -19,7 +19,8 @@ export const LinkedListVisualizerExtension = createExtension({
 
     store.dispatch('runner/set-shared', {layout: 'circle'})
 
-    store.dispatch('runner/listen', (variables) => {
+    store.dispatch('runner/on-track', (variable, runner) => {
+      const variables = runner.getTracked()
       const graph = linkedListToAdjList(variables)
 
       store.dispatch('runner/set-shared', {graph})

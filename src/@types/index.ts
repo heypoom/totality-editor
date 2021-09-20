@@ -7,7 +7,7 @@ export type {Store, State, Events, Dispatch, StoreModule} from './store'
 
 export type {EditorOptions, CoreOptions, TotalityOptions} from './EditorOptions'
 
-export type {TrackListener, FrameListener} from './store/runner'
+export type {TrackListener, FrameListener, RunnerEvents} from './store/runner'
 
 export type {
   Run,

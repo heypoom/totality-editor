@@ -1,4 +1,4 @@
-import {FrameListener} from '@types'
+import {FrameListener, TrackListener} from '@types'
 
 export interface Run {
   id: string | null
@@ -21,7 +21,7 @@ export interface RunHandlers {
   frame: FrameListener
 
   /** Track handlers run when a variable is tracked. */
-  track: (id: string, target: any) => void
+  track: TrackListener
 }
 
 export type RunHandlerMap = {

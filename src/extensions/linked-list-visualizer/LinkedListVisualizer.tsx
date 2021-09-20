@@ -69,8 +69,6 @@ export const LinkedListVisualizer: React.FC = () => {
   }, [graph])
 
   useEffect(() => {
-    console.log('on-frame handler added.')
-
     dispatch('runner/on-frame', (shared) => {
       try {
         const Core = cyRef.current

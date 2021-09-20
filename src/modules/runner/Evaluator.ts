@@ -88,7 +88,7 @@ export class JSRunner {
     this.tracked?.set(id, target)
 
     for (const handler of this.handlers.track) {
-      handler(id, target)
+      handler({key: id, value: target}, this)
     }
 
     return target
