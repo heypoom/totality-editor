@@ -32,7 +32,7 @@ export interface ExtensionContext<Config = Record<string, any>> {
     use(id: string): void
 
     /** Store an initial value in the renderer. */
-    store<T>(value: T): void
+    store(value: Record<string, unknown>): void
   }
 
   runner: JSRunner

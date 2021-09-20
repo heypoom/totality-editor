@@ -40,7 +40,7 @@ export const rendererModule: StoreModule = (store) => {
       if (!panel?.renderer) return s
 
       const renderer = s.renderer.renderers[panel?.renderer]
-      renderer.state = {...(renderer.state as {}), data}
+      renderer.state = {...(renderer.state as {}), ...data}
 
       return s
     })

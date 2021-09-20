@@ -4,7 +4,7 @@ import {useEffect, useMemo, useRef} from 'react'
 import CytoscapeView from 'react-cytoscapejs'
 import type {Core, ElementDefinition} from 'cytoscape'
 
-import {useRenderer} from 'modules/renderer'
+import {useRenderer, RendererProps} from '@totality/core'
 
 interface Node {
   id: string
@@ -42,13 +42,6 @@ const generateNodes = (nodes: Node[]): ElementDefinition[] => {
   }))
 }
 
-const Button = styled.button({
-  ...tw`bg-white text-violet-700 px-2 py-1 rounded transform duration-75 outline-none focus:outline-none`,
-  ...tw`hocus:(scale-105)`,
-
-  variants: {active: {true: tw`bg-violet-700 text-white`}},
-})
-
 const hsl = (i = 1, count = 8, s = 90, l = 60) =>
   `hsl(${i * Math.trunc(360 / count)}, ${s}%, ${l}%)`
 
@@ -57,8 +50,10 @@ interface VisualizerState {
   graph: Record<string, string[]>
 }
 
-export const LinkedListVisualizer: React.FC = () => {
-  const {state, options, dispatch} = useRenderer()
+export const LinkedListVisualizer: React.FC<RendererProps> = (props) => {
+  const {state} = props
+
+  const {dispatch} = useRenderer()
   const cyRef = useRef<Core>()
 
   const {graph, layout = 'circle'} = state as VisualizerState
@@ -85,35 +80,31 @@ export const LinkedListVisualizer: React.FC = () => {
     })
   }, [])
 
-  const height = options['layout.height'] ?? '100vh'
-
   return (
-    <div tw="w-full" style={{height}}>
-      <CytoscapeView
-        headless={false}
-        elements={elements}
-        layout={{name: layout}}
-        style={{width: '100%', height: '100%'}}
-        stylesheet={[
-          {
-            selector: 'node',
-            style: {
-              'background-color': 'data(bg)',
-              'border-width': '3px',
-              'border-color': '#fff',
-              color: '#ffffff',
-              label: 'data(label)',
-            },
+    <CytoscapeView
+      headless={false}
+      elements={elements}
+      layout={{name: layout}}
+      style={{width: '100%', height: '100%'}}
+      stylesheet={[
+        {
+          selector: 'node',
+          style: {
+            'background-color': 'data(bg)',
+            'border-width': '3px',
+            'border-color': '#fff',
+            color: '#ffffff',
+            label: 'data(label)',
           },
-          {
-            selector: 'edge',
-            style: {
-              'line-color': '#fff',
-            },
+        },
+        {
+          selector: 'edge',
+          style: {
+            'line-color': '#fff',
           },
-        ]}
-        cy={(cy) => (cyRef.current = cy)}
-      />
-    </div>
+        },
+      ]}
+      cy={(cy) => (cyRef.current = cy)}
+    />
   )
 }

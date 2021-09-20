@@ -26,3 +26,5 @@ export type {
   LayoutState,
   LayoutPreset,
 } from './LayoutState'
+
+export type {Renderer, RendererProps} from './Renderer'
