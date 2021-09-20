@@ -29,3 +29,9 @@ export const store = createStoreon<State, Events>([
 export const AppContext = createContext(store)
 
 export const useStore = customContext(AppContext)
+
+// Enables debugging the store.
+if (typeof window !== 'undefined') {
+  // @ts-ignore
+  window.store = store
+}
