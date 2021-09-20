@@ -19,6 +19,7 @@ export type {
 
 export type {
   Panel,
+  PanelOf,
   PanelType,
   PanelProps,
   PanelConfig,

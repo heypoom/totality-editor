@@ -5,14 +5,10 @@ export type TrackListener = (
   runner: JSRunner
 ) => void | Promise<void>
 
-export type FrameListener = (
-  shared: Record<string, any>,
-  runner: JSRunner
-) => void | Promise<void>
+export type FrameListener = (runner: JSRunner) => void | Promise<void>
 
 export interface RunnerState {
   compiled: string
-  shared: Record<string, any>
   error: Error | null
 }
 
@@ -26,5 +22,4 @@ export interface RunnerEvents {
 
   // Setters
   'runner/set': Partial<RunnerState>
-  'runner/set-shared': Record<string, any>
 }

@@ -30,6 +30,9 @@ export interface ExtensionContext<Config = Record<string, any>> {
 
     /** Activate a renderer. */
     use(id: string): void
+
+    /** Store an initial value in the renderer. */
+    store<T>(value: T): void
   }
 
   runner: JSRunner

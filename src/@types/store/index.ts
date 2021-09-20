@@ -40,6 +40,7 @@ export type Events = RunnerEvents &
 export interface RendererEvents {
   'renderer/add': {id: string; renderer: Renderer}
   'renderer/use': string
+  'renderer/store': Record<string, unknown>
 }
 
 export interface LayoutEvents {

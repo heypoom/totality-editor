@@ -2,6 +2,8 @@ import produce from 'immer'
 
 import {createMerge} from './utils/merge'
 
+import {isActiveRendererPanel} from 'modules/panel'
+
 import {StoreModule} from '@types'
 
 const set = createMerge('renderer')
@@ -21,8 +23,8 @@ export const rendererModule: StoreModule = (store) => {
 
   store.on('renderer/use', (s, data) => {
     const layout = produce(s.layout, (s) => {
-      const panel = s.panels.find((p) => p.type === 'renderer')
-      if (panel?.type !== 'renderer') return s
+      const panel = s.panels.find(isActiveRendererPanel)
+      if (!panel) return s
 
       panel.renderer = data
 
@@ -30,5 +32,17 @@ export const rendererModule: StoreModule = (store) => {
     })
 
     store.dispatch('layout/set', layout)
+  })
+
+  store.on('renderer/store', (s, data) => {
+    return produce(s, (s) => {
+      const panel = s.layout.panels.find(isActiveRendererPanel)
+      if (!panel?.renderer) return s
+
+      const renderer = s.renderer.renderers[panel?.renderer]
+      renderer.state = {...(renderer.state as {}), data}
+
+      return s
+    })
   })
 }

@@ -1,10 +1,10 @@
 import tw, {styled} from 'twin.macro'
-import {useEffect, useMemo, useRef, useState} from 'react'
+import {useEffect, useMemo, useRef} from 'react'
 
 import CytoscapeView from 'react-cytoscapejs'
 import type {Core, ElementDefinition} from 'cytoscape'
 
-import {useStore} from '@totality/core'
+import {useRenderer} from 'modules/renderer'
 
 interface Node {
   id: string
@@ -52,15 +52,19 @@ const Button = styled.button({
 const hsl = (i = 1, count = 8, s = 90, l = 60) =>
   `hsl(${i * Math.trunc(360 / count)}, ${s}%, ${l}%)`
 
-export const LinkedListVisualizer: React.FC = () => {
-  const {runner, options, dispatch} = useStore('runner', 'options')
+interface VisualizerState {
+  layout: string
+  graph: Record<string, string[]>
+}
 
+export const LinkedListVisualizer: React.FC = () => {
+  const {state, options, dispatch} = useRenderer()
   const cyRef = useRef<Core>()
 
-  const {graph, layout = 'circle'} = runner.shared ?? {}
+  const {graph, layout = 'circle'} = state as VisualizerState
 
   const elements = useMemo(() => {
-    const lists = toListNode(graph) ?? []
+    const lists = toListNode(graph as any) ?? []
 
     const nodes = generateNodes(lists) ?? []
     const edges = generateEdges(lists) ?? []
@@ -69,12 +73,12 @@ export const LinkedListVisualizer: React.FC = () => {
   }, [graph])
 
   useEffect(() => {
-    dispatch('runner/on-frame', (shared) => {
+    dispatch('runner/on-frame', () => {
       try {
         const Core = cyRef.current
         if (!Core) return
 
-        const Layout = Core.layout({name: shared?.layout, animate: true})
+        const Layout = Core.layout({name: layout as 'circle', animate: true})
 
         Layout?.run()
       } catch (err) {}

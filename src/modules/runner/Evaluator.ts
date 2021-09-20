@@ -55,12 +55,8 @@ export class JSRunner {
   }
 
   updateFrame() {
-    // HACK: Access the shared value.
-    const state = store.get()
-    const {shared} = state.runner ?? {}
-
     for (const handler of this.handlers.frame) {
-      handler(shared, this)
+      handler(this)
     }
 
     this.frame++

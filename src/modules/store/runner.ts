@@ -13,7 +13,6 @@ export const runnerModule: StoreModule = (store) => {
   store.on('@init', () => ({
     runner: {
       compiled: '',
-      shared: {},
       error: null,
     },
   }))
@@ -43,13 +42,6 @@ export const runnerModule: StoreModule = (store) => {
 
   store.on('runner/on-frame', (s, listener: FrameListener) => {
     runner.on('frame', listener)
-  })
-
-  store.on('runner/set-shared', (s, shared) => {
-    return set(s, {
-      error: null,
-      shared: {...s.runner?.shared, ...shared},
-    })
   })
 
   store.on('runner/set', (s, data) => set(s, data))

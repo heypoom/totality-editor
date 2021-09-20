@@ -27,3 +27,5 @@ export const panelViews: Record<PanelType, LoadableComponent<PanelProps>> = {
   renderer: RendererPanel,
   controls: ControlsPanel,
 }
+
+export {isActiveRendererPanel} from './utils/findPanel'

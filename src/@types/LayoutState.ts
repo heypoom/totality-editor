@@ -6,15 +6,15 @@ export type LayoutPreset =
   | 'visual-in-background'
 
 /** Renderer Panel allows you to render algorithm visualizations, simulations, previews and more. */
-type RendererPanel = {type: 'renderer'; renderer: string}
+export type RendererPanel = {type: 'renderer'; renderer: string}
 
 /** Editor Panel displays the Monaco editor for code editing. */
-type EditorPanel = {type: 'editor'; uri: string}
+export type EditorPanel = {type: 'editor'; uri: string}
 
 /** Controls Panel allows you to tweak each parameters and interact with the simulation. */
-type ControlsPanel = {type: 'controls'}
+export type ControlsPanel = {type: 'controls'}
 
-interface PanelState {
+export interface PanelState {
   // Panel Identifier
   id: string
 
@@ -26,6 +26,10 @@ interface PanelState {
 }
 
 export type PanelConfig = RendererPanel | EditorPanel | ControlsPanel
+
+export type PanelOf<K extends PanelType> = Extract<PanelConfig, {type: K}> &
+  PanelState
+
 export type Panel = PanelConfig & PanelState
 export type PanelType = Panel['type']
 
