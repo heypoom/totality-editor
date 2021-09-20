@@ -8,17 +8,12 @@ interface Node {
 export const toListNode = (graph: Record<string, string[]>): Node[] =>
   graph && Object.entries(graph).map(([id, nodes]) => ({id, nodes}))
 
-export function generateEdges(nodes: Node[]) {
-  const edges: ElementDefinition[] = []
-
-  nodes.forEach((source) => {
-    source.nodes.forEach((target) => {
-      edges.push({data: {source: source.id, target}})
-    })
+export const generateEdges = (nodes: Node[]): ElementDefinition[] =>
+  nodes.flatMap((source) => {
+    return source.nodes.flatMap((target) => ({
+      data: {source: source.id, target},
+    }))
   })
-
-  return edges
-}
 
 export const generateNodes = (nodes: Node[]): ElementDefinition[] => {
   nodes = nodes.filter((n) => n.id)
