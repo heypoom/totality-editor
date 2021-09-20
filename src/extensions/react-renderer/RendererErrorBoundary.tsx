@@ -1,29 +1,46 @@
 import 'twin.macro'
 
 import React from 'react'
-import {ErrorBoundary} from 'react-error-boundary'
 
-export const RendererErrorBoundary: React.FC = ({children}) => {
-  return (
-    <ErrorBoundary
-      fallbackRender={(props) => (
-        <div tw="text-white shadow-lg m-2 overflow-scroll">
-          <h1 tw="text-lg">
-            {props.error.name} - {props.error.message}
-          </h1>
+interface Props {
+  reset: () => void
+}
 
-          <button onClick={props.resetErrorBoundary}>Reset</button>
+export class RendererErrorBoundary extends React.Component<Props> {
+  state: {error: Error | null} = {error: null}
 
-          <pre tw="overflow-scroll">
-            <code>{props.error.stack}</code>
-          </pre>
-        </div>
-      )}
-      onError={(error, info) => {
-        console.warn('Component Error:', error, info.componentStack)
-      }}
-    >
-      {children}
-    </ErrorBoundary>
-  )
+  componentDidCatch(error: Error, info: any) {
+    this.setState({error})
+  }
+
+  componentDidUpdate() {
+    const {error} = this.state
+    if (!error) return
+
+    // Keep auto-clearing the error every second.
+    setTimeout(() => {
+      this.clear()
+    }, 900)
+  }
+
+  clear = () => {
+    this.setState({error: null})
+  }
+
+  render() {
+    const {error} = this.state
+    if (!error) return this.props.children
+
+    return (
+      <div tw="text-white shadow-lg m-2 overflow-scroll" onClick={this.clear}>
+        <h1 tw="text-base text-red-300 font-semibold">
+          {error.name}: {error.message}
+        </h1>
+
+        <pre tw="overflow-scroll text-xs mt-2">
+          <code>{error.stack}</code>
+        </pre>
+      </div>
+    )
+  }
 }
