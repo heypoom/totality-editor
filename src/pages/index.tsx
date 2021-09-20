@@ -1,6 +1,6 @@
 import 'twin.macro'
 
-import {Totality, TotalityWindow} from '@totality/core'
+import {TotalityWindow} from '@totality/core'
 
 import {
   VimModeExtension,
