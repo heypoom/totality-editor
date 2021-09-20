@@ -3,15 +3,11 @@ import {createExtension} from 'utils'
 export const TypeScriptReactExtension = createExtension({
   id: 'language.typescriptreact',
 
-  defaultConfig: {
-    'language.typescriptreact.typeDefs': true,
-  },
+  defaultConfig: {},
 
   async setup(app) {
     app.editor.setup(async (context) => {
       const {monaco} = context
-
-      console.log('tsx:', context)
 
       const ts = monaco.languages.typescript
       const tsd = ts.typescriptDefaults
@@ -22,12 +18,10 @@ export const TypeScriptReactExtension = createExtension({
         tsd.addExtraLib(source, filePath)
       }
 
-      if (app.options['language.typesciptreact.typeDefs']) {
-        await addTypedef(
-          'https://cdn.jsdelivr.net/npm/@types/react@17.0.14/index.d.ts',
-          'react.d.ts'
-        )
-      }
+      await addTypedef(
+        'https://cdn.jsdelivr.net/npm/@types/react@17.0.14/index.d.ts',
+        'react.d.ts'
+      )
 
       tsd.setCompilerOptions({
         jsx: ts.JsxEmit.React,

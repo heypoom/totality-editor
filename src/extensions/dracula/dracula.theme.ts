@@ -1,6 +1,6 @@
 import type {editor as EditorAPI} from 'monaco-editor/esm/vs/editor/editor.api'
 
-const Palette = {
+export const Palette = {
   BLACK: '#21222d',
   COMMENT: '#7970A9',
   YELLOW: '#ffff80',

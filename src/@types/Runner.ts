@@ -42,6 +42,6 @@ export interface RunnerGlobal {
 }
 
 export interface IRealm {
-  global: RunnerGlobal
+  global: RunnerGlobal & Record<string, unknown>
   evaluate(expr: string): unknown
 }

@@ -6,7 +6,7 @@ export function createTypeScriptWorker(): Worker | null {
 		importScripts('${window.location.origin}/ts/typescript.js')
 
 		onmessage = ({data: source}) => {
-			const transpiled = ts.transpile(source)
+			const transpiled = ts.transpile(source, {jsx: ts.JsxEmit.React, module: ts.ModuleKind.CommonJS}, 'main.tsx')
 
 			postMessage(transpiled)
 		}

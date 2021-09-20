@@ -74,20 +74,29 @@ export class JSRunner {
     })
   }
 
+  setScope(key: string, value: unknown) {
+    this.realm.global[key] = value
+  }
+
   on<T extends keyof RunHandlers>(type: T, handler: RunHandlers[T]) {
     const handlers = this.handlers[type]
     handlers.push(handler as any)
   }
 
   track(id: string, target: any) {
-    target._id = id
-    this.tracked?.set(id, target)
+    try {
+      if (target) target._id = id
 
-    for (const handler of this.handlers.track) {
-      handler({key: id, value: target}, this)
+      this.tracked?.set(id, target)
+
+      for (const handler of this.handlers.track) {
+        handler({key: id, value: target}, this)
+      }
+
+      return target
+    } catch (error) {
+      console.warn('[tracking error]', error)
     }
-
-    return target
   }
 
   tracks(vars: Record<string, any>) {

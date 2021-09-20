@@ -35,12 +35,17 @@ export const rendererModule: StoreModule = (store) => {
   })
 
   store.on('renderer/store', (s, data) => {
-    return produce(s, (s) => {
-      const panel = s.layout.panels.find(isActiveRendererPanel)
-      if (!panel?.renderer) return s
+    const panel = s.layout.panels.find(isActiveRendererPanel)
+    if (!panel?.renderer) return s
 
-      const renderer = s.renderer.renderers[panel?.renderer]
-      renderer.state = {...(renderer.state as {}), ...data}
+    const id = panel.renderer
+    const renderer = s.renderer.renderers[id]
+    if (!renderer) return s
+
+    const state = renderer.state ?? ({} as any)
+
+    return produce(s, (s) => {
+      s.renderer.renderers[id].state = {...state, ...data}
 
       return s
     })

@@ -29,6 +29,7 @@ export const Editor: React.FC = () => {
       options={config}
       theme={config.theme}
       onChange={handleChange}
+      path="main.tsx"
       defaultLanguage={config.language}
       loading={<LoadingSkeleton />}
       onMount={(editor, monaco) => register({editor, monaco})}

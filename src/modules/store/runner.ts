@@ -33,6 +33,8 @@ export const runnerModule: StoreModule = (store) => {
       store.dispatch('runner/set', {error: null})
     } catch (error) {
       if (error instanceof Error) {
+        console.warn('[runner error]', error)
+
         store.dispatch('runner/set', {error})
       }
     }
