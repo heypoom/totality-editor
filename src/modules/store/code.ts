@@ -6,7 +6,7 @@ const SAVE_KEY = 'totality.code'
 
 export const codeModule: StoreModule = (store) => {
   const save = debounce(() => store.dispatch('code/save'), 1000)
-  const compile = debounce(() => store.dispatch('runner/compile'), 100)
+  const compile = debounce(() => store.dispatch('runner/compile'), 50)
 
   store.on('@init', () => ({code: ''}))
 
