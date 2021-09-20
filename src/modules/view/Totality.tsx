@@ -4,6 +4,7 @@ import React, {useEffect} from 'react'
 import loadable from '@loadable/component'
 
 import {AppContext, store, useStore} from 'modules/store'
+import {TotalityErrorBoundary} from 'modules/common/ErrorBoundary'
 
 import {
   EditorOptions,
@@ -44,8 +45,10 @@ export const Totality = <E extends readonly Extension<any>[]>(
   }, [dispatch])
 
   return (
-    <AppContext.Provider value={store}>
-      <WindowManagerView />
-    </AppContext.Provider>
+    <TotalityErrorBoundary>
+      <AppContext.Provider value={store}>
+        <WindowManagerView />
+      </AppContext.Provider>
+    </TotalityErrorBoundary>
   )
 }
