@@ -1,4 +1,4 @@
-import {ElementDefinition} from 'cytoscape'
+import type {ElementDefinition} from 'cytoscape'
 
 interface Node {
   id: string
