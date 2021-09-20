@@ -3,9 +3,7 @@ import {createExtension} from 'utils'
 export const JSXHighlighterExtension = createExtension({
   id: 'jsx.highlighter',
 
-  defaultConfig: {
-    'jsx.highlighter.enabled': true,
-  },
+  defaultConfig: {},
 
   async setup(app) {
     const {parse} = await import('@babel/parser')
@@ -15,7 +13,10 @@ export const JSXHighlighterExtension = createExtension({
     // Minimal Babel setup for React JSX parsing.
     function babelParse(code: string) {
       try {
-        return parse(code, {sourceType: 'module', plugins: ['jsx']})
+        return parse(code, {
+          sourceType: 'module',
+          plugins: ['jsx', 'typescript'],
+        })
       } catch (err) {
         return null
       }
@@ -23,8 +24,6 @@ export const JSXHighlighterExtension = createExtension({
 
     app.editor.setup((context) => {
       const {monaco, editor} = context
-
-      if (!app.options['jsx.highlighter.enabled']) return
 
       const options = {
         parser: 'babel',

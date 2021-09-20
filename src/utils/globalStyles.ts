@@ -18,6 +18,9 @@ const customStyles = {
   '.JSXElement.JSXText.JSXText': {
     color: Palette.WHITE,
   },
+  '.JSXAttribute.JSXIdentifier.JSXIdentifier': {
+    color: Palette.GREEN,
+  },
 }
 
 const customStyle = globalCss(customStyles)
