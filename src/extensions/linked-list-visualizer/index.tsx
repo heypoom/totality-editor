@@ -12,14 +12,14 @@ export const LinkedListVisualizerExtension = createExtension({
   id: 'visualizer.linked-list',
 
   async setup(app) {
-    const {renderer, store} = app
+    const {renderer, store, runner} = app
 
     renderer.create('linked-list', {component: LinkedListVisualizer})
     renderer.use('linked-list')
 
     store.dispatch('runner/set-shared', {layout: 'circle'})
 
-    store.dispatch('runner/on-track', (variable, runner) => {
+    runner.on('track', () => {
       const variables = runner.getTracked()
       const graph = linkedListToAdjList(variables)
 

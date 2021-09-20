@@ -1,7 +1,7 @@
-import {JSRunner} from 'modules/runner/Evaluator'
+import {JSRunner} from 'modules/runner'
 
 export type TrackListener = (
-  variable: {key: string; value: string},
+  variable: {key: string; value: any},
   runner: JSRunner
 ) => void | Promise<void>
 

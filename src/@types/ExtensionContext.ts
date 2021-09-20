@@ -1,8 +1,9 @@
 import {Renderer} from './Renderer'
-import {TotalityOptions} from './store'
 import {EditorContext} from './EditorContext'
 
-import {Store} from '@types'
+import {CoreOptions, Store} from '@types'
+
+import {JSRunner, TypeScriptCompiler} from 'modules/runner'
 
 /**
  * The extension context allows totality extensions
@@ -14,7 +15,7 @@ export interface ExtensionContext<Config = Record<string, any>> {
   store: Store
 
   /** Options that are initially supplied to the app. */
-  options: Config & TotalityOptions & Record<string, any>
+  options: Config & CoreOptions
 
   /** Customize the monaco editor instances. */
   editor: {
@@ -29,5 +30,11 @@ export interface ExtensionContext<Config = Record<string, any>> {
 
     /** Activate a renderer. */
     use(id: string): void
+  }
+
+  runner: JSRunner
+
+  typescript: {
+    compiler: TypeScriptCompiler
   }
 }

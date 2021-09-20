@@ -2,15 +2,10 @@ import {debounce} from 'lodash'
 
 import {createMerge} from './utils/merge'
 
+import {runner, compiler} from 'modules/runner'
 import {FrameListener, StoreModule, TrackListener} from '@types'
 
-import {JSRunner} from 'modules/runner/Evaluator'
-import {TypeScriptCompiler} from 'modules/runner/TypescriptCompiler'
-
 const set = createMerge('runner')
-
-export const runner = new JSRunner()
-export const compiler = new TypeScriptCompiler()
 
 export const runnerModule: StoreModule = (store) => {
   const run = debounce(() => store.dispatch('runner/run'), 50)
