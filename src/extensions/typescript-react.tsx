@@ -38,7 +38,7 @@ export const TypeScriptReactExtension = createExtension({
         noSyntaxValidation: false,
       })
 
-      if (app.options['language.typescriptreact.typeDefs']) {
+      if (app.options['language.typesciptreact.typeDefs']) {
         await addTypedef(
           'https://cdn.jsdelivr.net/npm/@types/react@17.0.14/index.d.ts',
           'react.d.ts'
