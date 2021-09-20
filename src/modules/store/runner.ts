@@ -29,6 +29,8 @@ export const runnerModule: StoreModule = (store) => {
 
     try {
       await runner.run(compiled)
+
+      store.dispatch('runner/set', {error: null})
     } catch (error) {
       if (error instanceof Error) {
         store.dispatch('runner/set', {error})
