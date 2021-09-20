@@ -20,7 +20,7 @@ export class RendererErrorBoundary extends React.Component<Props> {
     // Keep auto-clearing the error every second.
     setTimeout(() => {
       this.clear()
-    }, 900)
+    }, 1500)
   }
 
   clear = () => {
