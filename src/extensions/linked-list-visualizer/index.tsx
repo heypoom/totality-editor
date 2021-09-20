@@ -12,7 +12,7 @@ export const LinkedListVisualizerExtension = createExtension({
   id: 'visualizer.linked-list',
 
   async setup(app) {
-    const {renderer, store, runner} = app
+    const {renderer, runner} = app
 
     renderer.create('linked-list', {
       component: LinkedListVisualizer,
