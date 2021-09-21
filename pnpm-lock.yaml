@@ -36,6 +36,7 @@ specifiers:
   next: ^11.1.2
   next-plugin-preact: ^3.0.6
   next-transpile-modules: ^8.0.0
+  pnpm: '3'
   preact: ^10.5.14
   preact-render-to-string: ^5.1.19
   quickjs-emscripten: ^0.13.0
@@ -130,6 +131,7 @@ devDependencies:
   eslint-config-next: 11.1.2_82ad98da5e129ae9d310451a179848d9
   monaco-editor-webpack-plugin: 4.1.2_monaco-editor@0.27.0
   next-transpile-modules: 8.0.0
+  pnpm: 3.8.1
   style-loader: 3.2.1
   tailwindcss: 2.2.15
   typescript: 4.4.3
@@ -3416,6 +3418,12 @@ packages:
     transitivePeerDependencies:
       - typescript
     dev: false
+
+  /pnpm/3.8.1:
+    resolution: {integrity: sha512-uINy/U+TNvUHInG1l0/NrgDosUtafn9BrHjP5+v+ojpw+zb/lgXjkQmMHB4461LKezlNoBb7+0JOrNnm5JhZFg==}
+    engines: {node: '>=8.15'}
+    hasBin: true
+    dev: true
 
   /postcss-js/3.0.3:
     resolution: {integrity: sha512-gWnoWQXKFw65Hk/mi2+WTQTHdPD5UJdDXZmX073EY/B3BWnYjO4F4t0VneTCnCGQ5E5GsCdMkzPaTXwl3r5dJw==}
