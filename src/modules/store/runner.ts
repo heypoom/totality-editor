@@ -48,5 +48,9 @@ export const runnerModule: StoreModule = (store) => {
     runner.on('frame', listener)
   })
 
+  store.on('runner/inject-global', (s, globals) => {
+    runner.injectGlobal(globals)
+  })
+
   store.on('runner/set', (s, data) => set(s, data))
 }

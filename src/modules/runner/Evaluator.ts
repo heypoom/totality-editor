@@ -74,8 +74,16 @@ export class JSRunner {
     })
   }
 
-  setScope(key: string, value: unknown) {
+  setGlobalVar(key: string, value: unknown) {
     this.realm.global[key] = value
+  }
+
+  injectGlobal(globals: Record<string, unknown>) {
+    for (const key in globals) {
+      if (globals.hasOwnProperty(key)) {
+        this.setGlobalVar(key, globals[key])
+      }
+    }
   }
 
   on<T extends keyof RunHandlers>(type: T, handler: RunHandlers[T]) {

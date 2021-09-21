@@ -13,12 +13,17 @@ import {
   TotalityOptions,
 } from '@types'
 
+type OptionsOf<E extends readonly Extension<any, any>[]> = Partial<
+  OptionsFromExtensions<E>
+> &
+  EditorOptions &
+  Partial<TotalityOptions>
+
 export interface ITotalityProps<E extends readonly Extension<any, any>[]> {
   extensions?: E
-  options?: Partial<OptionsFromExtensions<E>> &
-    EditorOptions &
-    Partial<TotalityOptions>
+  options?: OptionsOf<E>
   code?: string
+  scope?: Record<string, unknown>
 }
 
 const WindowManagerView = loadable(
@@ -29,7 +34,7 @@ const WindowManagerView = loadable(
 export const Totality = <E extends readonly Extension<any>[]>(
   props: ITotalityProps<E>
 ) => {
-  const {extensions, options, code} = props
+  const {extensions, options, scope, code} = props
 
   const {dispatch} = useStore()
 
@@ -45,6 +50,9 @@ export const Totality = <E extends readonly Extension<any>[]>(
   useEffect(() => {
     dispatch('extension/use-all', (extensions ?? []) as Extension[])
   }, [extensions, dispatch])
+
+  // Inject global variables into the runner.
+  useEffect(() => dispatch('runner/inject-global', scope), [scope, dispatch])
 
   // Setup the editor.
   useEffect(() => dispatch('core/setup'), [dispatch])

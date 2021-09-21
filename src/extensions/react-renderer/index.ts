@@ -10,7 +10,7 @@ export const ReactRendererExtension = createExtension({
   async setup(app) {
     const {renderer, runner} = app
 
-    runner.setScope('React', React)
+    runner.setGlobalVar('React', React)
 
     renderer.create('react', {
       component: ReactRendererView,

@@ -21,5 +21,6 @@ export interface RunnerEvents {
   'runner/on-frame': FrameListener
 
   // Setters
+  'runner/inject-global': Record<string, unknown>
   'runner/set': Partial<RunnerState>
 }
