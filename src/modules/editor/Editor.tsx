@@ -18,6 +18,7 @@ export const Editor: React.FC = () => {
     return {...defaultMonacoOptions, ...intoEditorOptions(options ?? {})}
   }, [options])
 
+  const path = options['file.path'] ?? 'main.tsx'
   const height = options['layout.height'] ?? '100vh'
 
   const handleChange = (code?: string) => dispatch('code/set', code ?? '')
@@ -29,7 +30,7 @@ export const Editor: React.FC = () => {
       options={config}
       theme={config.theme}
       onChange={handleChange}
-      path="main.tsx"
+      path={path}
       defaultLanguage={config.language}
       loading={<LoadingSkeleton />}
       onMount={(editor, monaco) => register({editor, monaco})}

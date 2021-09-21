@@ -2,7 +2,7 @@ import {debounce} from 'lodash'
 
 import {StoreModule} from '@types'
 
-const SAVE_KEY = 'totality.code'
+const saveKeyOf = (key = 'default') => `totality.persist.${key}`
 
 export const codeModule: StoreModule = (store) => {
   const save = debounce(() => store.dispatch('code/save'), 1000)
@@ -11,13 +11,18 @@ export const codeModule: StoreModule = (store) => {
   store.on('@init', () => ({code: ''}))
 
   store.on('code/save', (s) => {
-    localStorage.setItem(SAVE_KEY, s.code)
+    if (!s.options['persist.enabled']) return
+    const persistKey = saveKeyOf(s.options['file.path'])
+
+    localStorage.setItem(persistKey, s.code)
   })
 
-  store.on('code/load', () => {
-    const code = localStorage.getItem(SAVE_KEY) || ''
+  store.on('code/load', (s) => {
+    if (!s.options['persist.enabled']) return
+    const persistKey = saveKeyOf(s.options['file.path'])
 
-    store.dispatch('code/set', code)
+    const code = localStorage.getItem(persistKey)
+    if (code) store.dispatch('code/set', code)
   })
 
   store.on('code/set', (s, code) => {

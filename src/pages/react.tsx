@@ -42,6 +42,8 @@ export default function ReactDemo() {
             'editor.fontWeight': '500',
             'editor.fontLigatures': true,
             'theme.background': '#21222d',
+            'persist.enabled': true,
+            'file.path': 'react.tsx',
           }}
         />
       </div>

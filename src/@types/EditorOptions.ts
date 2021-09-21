@@ -11,4 +11,6 @@ export type CoreOptions = Record<string, any> &
 export interface TotalityOptions {
   'layout.height': string
   'theme.background': string
+  'file.path': string
+  'persist.enabled': boolean
 }
