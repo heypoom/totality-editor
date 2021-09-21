@@ -11,6 +11,8 @@ import {
   ReactRendererExtension,
 } from '@totality/extensions'
 
+import {ReactSample} from 'constants/sample/react.sample'
+
 const extensions = [
   DraculaThemeExtension,
   TypeScriptExtension,
@@ -34,6 +36,7 @@ export default function ReactDemo() {
         <TotalityWindow
           width="760px"
           height="320px"
+          code={ReactSample}
           extensions={extensions}
           options={{
             'editor.language': 'typescript',

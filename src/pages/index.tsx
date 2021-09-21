@@ -9,6 +9,8 @@ import {
   LinkedListVisualizerExtension,
 } from '@totality/extensions'
 
+import {LinkedListSample} from 'constants/sample/linked-list.sample'
+
 const extensions = [
   DraculaThemeExtension,
   TypeScriptExtension,
@@ -30,6 +32,7 @@ export default function Article() {
         <TotalityWindow
           width="760px"
           height="320px"
+          code={LinkedListSample}
           extensions={extensions}
           options={{
             'editor.fontSize': 16,
@@ -37,6 +40,8 @@ export default function Article() {
             'editor.fontWeight': '500',
             'editor.fontLigatures': true,
             'theme.background': '#21222d',
+            'persist.enabled': true,
+            'file.path': 'linked-list.tsx',
           }}
         />
       </div>
