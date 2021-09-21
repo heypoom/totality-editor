@@ -18,6 +18,7 @@ export interface ITotalityProps<E extends readonly Extension<any, any>[]> {
   options?: Partial<OptionsFromExtensions<E>> &
     EditorOptions &
     Partial<TotalityOptions>
+  code?: string
 }
 
 const WindowManagerView = loadable(
@@ -28,21 +29,25 @@ const WindowManagerView = loadable(
 export const Totality = <E extends readonly Extension<any>[]>(
   props: ITotalityProps<E>
 ) => {
-  const {extensions, options} = props
+  const {extensions, options, code} = props
 
   const {dispatch} = useStore()
 
-  useEffect(() => {
-    dispatch('config/set', options)
-  }, [options, dispatch])
+  // Sync editor configuration.
+  useEffect(() => dispatch('config/set', options), [options, dispatch])
 
+  // Sync initial code.
+  useEffect(() => {
+    if (code) dispatch('code/set', code)
+  }, [code, dispatch])
+
+  // Sync active extensions.
   useEffect(() => {
     dispatch('extension/use-all', (extensions ?? []) as Extension[])
   }, [extensions, dispatch])
 
-  useEffect(() => {
-    dispatch('core/setup')
-  }, [dispatch])
+  // Setup the editor.
+  useEffect(() => dispatch('core/setup'), [dispatch])
 
   return (
     <TotalityErrorBoundary>
