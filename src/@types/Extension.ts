@@ -1,9 +1,10 @@
-import {ExtensionContext} from './ExtensionContext'
+import {ExtensionContext, CoreOptions} from '@types'
 
 export interface Extension<Config = Record<string, any>, Instance = unknown> {
   id: string
   meta?: ExtensionMeta
   enabled?: boolean
+  options?: CoreOptions
   defaultConfig?: Config
 
   setup(

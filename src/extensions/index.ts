@@ -8,4 +8,5 @@ export {JSXHighlighterExtension} from './jsx-highlighter'
 export {TypeScriptReactExtension} from './typescript-react'
 
 export {ReactRendererExtension} from './react-renderer'
+export {GLSLPlaygroundExtension} from './glsl-playground'
 export {LinkedListVisualizerExtension} from './linked-list-visualizer'

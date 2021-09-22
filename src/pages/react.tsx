@@ -37,18 +37,10 @@ export default function ReactDemo() {
           width="760px"
           height="320px"
           scope={{fetch}}
+          path="react.tsx"
           code={ReactSample}
           extensions={extensions}
-          options={{
-            'editor.language': 'typescript',
-            'editor.fontSize': 16,
-            'editor.fontFamily': 'JetBrains Mono',
-            'editor.fontWeight': '500',
-            'editor.fontLigatures': true,
-            'theme.background': '#21222d',
-            'persist.enabled': true,
-            'file.path': 'react.tsx',
-          }}
+          options={{'persist.enabled': true}}
         />
       </div>
     </div>

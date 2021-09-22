@@ -24,15 +24,8 @@ export default function Home() {
       <Totality
         code={LinkedListSample}
         extensions={extensions}
-        options={{
-          'editor.fontSize': 24,
-          'editor.fontFamily': 'JetBrains Mono',
-          'editor.fontWeight': '500',
-          'editor.fontLigatures': true,
-          'theme.background': '#21222d',
-          'persist.enabled': true,
-          'file.path': 'linked-list.tsx',
-        }}
+        path="linked-list.tsx"
+        options={{'editor.fontSize': 24, 'persist.enabled': true}}
       />
     </div>
   )

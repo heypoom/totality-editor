@@ -28,14 +28,14 @@ export const Editor: React.FC = () => {
 
   return (
     <MonacoEditor
+      path={path}
       value={code}
       height={height}
       options={monacoOption}
-      theme={monacoOption.theme}
       onChange={handleChange}
-      defaultPath={path}
-      defaultLanguage={monacoOption.language}
+      theme={monacoOption.theme}
       loading={<LoadingSkeleton />}
+      language={monacoOption.language}
       onMount={(editor, monaco) => register({editor, monaco})}
     />
   )

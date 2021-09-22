@@ -32,17 +32,10 @@ export default function Article() {
         <TotalityWindow
           width="760px"
           height="320px"
+          path="linked-list.tsx"
           code={LinkedListSample}
           extensions={extensions}
-          options={{
-            'editor.fontSize': 16,
-            'editor.fontFamily': 'JetBrains Mono',
-            'editor.fontWeight': '500',
-            'editor.fontLigatures': true,
-            'theme.background': '#21222d',
-            'persist.enabled': true,
-            'file.path': 'linked-list.tsx',
-          }}
+          options={{'persist.enabled': true}}
         />
       </div>
     </div>

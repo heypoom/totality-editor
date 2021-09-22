@@ -1,13 +1,19 @@
 import {createExtensionContext} from './createExtensionContext'
 
-import {StoreModule} from '@types'
+import {Extension, StoreModule} from '@types'
+
+const mergeOptions = <T>(options: T, extension: Extension) => ({
+  ...(extension.options ?? {}),
+  ...(extension.defaultConfig ?? {}),
+  ...options,
+})
 
 export const extensionModule: StoreModule = (store) => {
   store.on('@init', () => ({extensions: []}))
 
   store.on('extension/add', (state, extension) => ({
     extensions: [...state.extensions, extension],
-    options: {...extension.defaultConfig, ...state.options},
+    options: mergeOptions(state.options, extension),
   }))
 
   store.on('extension/use', async (state, extension) => {

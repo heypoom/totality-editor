@@ -2,11 +2,17 @@ import 'twin.macro'
 
 import {TotalityWindow} from '@totality/core'
 
-import {VimModeExtension, DraculaThemeExtension} from '@totality/extensions'
+import {
+  VimModeExtension,
+  DraculaThemeExtension,
+  GLSLPlaygroundExtension,
+} from '@totality/extensions'
 
-import {ReactSample} from 'constants/sample/react.sample'
-
-const extensions = [DraculaThemeExtension, VimModeExtension] as const
+const extensions = [
+  DraculaThemeExtension,
+  GLSLPlaygroundExtension,
+  VimModeExtension,
+] as const
 
 export default function GLSLDemo() {
   return (
@@ -21,15 +27,8 @@ export default function GLSLDemo() {
           width="760px"
           height="320px"
           extensions={extensions}
-          options={{
-            'editor.language': 'glsl',
-            'editor.fontSize': 16,
-            'editor.fontFamily': 'JetBrains Mono',
-            'editor.fontWeight': '500',
-            'theme.background': '#21222d',
-            'persist.enabled': true,
-            'file.path': 'shader.glsl',
-          }}
+          path="shader.glsl"
+          options={{'persist.enabled': true}}
         />
       </div>
     </div>

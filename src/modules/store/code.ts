@@ -27,7 +27,10 @@ export const codeModule: StoreModule = (store) => {
 
   store.on('code/set', (s, code) => {
     save()
-    compile()
+
+    // Compile if editor language is in typescript.
+    const lang = s.options['editor.language']
+    if (!lang || lang === 'typescript') compile()
 
     return {code}
   })
