@@ -22,10 +22,7 @@ void main() {
 
 export default function GLSLDemo() {
   return (
-    <div
-      tw="bg-purple-400 text-gray-800 min-h-screen"
-      style={{background: '#badc58'}}
-    >
+    <div tw="bg-purple-500 text-gray-800 min-h-screen">
       <div tw="flex flex-col items-center justify-center w-full min-h-screen">
         <h1 tw="text-white text-4xl mb-6 font-semibold">GLSL Demo.</h1>
 
