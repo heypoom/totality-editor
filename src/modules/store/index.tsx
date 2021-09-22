@@ -1,4 +1,4 @@
-import {createStoreon} from 'storeon'
+import {createStoreon, StoreonStore} from 'storeon'
 import {createContext} from 'preact'
 import {customContext} from 'storeon/preact'
 import {storeonDevtools} from 'storeon/devtools'
@@ -12,26 +12,21 @@ import {layoutModule} from './layout'
 import {rendererModule} from './renderer'
 import {extensionModule} from './extension'
 
-import {Events, State} from '@types'
+import {Events, State, Store} from '@types'
 
-export const store = createStoreon<State, Events>([
-  codeModule,
-  configModule,
-  coreModule,
-  extensionModule,
-  hooksModule,
-  rendererModule,
-  runnerModule,
-  layoutModule,
-  storeonDevtools,
-])
-
-export const AppContext = createContext(store)
-
-export const useStore = customContext(AppContext)
-
-// Enables debugging the store.
-if (typeof window !== 'undefined') {
-  // @ts-ignore
-  window.store = store
+export function createStore() {
+  return createStoreon<State, Events>([
+    codeModule,
+    configModule,
+    coreModule,
+    extensionModule,
+    hooksModule,
+    rendererModule,
+    runnerModule,
+    layoutModule,
+    storeonDevtools,
+  ])
 }
+
+export const AppContext = createContext<Store>({} as Store)
+export const useStore = customContext(AppContext)

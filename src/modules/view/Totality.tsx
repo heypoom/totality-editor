@@ -1,9 +1,9 @@
 import 'twin.macro'
 
-import React, {useEffect} from 'react'
+import React, {useEffect, useMemo} from 'react'
 import loadable from '@loadable/component'
 
-import {AppContext, store, useStore} from 'modules/store'
+import {AppContext, createStore, store, useStore} from 'modules/store'
 
 import {useCombinedConfig} from 'modules/core/TotalityProvider'
 import {TotalityErrorBoundary} from 'modules/common/ErrorBoundary'
@@ -26,10 +26,11 @@ const WindowManagerView = loadable(
 export const Totality = <E extends readonly Extension<any>[]>(
   props: ITotalityProps<E>
 ) => {
-  const {extensions, options, scope, code, path} = useCombinedConfig(props)
-  console.log('Combined Config:', {extensions, options, scope, code})
+  const {extensions, options, scope, code} = useCombinedConfig(props)
 
-  const {dispatch} = useStore()
+  // Creates a separate store for each totality editor instance.
+  const store = useMemo(() => createStore(), [])
+  const {dispatch} = store
 
   // Sync editor configuration.
   useEffect(() => dispatch('config/set', options), [options, dispatch])
