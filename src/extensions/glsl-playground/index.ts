@@ -1,6 +1,8 @@
+import {createExtension} from 'utils'
+
 import {GLSLPlaygroundView} from './View'
 
-import {createExtension} from 'utils'
+import {configureGrammar} from './utils/glsl-language'
 
 export const GLSLPlaygroundExtension = createExtension({
   id: 'playground.glsl',
@@ -15,5 +17,8 @@ export const GLSLPlaygroundExtension = createExtension({
     // Create the GLSL renderer.
     renderer.create('glsl-playground', {component: GLSLPlaygroundView})
     renderer.use('glsl-playground')
+
+    // Configure the GLSL Syntax Highlighting.
+    editor.setup(configureGrammar)
   },
 })
