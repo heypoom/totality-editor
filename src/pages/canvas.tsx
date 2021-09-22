@@ -9,26 +9,23 @@ import {
   DraculaThemeExtension,
   CanvasRendererExtension,
 } from '@totality/extensions'
+import {CanvasSample} from 'constants/sample/canvas.sample'
 
 const extensions = [
   DraculaThemeExtension,
-  // VimModeExtension,
+  VimModeExtension,
   TypeScriptExtension,
   CanvasRendererExtension,
 ] as const
-
-const CanvasSample = `
-const ctx = canvas.getContext('2d')
-
-ctx.fillStyle = '#badc58'
-ctx.fillRect(0, 0, canvas.width, canvas.height)
-`.trimStart()
 
 export default function CanvasDemo() {
   const [isLiveLayout, toggle] = useReducer((s) => !s, true)
 
   return (
-    <div tw="bg-purple-500 text-gray-800 min-h-screen relative">
+    <div
+      style={{background: '#badc58'}}
+      tw="text-gray-800 min-h-screen relative"
+    >
       <button
         tw="absolute z-10 bg-red-500 bottom-5 right-5 px-3 py-1 text-white shadow-lg"
         onClick={toggle}
