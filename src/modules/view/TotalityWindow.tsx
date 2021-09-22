@@ -20,11 +20,13 @@ export const TotalityWindow = <E extends readonly Extension<any>[]>(
   const {options} = useCombinedConfig(totalityProps)
 
   // Override the height on the window level.
-  if (height && options) options['layout.height'] = height
+  if (options) options['layout.height'] = height
+
+  const background = options?.['theme.background'] ?? '#1e1e1e'
 
   return (
     <div
-      css={{background: '#21222d', width, minHeight: height}}
+      css={{background, width, minHeight: height}}
       tw="p-2 bg-gray-900 rounded-lg shadow-carbon"
     >
       <div tw="flex p-1 pb-2">
