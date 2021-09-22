@@ -5,20 +5,28 @@ import {Totality} from '@totality/core'
 
 import {
   VimModeExtension,
+  TypeScriptExtension,
   DraculaThemeExtension,
-  GLSLPlaygroundExtension,
+  CanvasRendererExtension,
 } from '@totality/extensions'
-
-import {GLSLSample} from 'constants/sample/glsl.sample'
 
 const extensions = [
   DraculaThemeExtension,
-  GLSLPlaygroundExtension,
   VimModeExtension,
+  TypeScriptExtension,
+  CanvasRendererExtension,
 ] as const
 
-export default function GLSLLiveDemo() {
-  const [isLiveLayout, toggle] = useReducer((s) => !s, true)
+const CanvasSample = `
+resize()
+const ctx = canvas.getContext('2d')
+
+ctx.fillStyle = 'green'
+ctx.fillRect(10, 10, 150, 100)
+`.trimStart()
+
+export default function CanvasDemo() {
+  const [isLiveLayout, toggle] = useReducer((s) => !s, false)
 
   return (
     <div tw="bg-purple-500 text-gray-800 min-h-screen relative">
@@ -31,8 +39,8 @@ export default function GLSLLiveDemo() {
 
       <Totality
         height="100vh"
-        code={GLSLSample}
-        path="shader.glsl"
+        code={CanvasSample}
+        path="canvas.tsx"
         extensions={extensions}
         {...(isLiveLayout && {
           layout: 'visual-in-background',
