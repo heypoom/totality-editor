@@ -22,6 +22,7 @@ export const TotalityWindow = <E extends readonly Extension<any>[]>(
   // Override the height on the window level.
   if (options) options['layout.height'] = height
 
+  // Override the background color of the window decoration.
   const background = options?.['theme.background'] ?? '#1e1e1e'
 
   return (
