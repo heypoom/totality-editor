@@ -8,14 +8,16 @@ export const ReactRendererExtension = createExtension({
   id: 'renderer.react',
 
   async setup(app) {
-    const {renderer, runner} = app
+    const {renderer, runner, editor} = app
 
+    // Inject the React global and the renderer function.
     runner.setGlobalVar('React', React)
 
     runner.setGlobalVar('render', (element: React.ReactNode) => {
       runner.track('ReactRoot', element)
     })
 
+    // Create the React renderer.
     renderer.create('react', {
       component: ReactRendererView,
       state: {element: null},
@@ -25,7 +27,6 @@ export const ReactRendererExtension = createExtension({
 
     // Add TypeScript type definitions for the render function.
     const definition = `declare function render(element: React.ReactNode): void`
-
-    app.editor.addTypeDefinition('react-runtime', definition)
+    editor.addTypeDefinition('react-runtime', definition)
   },
 })
