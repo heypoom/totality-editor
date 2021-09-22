@@ -1,6 +1,4 @@
 export const ReactSample = `
-const render = (element: React.ReactNode) => track('RootNode', element)
-
 const {useState, useEffect} = React
 
 const Wrapper: React.FC = ({ children }) => {

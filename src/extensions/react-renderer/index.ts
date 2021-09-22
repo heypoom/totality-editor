@@ -12,11 +12,25 @@ export const ReactRendererExtension = createExtension({
 
     runner.setGlobalVar('React', React)
 
+    runner.setGlobalVar('render', (element: React.ReactNode) => {
+      runner.track('ReactRoot', element)
+    })
+
     renderer.create('react', {
       component: ReactRendererView,
       state: {element: null},
     })
 
     renderer.use('react')
+
+    // Add TypeScript type definitions for the render function.
+    app.editor.setup(async (context) => {
+      const {monaco} = context
+      const tsd = monaco.languages.typescript.typescriptDefaults
+
+      const source = `declare function render(element: React.ReactNode): void`
+
+      tsd.addExtraLib(source, 'react-runtime.d.ts')
+    })
   },
 })
