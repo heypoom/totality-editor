@@ -35,8 +35,17 @@ export function useCombinedConfig<E extends readonly Extension<any>[]>(
     new Set([...(shared?.extensions ?? []), ...(props?.extensions ?? [])])
   ) as unknown as E
 
+  // Merge the default options of the extensions.
+  const extensionDefaultOptions = extensions
+    .map((e) => e.options)
+    .reduce((a, b) => ({...a, ...b}))
+
   // Merge the editor options.
-  const options = {...shared?.options, ...props?.options} as OptionsOf<E>
+  const options = {
+    ...extensionDefaultOptions,
+    ...shared?.options,
+    ...props?.options,
+  } as OptionsOf<E>
 
   // Override the file path.
   if (props.path) options['file.path'] = props.path

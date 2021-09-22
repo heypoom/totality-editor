@@ -9,7 +9,7 @@ import {
 } from '@totality/extensions'
 
 const extensions = [
-  // DraculaThemeExtension,
+  DraculaThemeExtension,
   GLSLPlaygroundExtension,
   VimModeExtension,
 ] as const
