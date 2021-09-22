@@ -30,15 +30,19 @@ export function useCombinedConfig<E extends readonly Extension<any>[]>(
 ): ITotalityProps<E> {
   const shared = useContext(SharedConfigContext) ?? {}
 
+  // Merge and de-duplicate the extensions.
   const extensions = Array.from(
     new Set([...(shared?.extensions ?? []), ...(props?.extensions ?? [])])
   ) as unknown as E
 
+  // Merge the editor options.
   const options = {...shared?.options, ...props?.options} as OptionsOf<E>
 
   // Override the file path.
   if (props.path) options['file.path'] = props.path
-  if (props.persist) options['persist.enabled'] = true
+
+  // Override the persistence option.
+  if (props.persist !== undefined) options['persist.enabled'] = props.persist
 
   return {
     ...props,
