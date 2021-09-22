@@ -62,12 +62,7 @@ export default function MultipleEditorDemo() {
             molestias dolores.
           </p>
 
-          <TotalityWindow
-            width="760px"
-            height="320px"
-            path="b.tsx"
-            options={{'persist.enabled': true}}
-          />
+          <TotalityWindow width="760px" height="320px" path="b.tsx" />
         </div>
       </div>
     </TotalityProvider>
