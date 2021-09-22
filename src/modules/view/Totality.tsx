@@ -15,6 +15,7 @@ export interface ITotalityProps<E extends readonly Extension<any, any>[]> {
   options?: OptionsOf<E>
   code?: string
   path?: string
+  persist?: boolean
   scope?: Record<string, unknown>
 }
 

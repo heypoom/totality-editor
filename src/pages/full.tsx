@@ -25,7 +25,8 @@ export default function Home() {
         code={LinkedListSample}
         extensions={extensions}
         path="linked-list.tsx"
-        options={{'editor.fontSize': 24, 'persist.enabled': true}}
+        options={{'editor.fontSize': 24}}
+        persist
       />
     </div>
   )

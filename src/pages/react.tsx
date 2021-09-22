@@ -40,7 +40,7 @@ export default function ReactDemo() {
           path="react.tsx"
           code={ReactSample}
           extensions={extensions}
-          options={{'persist.enabled': true}}
+          persist
         />
       </div>
     </div>

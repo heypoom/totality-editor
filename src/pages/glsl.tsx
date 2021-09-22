@@ -28,7 +28,7 @@ export default function GLSLDemo() {
           height="320px"
           extensions={extensions}
           path="shader.glsl"
-          options={{'persist.enabled': true}}
+          persist
         />
       </div>
     </div>

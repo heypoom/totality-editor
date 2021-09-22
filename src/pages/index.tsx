@@ -35,7 +35,7 @@ export default function Article() {
           path="linked-list.tsx"
           code={LinkedListSample}
           extensions={extensions}
-          options={{'persist.enabled': true}}
+          persist
         />
       </div>
     </div>

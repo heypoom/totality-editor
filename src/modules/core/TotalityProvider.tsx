@@ -38,6 +38,7 @@ export function useCombinedConfig<E extends readonly Extension<any>[]>(
 
   // Override the file path.
   if (props.path) options['file.path'] = props.path
+  if (props.persist) options['persist.enabled'] = true
 
   return {
     ...props,

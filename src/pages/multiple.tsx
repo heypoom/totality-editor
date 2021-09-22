@@ -25,11 +25,7 @@ const extensions = [
 
 export default function MultipleEditorDemo() {
   return (
-    <TotalityProvider
-      scope={{fetch}}
-      extensions={extensions}
-      options={{'vim.enabled': true}}
-    >
+    <TotalityProvider extensions={extensions} scope={{fetch}}>
       <div tw="bg-purple-500 text-white min-h-screen">
         <div tw="flex flex-col w-full min-h-screen max-w-5xl mx-auto gap-8 py-10 px-10">
           <h1 tw="text-4xl font-semibold">Multiple Editor Demo.</h1>
