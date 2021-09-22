@@ -14,13 +14,10 @@ interface Props {
 export const TotalityWindow = <E extends readonly Extension<any>[]>(
   props: ITotalityProps<E> & Props
 ) => {
-  const {width, height, ...totalityProps} = props
+  const {width, ...totalityProps} = props
 
   // Get the combined configuration.
-  const {options} = useCombinedConfig(totalityProps)
-
-  // Override the height on the window level.
-  if (options) options['layout.height'] = height
+  const {options, height} = useCombinedConfig(totalityProps)
 
   // Override the background color of the window decoration.
   const background = options?.['theme.background'] ?? '#1e1e1e'

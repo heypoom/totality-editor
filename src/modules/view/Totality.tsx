@@ -28,6 +28,9 @@ export interface ITotalityProps<E extends readonly Extension<any, any>[]> {
 
   /** Injects these variables into the global runner scope. */
   scope?: Record<string, unknown>
+
+  /** Height of the current window */
+  height?: string
 }
 
 const WindowManagerView = loadable(

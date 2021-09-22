@@ -47,6 +47,9 @@ export function useCombinedConfig<E extends readonly Extension<any>[]>(
     ...props?.options,
   } as OptionsOf<E>
 
+  // Override the height on the window level.
+  if (props.height) options['layout.height'] = props.height
+
   // Override the file path.
   if (props.path) options['file.path'] = props.path
 
