@@ -8,29 +8,13 @@ import {
   GLSLPlaygroundExtension,
 } from '@totality/extensions'
 
+import {GLSLWarpingSample} from 'constants/sample/glsl-warping.sample'
+
 const extensions = [
   DraculaThemeExtension,
   GLSLPlaygroundExtension,
   VimModeExtension,
 ] as const
-
-const SampleCode = `
-precision mediump float;
-
-uniform vec2 u_resolution;
-uniform vec2 u_mouse;
-uniform float u_time;
-
-void main() {
-  vec2 st = gl_FragCoord.xy / u_resolution.xy;
-  st.x *= u_resolution.x / u_resolution.y;
-
-  vec3 color = vec3(0);
-  color = vec3(st.x, st.y, abs(sin(u_time)));
-
-  gl_FragColor = vec4(color, 1.0);
-}
-`.trimStart()
 
 export default function GLSLDemo() {
   return (
@@ -43,7 +27,7 @@ export default function GLSLDemo() {
           height="320px"
           path="shader.glsl"
           extensions={extensions}
-          code={SampleCode}
+          code={GLSLWarpingSample}
         />
       </div>
     </div>
