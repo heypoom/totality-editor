@@ -1,7 +1,7 @@
 export type {Extension} from './Extension'
 export type {ExtensionContext} from './ExtensionContext'
 export type {IMonacoOption, EditorContext} from './EditorContext'
-export type {OptionsFromExtensions} from './OptionsFromExtensions'
+export type {OptionsFromExtensions, OptionsOf} from './OptionsFromExtensions'
 
 export type {Store, State, Events, Dispatch, StoreModule} from './store'
 

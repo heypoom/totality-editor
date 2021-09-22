@@ -4,37 +4,30 @@ import React, {useEffect} from 'react'
 import loadable from '@loadable/component'
 
 import {AppContext, store, useStore} from 'modules/store'
+
+import {useCombinedConfig} from 'modules/core/TotalityProvider'
 import {TotalityErrorBoundary} from 'modules/common/ErrorBoundary'
 
-import {
-  EditorOptions,
-  Extension,
-  OptionsFromExtensions,
-  TotalityOptions,
-} from '@types'
-
-type OptionsOf<E extends readonly Extension<any, any>[]> = Partial<
-  OptionsFromExtensions<E>
-> &
-  EditorOptions &
-  Partial<TotalityOptions>
+import {OptionsOf, Extension} from '@types'
 
 export interface ITotalityProps<E extends readonly Extension<any, any>[]> {
   extensions?: E
   options?: OptionsOf<E>
   code?: string
+  path?: string
   scope?: Record<string, unknown>
 }
 
 const WindowManagerView = loadable(
   async () => (await import('./WindowManagerView')).WindowManagerView,
-  {fallback: <div>loading</div>}
+  {fallback: <div />}
 )
 
 export const Totality = <E extends readonly Extension<any>[]>(
   props: ITotalityProps<E>
 ) => {
-  const {extensions, options, scope, code} = props
+  const {extensions, options, scope, code, path} = useCombinedConfig(props)
+  console.log('Combined Config:', {extensions, options, scope, code})
 
   const {dispatch} = useStore()
 

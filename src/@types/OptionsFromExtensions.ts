@@ -2,6 +2,8 @@ import {UnionToIntersection} from 'type-fest'
 
 import {Extension} from './Extension'
 
+import {EditorOptions, TotalityOptions} from '@types'
+
 /** Construct the options object from the extensions. */
 export type OptionsFromExtensions<E extends readonly Extension<any, any>[]> =
   UnionToIntersection<
@@ -10,4 +12,9 @@ export type OptionsFromExtensions<E extends readonly Extension<any, any>[]> =
     }[number]
   >
 
-type K = true extends unknown ? 'yes' : 'no'
+/** Construct the full options for the editor. */
+export type OptionsOf<E extends readonly Extension<any, any>[]> = Partial<
+  OptionsFromExtensions<E>
+> &
+  EditorOptions &
+  Partial<TotalityOptions>

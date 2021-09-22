@@ -1,3 +1,4 @@
+import {nanoid} from 'nanoid'
 import React, {useMemo} from 'react'
 import MonacoEditor from '@monaco-editor/react'
 
@@ -14,11 +15,15 @@ export const Editor: React.FC = () => {
   const {register} = useSetupEditorHooks()
   const {code, options, dispatch} = useStore('code', 'options')
 
-  const config: IMonacoOption = useMemo(() => {
+  const monacoOption: IMonacoOption = useMemo(() => {
     return {...defaultMonacoOptions, ...intoEditorOptions(options ?? {})}
   }, [options])
 
-  const path = options['file.path'] ?? 'main.tsx'
+  const defaultPath = options['file.path']
+
+  const path = useMemo(() => defaultPath ?? `${nanoid()}.tsx`, [defaultPath])
+  console.log('path =', path)
+
   const height = options['layout.height'] ?? '100vh'
 
   const handleChange = (code?: string) => dispatch('code/set', code ?? '')
@@ -27,11 +32,11 @@ export const Editor: React.FC = () => {
     <MonacoEditor
       value={code}
       height={height}
-      options={config}
-      theme={config.theme}
+      options={monacoOption}
+      theme={monacoOption.theme}
       onChange={handleChange}
       path={path}
-      defaultLanguage={config.language}
+      defaultLanguage={monacoOption.language}
       loading={<LoadingSkeleton />}
       onMount={(editor, monaco) => register({editor, monaco})}
     />
