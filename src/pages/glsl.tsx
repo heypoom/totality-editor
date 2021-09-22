@@ -8,7 +8,7 @@ import {
   GLSLPlaygroundExtension,
 } from '@totality/extensions'
 
-import {GLSLWarpingSample} from 'constants/sample/glsl-warping.sample'
+import {GLSLSample} from 'constants/sample/glsl.sample'
 
 const extensions = [
   DraculaThemeExtension,
@@ -27,7 +27,7 @@ export default function GLSLDemo() {
           height="320px"
           path="shader.glsl"
           extensions={extensions}
-          code={GLSLWarpingSample}
+          code={GLSLSample}
         />
       </div>
     </div>
