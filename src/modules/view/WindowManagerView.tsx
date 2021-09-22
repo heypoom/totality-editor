@@ -4,6 +4,7 @@ import Split from 'react-split'
 
 import {useStore} from 'modules/store'
 import {panelViews} from 'modules/panel'
+import {FullVisualLayout} from './FullVisualLayout'
 
 const handlerImage = `url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==')`
 
@@ -24,6 +25,9 @@ export const WindowManagerView: React.FC = () => {
   const style = {background: bgColor, height}
 
   if (typeof window === 'undefined') return null
+
+  // Use custom layout providers for presets.
+  if (layout.preset === 'visual-in-background') return <FullVisualLayout />
 
   return (
     <div style={style}>

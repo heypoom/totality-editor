@@ -20,6 +20,14 @@ export const DraculaThemeExtension = createExtension({
       const bg = app.options['theme.background']
       if (bg) DraculaTheme.colors['editor.background'] = bg
 
+      // Override the highlight colors, if present.
+      const hl = app.options['theme.highlight']
+
+      if (hl) {
+        DraculaTheme.colors['editor.lineHighlightBackground'] = hl
+        DraculaTheme.colors['editor.selectionBackground'] = hl
+      }
+
       editor.defineTheme('dracula', DraculaTheme)
       editor.setTheme('dracula')
     })

@@ -17,7 +17,7 @@ const extensions = [
   VimModeExtension,
 ] as const
 
-export default function GLSLDemo() {
+export default function GLSLLiveDemo() {
   return (
     <div tw="bg-purple-500 text-gray-800 min-h-screen">
       <Totality
@@ -25,6 +25,12 @@ export default function GLSLDemo() {
         extensions={extensions}
         code={GLSLSample}
         height="100vh"
+        layout="visual-in-background"
+        options={{
+          'theme.background': '#00000000',
+          'theme.highlight': '#00000022',
+          'editor.fontSize': 21,
+        }}
       />
     </div>
   )

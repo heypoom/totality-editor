@@ -7,12 +7,16 @@ import {configureGrammar} from './utils/glsl-language'
 export const GLSLPlaygroundExtension = createExtension({
   id: 'playground.glsl',
 
+  defaultConfig: {
+    'glsl.backgroundPreview': false,
+  },
+
   options: {
     'editor.language': 'glsl',
   },
 
   async setup(app) {
-    const {renderer, runner, editor} = app
+    const {renderer, editor, store, options} = app
 
     // Create the GLSL renderer.
     renderer.create('glsl-playground', {component: GLSLPlaygroundView})

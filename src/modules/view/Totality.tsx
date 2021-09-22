@@ -8,7 +8,7 @@ import {AppContext, createStore} from 'modules/store'
 import {useCombinedConfig} from 'modules/core'
 import {TotalityErrorBoundary} from 'modules/common/ErrorBoundary'
 
-import {OptionsOf, Extension} from '@types'
+import {OptionsOf, Extension, LayoutPreset} from '@types'
 
 export interface ITotalityProps<E extends readonly Extension<any, any>[]> {
   /** Extensions to add functionality to the editor. */
@@ -31,6 +31,9 @@ export interface ITotalityProps<E extends readonly Extension<any, any>[]> {
 
   /** Height of the current window */
   height?: string
+
+  /** Layout preset to use. */
+  layout?: LayoutPreset
 }
 
 const WindowManagerView = loadable(
@@ -41,7 +44,7 @@ const WindowManagerView = loadable(
 export const Totality = <E extends readonly Extension<any>[]>(
   props: ITotalityProps<E>
 ) => {
-  const {extensions, options, scope, code} = useCombinedConfig(props)
+  const {extensions, options, scope, code, layout} = useCombinedConfig(props)
 
   // Creates a separate store for each totality editor instance.
   const store = useMemo(() => createStore(), [])
@@ -49,6 +52,9 @@ export const Totality = <E extends readonly Extension<any>[]>(
 
   // Sync editor configuration.
   useEffect(() => dispatch('config/set', options), [options, dispatch])
+
+  // Sync editor layout preset.
+  useEffect(() => dispatch('layout/set', {preset: layout}), [layout, dispatch])
 
   // Sync initial code.
   useEffect(() => {
