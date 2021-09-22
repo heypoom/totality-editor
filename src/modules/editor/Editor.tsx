@@ -20,9 +20,7 @@ export const Editor: React.FC = () => {
   }, [options])
 
   const defaultPath = options['file.path']
-
   const path = useMemo(() => defaultPath ?? `${nanoid()}.tsx`, [defaultPath])
-  console.log('path =', path)
 
   const height = options['layout.height'] ?? '100vh'
 

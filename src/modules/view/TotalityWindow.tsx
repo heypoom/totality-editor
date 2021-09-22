@@ -15,6 +15,8 @@ export const TotalityWindow = <E extends readonly Extension<any>[]>(
   props: ITotalityProps<E> & Props
 ) => {
   const {width, height, ...totalityProps} = props
+
+  // Get the combined configuration.
   const {options} = useCombinedConfig(totalityProps)
 
   // Override the height on the window level.

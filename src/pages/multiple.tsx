@@ -34,7 +34,7 @@ export default function MultipleEditorDemo() {
         'editor.fontFamily': 'JetBrains Mono',
         'editor.fontWeight': '500',
         'theme.background': '#21222d',
-        'vim.enabled': false,
+        'vim.enabled': true,
       }}
     >
       <div tw="bg-purple-500 text-white min-h-screen">
@@ -65,8 +65,8 @@ export default function MultipleEditorDemo() {
           <TotalityWindow
             width="760px"
             height="320px"
-            code={ReactSample}
             path="b.tsx"
+            options={{'persist.enabled': true}}
           />
         </div>
       </div>

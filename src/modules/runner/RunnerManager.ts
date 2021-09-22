@@ -16,3 +16,7 @@ class RunnerManager {
 }
 
 export const runnerManager = new RunnerManager()
+
+if (typeof window !== 'undefined') {
+  window.runnerManager = runnerManager
+}
