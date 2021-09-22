@@ -31,13 +31,21 @@ export async function configureGrammar(context: EditorContext) {
     },
   })
 
+  // Register GLSL shader language.
   monaco.languages.register({
     id: 'glsl',
     extensions: ['.glsl', '.frag', '.vert'],
-    aliases: [],
   })
 
-  // map of monaco "language id's" to TextMate scopeNames
+  // Configure line and block comments.
+  monaco.languages.setLanguageConfiguration('glsl', {
+    comments: {
+      lineComment: '//',
+      blockComment: ['/*', '*/'],
+    },
+  })
+
+  // Map the GLSL language to the TextMate scope name.
   const grammars = new Map()
   grammars.set('glsl', 'source.glsl')
 
