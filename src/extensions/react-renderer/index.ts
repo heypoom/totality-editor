@@ -11,10 +11,9 @@ export const ReactRendererExtension = createExtension({
     const {renderer, runner, editor} = app
 
     // Inject the React global and the renderer function.
-    runner.setGlobalVar('React', React)
-
-    runner.setGlobalVar('render', (element: React.ReactNode) => {
-      runner.track('ReactRoot', element)
+    runner.injectGlobal({
+      React,
+      render: (element: React.ReactNode) => runner.track('ReactRoot', element),
     })
 
     // Create the React renderer.

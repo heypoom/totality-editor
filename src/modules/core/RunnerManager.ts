@@ -18,5 +18,6 @@ class RunnerManager {
 export const runnerManager = new RunnerManager()
 
 if (typeof window !== 'undefined') {
+  // @ts-ignore
   window.runnerManager = runnerManager
 }

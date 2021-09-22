@@ -10,7 +10,9 @@ export const ReactRendererView: React.FC = () => {
 
   useEffect(() => {
     dispatch('runner/on-track', (variable) => {
-      setElement(variable.value)
+      if (variable.key === 'ReactRoot') {
+        setElement(variable.value)
+      }
     })
   }, [dispatch])
 
