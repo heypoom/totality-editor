@@ -8,6 +8,6 @@ export interface RendererProps {
 }
 
 export interface Renderer {
-  state: unknown
+  state?: unknown
   component: React.ComponentType<RendererProps>
 }

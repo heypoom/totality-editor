@@ -17,11 +17,7 @@ export const ReactRendererExtension = createExtension({
     })
 
     // Create the React renderer.
-    renderer.create('react', {
-      component: ReactRendererView,
-      state: {element: null},
-    })
-
+    renderer.create('react', {component: ReactRendererView})
     renderer.use('react')
 
     // Add TypeScript type definitions for the render function.
