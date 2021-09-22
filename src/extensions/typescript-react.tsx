@@ -6,22 +6,22 @@ export const TypeScriptReactExtension = createExtension({
   defaultConfig: {},
 
   async setup(app) {
+    async function addTypedef(id: string, uri: string) {
+      const source = await fetch(uri).then((x) => x.text())
+
+      app.editor.addTypeDefinition(id, source)
+    }
+
+    await addTypedef(
+      'react',
+      'https://cdn.jsdelivr.net/npm/@types/react@17.0.14/index.d.ts'
+    )
+
     app.editor.setup(async (context) => {
       const {monaco} = context
 
       const ts = monaco.languages.typescript
       const tsd = ts.typescriptDefaults
-
-      async function addTypedef(uri: string, filePath: string) {
-        const source = await fetch(uri).then((x) => x.text())
-
-        tsd.addExtraLib(source, filePath)
-      }
-
-      await addTypedef(
-        'https://cdn.jsdelivr.net/npm/@types/react@17.0.14/index.d.ts',
-        'react.d.ts'
-      )
 
       tsd.setCompilerOptions({
         jsx: ts.JsxEmit.React,

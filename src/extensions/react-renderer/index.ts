@@ -24,13 +24,8 @@ export const ReactRendererExtension = createExtension({
     renderer.use('react')
 
     // Add TypeScript type definitions for the render function.
-    app.editor.setup(async (context) => {
-      const {monaco} = context
-      const tsd = monaco.languages.typescript.typescriptDefaults
+    const definition = `declare function render(element: React.ReactNode): void`
 
-      const source = `declare function render(element: React.ReactNode): void`
-
-      tsd.addExtraLib(source, 'react-runtime.d.ts')
-    })
+    app.editor.addTypeDefinition('react-runtime', definition)
   },
 })

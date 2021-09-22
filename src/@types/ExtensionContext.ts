@@ -21,6 +21,9 @@ export interface ExtensionContext<Config = Record<string, any>> {
   editor: {
     /** Injects an editor hook, which runs when the monaco editor is initialized. */
     setup(handler: (context: EditorContext) => void): void
+
+    /** Injects a TypeScript type definition. */
+    addTypeDefinition(id: string, definition: string): void
   }
 
   /** Create and use custom renderers and visualizers. */

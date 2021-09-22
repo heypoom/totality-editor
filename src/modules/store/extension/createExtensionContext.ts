@@ -24,6 +24,15 @@ export const createExtensionContext = (config: Config): ExtensionContext => {
           extensionId: extension.id,
         })
       },
+
+      addTypeDefinition(id, definition) {
+        this.setup(async (context) => {
+          const {monaco} = context
+          const tsd = monaco.languages.typescript.typescriptDefaults
+
+          tsd.addExtraLib(definition, `${id}.d.ts`)
+        })
+      },
     },
 
     renderer: {

@@ -2,9 +2,7 @@ import 'twin.macro'
 
 import React from 'react'
 
-interface Props {
-  reset: () => void
-}
+interface Props {}
 
 export class RendererErrorBoundary extends React.Component<Props> {
   state: {error: Error | null} = {error: null}

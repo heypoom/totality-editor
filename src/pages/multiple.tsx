@@ -18,8 +18,8 @@ const extensions = [
   TypeScriptExtension,
   TypeScriptReactExtension,
   ReactRendererExtension,
-  VimModeExtension,
   JSXHighlighterExtension,
+  // VimModeExtension,
 ] as const
 
 export default function MultipleEditorDemo() {
