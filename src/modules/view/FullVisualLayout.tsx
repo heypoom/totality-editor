@@ -23,7 +23,7 @@ export const FullVisualLayout: React.FC = () => {
               <div
                 tw="w-full"
                 style={{
-                  background: 'rgba(0, 0, 0, 0.5)',
+                  background: 'rgba(0, 0, 0, 0.6)',
                   padding: '60px 50px',
                 }}
               >
