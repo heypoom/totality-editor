@@ -36,6 +36,7 @@ export default function ReactDemo() {
         <TotalityWindow
           width="760px"
           height="320px"
+          scope={{fetch}}
           code={ReactSample}
           extensions={extensions}
           options={{

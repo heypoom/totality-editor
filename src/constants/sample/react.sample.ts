@@ -1,10 +1,16 @@
 export const ReactSample = `
 const render = (element: React.ReactNode) => track('RootNode', element)
 
-const {useState} = React
+const {useState, useEffect} = React
 
 const Wrapper: React.FC = ({ children }) => {
 	const [counter, setCounter] = useState(0)
+
+	useEffect(() => {
+		fetch('http://localhost:3000')
+			.then(x => x.text())
+			.then(x => setCounter(x.length))
+	}, [])
 
 	return (
 		<div style={{width: '100%', padding: '2rem'}}>

@@ -75,6 +75,8 @@ export class JSRunner {
   }
 
   setGlobalVar(key: string, value: unknown) {
+    if (typeof value === 'function') value = value.bind(window)
+
     this.realm.global[key] = value
   }
 
