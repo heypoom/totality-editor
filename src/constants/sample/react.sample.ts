@@ -7,7 +7,7 @@ const Wrapper: React.FC = ({ children }) => {
 	const [counter, setCounter] = useState(0)
 
 	useEffect(() => {
-		fetch('http://localhost:3000')
+		fetch('https://icanhazip.com')
 			.then(x => x.text())
 			.then(x => setCounter(x.length))
 	}, [])
