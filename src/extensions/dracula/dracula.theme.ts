@@ -84,7 +84,7 @@ export const DraculaTheme: EditorAPI.IStandaloneThemeData = {
     },
     {
       foreground: Palette.PURPLE,
-      token: 'number.ts',
+      token: 'number',
     },
     {
       foreground: Palette.CYAN,
@@ -122,6 +122,22 @@ export const DraculaTheme: EditorAPI.IStandaloneThemeData = {
     {
       foreground: Palette.PINK,
       token: 'entity.name.tag',
+    },
+    {
+      foreground: Palette.PINK,
+      token: 'tag',
+    },
+    {
+      foreground: Palette.GREEN,
+      token: 'attribute.name',
+    },
+    {
+      foreground: Palette.PINK,
+      token: 'delimiter.html',
+    },
+    {
+      foreground: Palette.YELLOW,
+      token: 'attribute.value',
     },
     {
       foreground: Palette.GREEN,

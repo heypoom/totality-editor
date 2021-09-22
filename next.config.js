@@ -8,6 +8,8 @@ const config = withPreact({
   webpack: (config) => {
     const monaco = new MonacoWebpackPlugin({
       languages: [
+        'html',
+        'css',
         'javascript',
         'typescript',
         'json',

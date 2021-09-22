@@ -8,6 +8,7 @@ export {TypeScriptExtension} from './typescript'
 export {JSXHighlighterExtension} from './jsx-highlighter'
 export {TypeScriptReactExtension} from './typescript-react'
 
+export {HTMLPreviewerExtension} from './html'
 export {ReactRendererExtension} from './react-renderer'
 export {CanvasRendererExtension} from './canvas-renderer'
 export {GLSLPlaygroundExtension} from './glsl-playground'
