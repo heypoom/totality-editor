@@ -14,7 +14,7 @@ export const FullVisualLayout: React.FC = () => {
         return (
           <div
             key={panel.id}
-            tw="flex absolute w-full"
+            tw="flex absolute w-full h-screen"
             style={{zIndex: 2 - idx}}
           >
             {panel.type !== 'editor' && <View panel={panel} />}

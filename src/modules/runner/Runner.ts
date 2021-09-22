@@ -17,9 +17,10 @@ export class JSRunner {
   }
 
   handlers: RunHandlerMap = {
+    setup: [],
+    track: [],
     frame: [],
     cleanup: [],
-    track: [],
   }
 
   frame = 0
@@ -133,6 +134,10 @@ export class JSRunner {
     this.handlers.cleanup = []
   }
 
+  async beforeRun() {
+    for (const handler of this.handlers.setup) await handler(this)
+  }
+
   async run(code: string): Promise<string> {
     const runId = Math.random().toString(16).slice(2, 10)
     this.state.id = runId
@@ -142,6 +147,8 @@ export class JSRunner {
     try {
       this.tracked = new Map()
       this.state.isRunning = true
+
+      await this.beforeRun()
 
       const result = await this.realm.evaluate(code)
 

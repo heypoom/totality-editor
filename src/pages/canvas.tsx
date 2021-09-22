@@ -12,21 +12,20 @@ import {
 
 const extensions = [
   DraculaThemeExtension,
-  VimModeExtension,
+  // VimModeExtension,
   TypeScriptExtension,
   CanvasRendererExtension,
 ] as const
 
 const CanvasSample = `
-resize()
 const ctx = canvas.getContext('2d')
 
-ctx.fillStyle = 'green'
-ctx.fillRect(10, 10, 150, 100)
+ctx.fillStyle = '#badc58'
+ctx.fillRect(0, 0, canvas.width, canvas.height)
 `.trimStart()
 
 export default function CanvasDemo() {
-  const [isLiveLayout, toggle] = useReducer((s) => !s, false)
+  const [isLiveLayout, toggle] = useReducer((s) => !s, true)
 
   return (
     <div tw="bg-purple-500 text-gray-800 min-h-screen relative">

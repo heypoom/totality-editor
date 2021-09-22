@@ -13,26 +13,23 @@ export const CanvasRendererExtension = createExtension({
     renderer.use('canvas')
 
     // Resize function syncs the canvas dimensions.
-    runner.injectGlobal({
-      resize() {
-        const canvas = runner.realm.global.canvas as HTMLCanvasElement
-        const {width, height} = canvas.getBoundingClientRect()
+    runner.on('setup', (runner) => {
+      const canvas = runner.realm.global.canvas as HTMLCanvasElement
+      const {width, height} = canvas.getBoundingClientRect()
 
-        if (canvas.width !== width || canvas.height !== height) {
-          const {devicePixelRatio: ratio = 1} = window
-          const context = canvas.getContext('2d')
-          canvas.width = width * ratio
-          canvas.height = height * ratio
-          context?.scale(ratio, ratio)
-        }
-      },
+      if (canvas.width !== width || canvas.height !== height) {
+        const {devicePixelRatio: dpr = 1} = window
+
+        const context = canvas.getContext('2d')
+        canvas.width = width * dpr
+        canvas.height = height * dpr
+
+        context?.scale(dpr, dpr)
+      }
     })
 
     // Setup the type definitions.
-    const definition = `
-			declare const canvas: HTMLCanvasElement
-			declare function resize(): void
-		`
+    const definition = `declare const canvas: HTMLCanvasElement`
 
     editor.addTypeDefinition('canvas-runtime', definition)
   },

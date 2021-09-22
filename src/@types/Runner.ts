@@ -13,6 +13,8 @@ export interface Run {
 }
 
 export interface RunHandlers {
+  setup: FrameListener
+
   /** Cleanup handlers are used for abort and when execution finishes. */
   cleanup: () => void | Promise<void>
 
