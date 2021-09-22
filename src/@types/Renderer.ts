@@ -1,10 +1,8 @@
-import {CoreOptions} from '@types'
-
 export interface RendererProps {
+  state: unknown
+
   panelId: string
   rendererId: string
-
-  state: unknown
 }
 
 export interface Renderer {

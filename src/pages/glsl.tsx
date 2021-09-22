@@ -14,6 +14,12 @@ const extensions = [
   VimModeExtension,
 ] as const
 
+const SampleCode = `
+void main() {
+	gl_FragColor = vec4(0.5, 0.9, 0.6, 1);
+}
+`.trim()
+
 export default function GLSLDemo() {
   return (
     <div
@@ -26,9 +32,9 @@ export default function GLSLDemo() {
         <TotalityWindow
           width="760px"
           height="320px"
-          extensions={extensions}
           path="shader.glsl"
-          persist
+          extensions={extensions}
+          code={SampleCode}
         />
       </div>
     </div>
