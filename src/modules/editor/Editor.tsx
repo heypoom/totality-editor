@@ -33,7 +33,7 @@ export const Editor: React.FC = () => {
       options={monacoOption}
       theme={monacoOption.theme}
       onChange={handleChange}
-      path={path}
+      defaultPath={path}
       defaultLanguage={monacoOption.language}
       loading={<LoadingSkeleton />}
       onMount={(editor, monaco) => register({editor, monaco})}

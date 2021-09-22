@@ -31,7 +31,7 @@ export function useCombinedConfig<E extends readonly Extension<any>[]>(
   const shared = useContext(SharedConfigContext) ?? {}
 
   const extensions = Array.from(
-    new Set([...shared?.extensions, ...(props?.extensions ?? [])])
+    new Set([...(shared?.extensions ?? []), ...(props?.extensions ?? [])])
   ) as unknown as E
 
   const options = {...shared?.options, ...props?.options} as OptionsOf<E>
