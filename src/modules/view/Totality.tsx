@@ -3,9 +3,9 @@ import 'twin.macro'
 import React, {useEffect, useMemo} from 'react'
 import loadable from '@loadable/component'
 
-import {AppContext, createStore, store, useStore} from 'modules/store'
+import {AppContext, createStore} from 'modules/store'
 
-import {useCombinedConfig} from 'modules/core/TotalityProvider'
+import {useCombinedConfig} from 'modules/core'
 import {TotalityErrorBoundary} from 'modules/common/ErrorBoundary'
 
 import {OptionsOf, Extension} from '@types'

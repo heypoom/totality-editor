@@ -4,6 +4,3 @@ export const compiler = new TypeScriptCompiler()
 
 export {JSRunner} from './Runner'
 export {TypeScriptCompiler} from './TypescriptCompiler'
-
-export {runnerManager} from './RunnerManager'
-export {editorManager} from './EditorManager'

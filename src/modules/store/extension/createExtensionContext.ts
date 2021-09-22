@@ -1,6 +1,7 @@
 import {Store, Extension, ExtensionContext} from '@types'
 
-import {compiler, runnerManager, editorManager} from 'modules/runner'
+import {compiler} from 'modules/runner'
+import {editorManager, runnerManager} from 'modules/core'
 
 interface Config {
   store: Store

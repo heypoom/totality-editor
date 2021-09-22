@@ -1,4 +1,4 @@
-import {JSRunner} from '.'
+import {JSRunner} from '../runner'
 
 class RunnerManager {
   instances: Map<string, JSRunner> = new Map()

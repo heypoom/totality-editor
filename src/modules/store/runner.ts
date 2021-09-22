@@ -4,8 +4,8 @@ import {debounce} from 'lodash'
 import {createMerge} from './utils/merge'
 
 import {compiler} from 'modules/runner'
+import {runnerManager} from 'modules/core'
 import {FrameListener, StoreModule, TrackListener} from '@types'
-import {runnerManager} from 'modules/runner/RunnerManager'
 
 const set = createMerge('runner')
 

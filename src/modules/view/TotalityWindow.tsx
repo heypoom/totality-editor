@@ -4,7 +4,7 @@ import React from 'react'
 import {ITotalityProps, Totality} from './Totality'
 
 import {Extension} from '@types'
-import {useCombinedConfig} from 'modules/core/TotalityProvider'
+import {useCombinedConfig} from 'modules/core'
 
 interface Props {
   width: string
