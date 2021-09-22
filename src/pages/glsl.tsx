@@ -15,10 +15,22 @@ const extensions = [
 ] as const
 
 const SampleCode = `
+precision mediump float;
+
+uniform vec2 u_resolution;
+uniform vec2 u_mouse;
+uniform float u_time;
+
 void main() {
-	gl_FragColor = vec4(0.5, 0.9, 0.6, 1);
+  vec2 st = gl_FragCoord.xy / u_resolution.xy;
+  st.x *= u_resolution.x / u_resolution.y;
+
+  vec3 color = vec3(0);
+  color = vec3(st.x, st.y, abs(sin(u_time)));
+
+  gl_FragColor = vec4(color, 1.0);
 }
-`.trim()
+`.trimStart()
 
 export default function GLSLDemo() {
   return (
@@ -27,7 +39,7 @@ export default function GLSLDemo() {
         <h1 tw="text-white text-4xl mb-6 font-semibold">GLSL Demo.</h1>
 
         <TotalityWindow
-          width="760px"
+          width="960px"
           height="320px"
           path="shader.glsl"
           extensions={extensions}

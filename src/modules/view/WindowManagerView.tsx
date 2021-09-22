@@ -28,7 +28,7 @@ export const WindowManagerView: React.FC = () => {
   return (
     <div style={style}>
       <Split
-        sizes={[70, 30]}
+        sizes={[65, 35]}
         tw="flex flex-row"
         gutterStyle={() => gutterStyle}
       >
