@@ -7,6 +7,10 @@ export const VimModeExtension = createExtension({
     'vim.enabled': true,
   },
 
+  options: {
+    'editor.cursorStyle': 'block',
+  },
+
   async setup(app) {
     app.editor.setup(async (context) => {
       if (!app.options['vim.enabled']) return

@@ -1,11 +1,11 @@
 import {IMonacoOption} from '@types'
 
 export const defaultMonacoOptions: IMonacoOption = {
-  cursorStyle: 'block',
   detectIndentation: false,
   fontFamily: '"JetBrains Mono", monospace',
+  fontSize: 16,
+  fontWeight: '500',
   fontLigatures: true,
-  fontSize: 21,
   insertSpaces: true,
   language: 'typescript',
   minimap: {enabled: false},

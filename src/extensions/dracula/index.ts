@@ -6,8 +6,6 @@ export const DraculaThemeExtension = createExtension({
   id: 'theme.dracula',
 
   options: {
-    'editor.fontSize': 16,
-    'editor.fontFamily': 'JetBrains Mono',
     'editor.fontWeight': '500',
     'theme.background': '#21222d',
   },
