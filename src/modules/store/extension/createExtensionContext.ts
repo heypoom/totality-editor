@@ -1,16 +1,21 @@
-import {compiler, runner} from 'modules/runner'
-
 import {Store, Extension, ExtensionContext} from '@types'
+
+import {compiler, runnerManager, editorManager} from 'modules/runner'
 
 interface Config {
   store: Store
+  runnerId: string
   extension: Extension
   options: Record<string, any>
 }
 
+const {typeDefs} = editorManager
+
 export const createExtensionContext = (config: Config): ExtensionContext => {
-  const {store, extension, options} = config
+  const {store, extension, options, runnerId} = config
   const {dispatch} = store
+
+  const runner = runnerManager.of(runnerId)
 
   return {
     store,
@@ -26,6 +31,11 @@ export const createExtensionContext = (config: Config): ExtensionContext => {
       },
 
       addTypeDefinition(id, definition) {
+        // Prevent duplicate type definitions.
+        if (typeDefs.has(id)) return
+        typeDefs.set(id, definition)
+
+        // Register type definition with the language service.
         this.setup(async (context) => {
           const {monaco} = context
           const tsd = monaco.languages.typescript.typescriptDefaults

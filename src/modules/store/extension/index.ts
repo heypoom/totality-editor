@@ -21,6 +21,7 @@ export const extensionModule: StoreModule = (store) => {
       store,
       extension,
       options: state.options,
+      runnerId: state.runner.id,
     })
 
     await extension.setup(context)
@@ -28,6 +29,8 @@ export const extensionModule: StoreModule = (store) => {
 
   store.on('extension/use-all', async (state, extensions) => {
     if (!extensions) return
+
+    console.log('Extensions to register:', extensions)
 
     console.time('register extension')
 

@@ -1,8 +1,9 @@
-import {JSRunner} from './Evaluator'
 import {TypeScriptCompiler} from './TypescriptCompiler'
 
-export const runner = new JSRunner()
 export const compiler = new TypeScriptCompiler()
 
-export {JSRunner} from './Evaluator'
+export {JSRunner} from './Runner'
 export {TypeScriptCompiler} from './TypescriptCompiler'
+
+export {runnerManager} from './RunnerManager'
+export {editorManager} from './EditorManager'

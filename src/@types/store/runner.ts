@@ -8,6 +8,7 @@ export type TrackListener = (
 export type FrameListener = (runner: JSRunner) => void | Promise<void>
 
 export interface RunnerState {
+  id: string
   compiled: string
   error: Error | null
 }

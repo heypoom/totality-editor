@@ -1,17 +1,23 @@
+import {nanoid} from 'nanoid'
 import {debounce} from 'lodash'
 
 import {createMerge} from './utils/merge'
 
-import {runner, compiler} from 'modules/runner'
+import {compiler} from 'modules/runner'
 import {FrameListener, StoreModule, TrackListener} from '@types'
+import {runnerManager} from 'modules/runner/RunnerManager'
 
 const set = createMerge('runner')
 
 export const runnerModule: StoreModule = (store) => {
+  const runnerId = nanoid()
   const run = debounce(() => store.dispatch('runner/run'), 50)
+
+  const runner = runnerManager.of(runnerId)
 
   store.on('@init', () => ({
     runner: {
+      id: runnerId,
       compiled: '',
       error: null,
     },
