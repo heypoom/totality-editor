@@ -1,6 +1,6 @@
 import {createExtension} from 'utils'
 
-import {render} from 'preact'
+import {ComponentChild, render} from 'preact'
 
 const styles: React.CSSProperties = {
   display: 'flex',
@@ -17,6 +17,13 @@ const styles: React.CSSProperties = {
   backdropFilter: 'blur(3px)',
 }
 
+function draw(node: ComponentChild) {
+  const div = document.createElement('div')
+  render(node, div)
+
+  return div
+}
+
 export const ExampleWidgetExtension = createExtension({
   id: 'widget.example',
 
@@ -25,17 +32,16 @@ export const ExampleWidgetExtension = createExtension({
       const {monaco, editor} = context
       const {ContentWidgetPositionPreference} = monaco.editor
 
-      const n = document.createElement('div')
-      render(<div style={styles}>🦄</div>, n)
+      const cwNode = draw(<div style={styles}>🦄</div>)
+      const owNode = draw(<div style={styles}>🍻</div>)
 
       const widget = {
         getId: () => 'my.content.widget',
-        getDomNode: () => n,
+        getDomNode: () => cwNode,
 
         getPosition() {
           return {
             position: editor.getPosition(),
-
             preference: [ContentWidgetPositionPreference.ABOVE],
           }
         },
@@ -49,17 +55,12 @@ export const ExampleWidgetExtension = createExtension({
 
       editor.addOverlayWidget({
         getId: () => 'my.overlay.widget',
+        getDomNode: () => owNode,
 
-        getDomNode() {
-          const div = document.createElement('div')
-          div.innerHTML = '<button>🌟</button>'
-          div.style.fontSize = '24px'
-          return div
-        },
-
-        getPosition() {
-          return null
-        },
+        getPosition: () => ({
+          preference:
+            monaco.editor.OverlayWidgetPositionPreference.TOP_RIGHT_CORNER,
+        }),
       })
     })
   },
