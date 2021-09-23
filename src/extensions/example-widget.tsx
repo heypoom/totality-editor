@@ -8,11 +8,8 @@ const Circle = tw.div`
 	flex items-center justify-center text-3xl rounded-full
 	cursor-pointer backdrop-filter backdrop-blur-sm
 	w-14 h-14 border-[3px] border-opacity-20
-	bg-white bg-opacity-5 shadow-carbon
-	hover:bg-red-500 hover:bg-opacity-70
+	bg-white/5 shadow-carbon hover:bg-red-500/70
 `
-
-draw(<Circle>🦄</Circle>)
 
 function draw(node: ComponentChild) {
   const div = document.createElement('div')
