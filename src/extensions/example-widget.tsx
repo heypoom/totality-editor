@@ -5,16 +5,14 @@ import {createExtension} from 'utils'
 import {ComponentChild, render} from 'preact'
 
 const styles: React.CSSProperties = {
-  background: '#ffffff22',
   backdropFilter: 'blur(5px)',
   border: '3px solid #ffffff33',
-  boxShadow: 'rgb(0 0 0 / 55%) 0px 20px 68px',
 }
 
 const Circle: React.FC = ({children}) => (
   <div
     style={styles}
-    tw="flex items-center justify-center text-3xl rounded-full cursor-pointer w-14 h-14 hover:bg-red-500!"
+    tw="flex items-center justify-center text-3xl rounded-full cursor-pointer w-14 h-14 bg-white bg-opacity-5 hover:bg-red-500! hover:bg-opacity-70 shadow-carbon"
   >
     {children}
   </div>
