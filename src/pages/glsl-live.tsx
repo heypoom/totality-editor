@@ -7,6 +7,7 @@ import {
   VimModeExtension,
   DraculaThemeExtension,
   GLSLPlaygroundExtension,
+  ExampleWidgetExtension,
 } from '@totality/extensions'
 
 import {GLSLSample} from 'constants/sample/glsl.sample'
@@ -15,6 +16,7 @@ const extensions = [
   DraculaThemeExtension,
   GLSLPlaygroundExtension,
   VimModeExtension,
+  ExampleWidgetExtension,
 ] as const
 
 export default function GLSLLiveDemo() {
