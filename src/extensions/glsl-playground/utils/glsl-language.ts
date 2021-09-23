@@ -3,6 +3,7 @@ import {Registry} from 'monaco-textmate'
 import {wireTmGrammars} from 'monaco-editor-textmate'
 
 import {EditorContext} from '@types'
+import type {IMarkdownString} from 'monaco-editor'
 
 async function loadOnigasm() {
   if (window.onigasmLoaded) return
@@ -36,6 +37,23 @@ export async function configureGrammar(context: EditorContext) {
     comments: {
       lineComment: '//',
       blockComment: ['/*', '*/'],
+    },
+  })
+
+  monaco.languages.registerHoverProvider('glsl', {
+    provideHover(model, position) {
+      const wordAtPos = model.getWordAtPosition(position)
+      const {word, startColumn = 0, endColumn = 0} = wordAtPos ?? {}
+
+      const line = position.lineNumber
+      const range = new monaco.Range(line, startColumn, line, endColumn)
+
+      const contents: IMarkdownString[] = []
+
+      if (word?.startsWith('u_')) contents.push({value: `Uniform: ${word}`})
+      if (word?.startsWith('gl_')) contents.push({value: `Output: ${word}`})
+
+      return {range, contents}
     },
   })
 
