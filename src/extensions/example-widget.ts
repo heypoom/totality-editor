@@ -12,11 +12,21 @@ export const ExampleWidgetExtension = createExtension({
         getId: () => 'my.content.widget',
 
         getDomNode() {
-          const div = document.createElement('div')
-          div.innerHTML = '<h1>🦄</h1>'
-          div.style.fontSize = '24px'
-          div.style.cursor = 'pointer'
-          return div
+          const n = document.createElement('div')
+
+          n.innerText = '🦄'
+          n.style.fontSize = '30px'
+          n.style.cursor = 'pointer'
+          n.style.background = '#ffffff22'
+          n.style.padding = '4px 11px'
+          n.style.borderRadius = '50%'
+          n.style.border = '3px solid #ffffff33'
+          n.style.boxShadow = 'rgb(0 0 0 / 55%) 0px 20px 68px'
+
+          // @ts-ignore
+          n.style.backdropFilter = 'blur(4px)'
+
+          return n
         },
 
         getPosition() {
