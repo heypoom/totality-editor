@@ -1,37 +1,36 @@
 import {createExtension} from 'utils'
 
+import {render} from 'preact'
+
+const styles: React.CSSProperties = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontSize: 30,
+  cursor: 'pointer',
+  background: '#ffffff22',
+  borderRadius: '50%',
+  width: '55px',
+  height: '55px',
+  border: '3px solid #ffffff33',
+  boxShadow: 'rgb(0 0 0 / 55%) 0px 20px 68px',
+  backdropFilter: 'blur(3px)',
+}
+
 export const ExampleWidgetExtension = createExtension({
-  id: 'example.widget',
+  id: 'widget.example',
 
   setup(app) {
     app.editor.setup((context) => {
       const {monaco, editor} = context
       const {ContentWidgetPositionPreference} = monaco.editor
 
+      const n = document.createElement('div')
+      render(<div style={styles}>🦄</div>, n)
+
       const widget = {
         getId: () => 'my.content.widget',
-
-        getDomNode() {
-          const n = document.createElement('div')
-
-          n.innerText = '🦄'
-          n.style.display = 'flex'
-          n.style.alignItems = 'center'
-          n.style.justifyContent = 'center'
-          n.style.fontSize = '30px'
-          n.style.cursor = 'pointer'
-          n.style.background = '#ffffff22'
-          n.style.borderRadius = '50%'
-          n.style.width = '55px'
-          n.style.height = '55px'
-          n.style.border = '3px solid #ffffff33'
-          n.style.boxShadow = 'rgb(0 0 0 / 55%) 0px 20px 68px'
-
-          // @ts-ignore
-          n.style.backdropFilter = 'blur(3px)'
-
-          return n
-        },
+        getDomNode: () => n,
 
         getPosition() {
           return {
