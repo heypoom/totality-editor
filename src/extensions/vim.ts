@@ -15,7 +15,6 @@ export const VimModeExtension = createExtension({
     app.editor.setup(async (context) => {
       if (!app.options['vim.enabled']) return
 
-      // @ts-ignore
       const MonacoVim = await import('monaco-vim')
 
       MonacoVim.initVimMode(context.editor)

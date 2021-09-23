@@ -38,7 +38,6 @@ export const JSXHighlighterExtension = createExtension({
       hi.highLightOnDidChangeModelContent(100)
       hi.addJSXCommentCommand()
 
-      // @ts-ignore
       window.monacoJSXHighlighter = hi
     })
   },

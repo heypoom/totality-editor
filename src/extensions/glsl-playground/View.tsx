@@ -28,7 +28,6 @@ export const GLSLPlaygroundView: React.FC = () => {
     sandboxRef.current = sandbox
     setReady(true)
 
-    // @ts-ignore
     window.sandbox = sandbox
   }
 

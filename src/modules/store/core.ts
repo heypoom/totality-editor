@@ -7,7 +7,6 @@ export const coreModule: StoreModule = (store) => {
     await store.dispatch('code/load')
 
     if (typeof window !== 'undefined') {
-      // @ts-ignore
       window.store = store
     }
   })

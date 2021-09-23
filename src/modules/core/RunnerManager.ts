@@ -1,6 +1,6 @@
 import {JSRunner} from '../runner'
 
-class RunnerManager {
+export class RunnerManager {
   instances: Map<string, JSRunner> = new Map()
 
   create(id: string) {
@@ -18,6 +18,5 @@ class RunnerManager {
 export const runnerManager = new RunnerManager()
 
 if (typeof window !== 'undefined') {
-  // @ts-ignore
   window.runnerManager = runnerManager
 }

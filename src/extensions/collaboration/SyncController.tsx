@@ -25,8 +25,6 @@ export class SyncController {
     })
 
     this.rtc = new WebrtcProvider(this.key, this.doc)
-
-    // @ts-ignore
     window.sync = this
   }
 }

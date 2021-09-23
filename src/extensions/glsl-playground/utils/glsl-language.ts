@@ -4,23 +4,17 @@ import {wireTmGrammars} from 'monaco-editor-textmate'
 
 import {EditorContext} from '@types'
 
-class OnigasmManager {
-  loaded = false
+async function loadOnigasm() {
+  if (window.onigasmLoaded) return
+  window.onigasmLoaded = true
 
-  async load() {
-    if (this.loaded) return
-
-    this.loaded = true
-    await loadWASM('/onigasm.wasm')
-  }
+  return loadWASM('/onigasm.wasm')
 }
-
-const manager = new OnigasmManager()
 
 export async function configureGrammar(context: EditorContext) {
   const {monaco, editor} = context
 
-  await manager.load()
+  await loadOnigasm()
 
   const registry = new Registry({
     getGrammarDefinition: async () => {

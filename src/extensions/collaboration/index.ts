@@ -19,15 +19,12 @@ export const LiveCollaborationExtension = createExtension({
       const model = editor.getModel()
       if (!model) return
 
-      // @ts-ignore
       const {MonacoBinding} = await import('y-monaco')
 
       const editors = new Set([editor])
       const text = doc?.getText('editor')
 
       const binding = new MonacoBinding(text, model, editors, rtc?.awareness)
-
-      // @ts-ignore
       window.monacoYBinding = binding
     })
   },
