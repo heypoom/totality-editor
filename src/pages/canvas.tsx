@@ -9,6 +9,7 @@ import {
   DraculaThemeExtension,
   CanvasRendererExtension,
 } from '@totality/extensions'
+
 import {CanvasSample} from 'constants/sample/canvas.sample'
 
 const extensions = [

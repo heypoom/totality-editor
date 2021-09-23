@@ -10,6 +10,7 @@ export const FullVisualLayout: React.FC = () => {
     <div tw="relative">
       {layout?.panels?.map((panel, idx) => {
         const View = panelViews[panel.type]
+        if (!panel.visible) return null
 
         return (
           <div

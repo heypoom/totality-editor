@@ -8,17 +8,13 @@ import {
   HTMLPreviewerExtension,
 } from '@totality/extensions'
 
+import {HTMLSample} from 'constants/sample/html.sample'
+
 const extensions = [
   DraculaThemeExtension,
   VimModeExtension,
   HTMLPreviewerExtension,
 ] as const
-
-const source = `
-<h1 style="font-size: 40px; text-align: center; font-weight: bold; color: #f6e58d">
-	Hello, World!
-</h1>
-`.trimStart()
 
 export default function HtmlDemo() {
   return (
@@ -27,7 +23,7 @@ export default function HtmlDemo() {
         <h1 tw="text-white text-4xl mb-6 font-semibold">HTML Demo.</h1>
 
         <TotalityWindow
-          code={source}
+          code={HTMLSample}
           width="960px"
           height="320px"
           path="index.html"

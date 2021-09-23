@@ -34,7 +34,9 @@ export type Events = RunnerEvents &
     'code/load': void
 
     'config/set': Partial<CoreOptions>
+
     'layout/set': Partial<LayoutState>
+    'layout/update-panel': Partial<Panel>
   }
 
 export interface RendererEvents {

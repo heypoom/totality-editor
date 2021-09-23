@@ -12,7 +12,6 @@ import {
 } from '@totality/extensions'
 
 import {ReactSample} from 'constants/sample/react.sample'
-import React from 'react'
 
 const extensions = [
   DraculaThemeExtension,
