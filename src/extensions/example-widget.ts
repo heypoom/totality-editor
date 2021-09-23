@@ -15,16 +15,20 @@ export const ExampleWidgetExtension = createExtension({
           const n = document.createElement('div')
 
           n.innerText = '🦄'
+          n.style.display = 'flex'
+          n.style.alignItems = 'center'
+          n.style.justifyContent = 'center'
           n.style.fontSize = '30px'
           n.style.cursor = 'pointer'
           n.style.background = '#ffffff22'
-          n.style.padding = '4px 11px'
           n.style.borderRadius = '50%'
+          n.style.width = '55px'
+          n.style.height = '55px'
           n.style.border = '3px solid #ffffff33'
           n.style.boxShadow = 'rgb(0 0 0 / 55%) 0px 20px 68px'
 
           // @ts-ignore
-          n.style.backdropFilter = 'blur(4px)'
+          n.style.backdropFilter = 'blur(3px)'
 
           return n
         },
@@ -33,10 +37,7 @@ export const ExampleWidgetExtension = createExtension({
           return {
             position: editor.getPosition(),
 
-            preference: [
-              ContentWidgetPositionPreference.ABOVE,
-              ContentWidgetPositionPreference.BELOW,
-            ],
+            preference: [ContentWidgetPositionPreference.ABOVE],
           }
         },
       }
