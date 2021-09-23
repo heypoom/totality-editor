@@ -6,7 +6,7 @@ import {ComponentChild, render} from 'preact'
 
 const styles: React.CSSProperties = {
   background: '#ffffff22',
-  backdropFilter: 'blur(3px)',
+  backdropFilter: 'blur(5px)',
   border: '3px solid #ffffff33',
   boxShadow: 'rgb(0 0 0 / 55%) 0px 20px 68px',
 }
