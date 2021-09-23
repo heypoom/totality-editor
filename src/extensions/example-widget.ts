@@ -8,7 +8,7 @@ export const ExampleWidgetExtension = createExtension({
       const {monaco, editor} = context
       const {ContentWidgetPositionPreference} = monaco.editor
 
-      editor.addContentWidget({
+      const widget = {
         getId: () => 'my.content.widget',
 
         getDomNode() {
@@ -21,7 +21,7 @@ export const ExampleWidgetExtension = createExtension({
 
         getPosition() {
           return {
-            position: {lineNumber: 1, column: 1},
+            position: editor.getPosition(),
 
             preference: [
               ContentWidgetPositionPreference.ABOVE,
@@ -29,7 +29,14 @@ export const ExampleWidgetExtension = createExtension({
             ],
           }
         },
+      }
+
+      editor.onDidChangeCursorPosition((e) => {
+        console.log('on change cursor position')
+        editor.layoutContentWidget(widget)
       })
+
+      editor.addContentWidget(widget)
 
       editor.addOverlayWidget({
         getId: () => 'my.overlay.widget',
