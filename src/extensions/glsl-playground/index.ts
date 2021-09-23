@@ -16,7 +16,7 @@ export const GLSLPlaygroundExtension = createExtension({
 
     // Create the GLSL renderer.
     renderer.create('glsl-playground', {component: GLSLPlaygroundView})
-    // renderer.use('glsl-playground')
+    renderer.use('glsl-playground')
 
     // Configure the GLSL Syntax Highlighting.
     editor.setup(async (context) => {
