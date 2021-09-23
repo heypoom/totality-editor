@@ -1,21 +1,24 @@
+import 'twin.macro'
+
 import {createExtension} from 'utils'
 
 import {ComponentChild, render} from 'preact'
 
 const styles: React.CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center',
-  fontSize: 30,
-  cursor: 'pointer',
   background: '#ffffff22',
-  borderRadius: '50%',
-  width: '55px',
-  height: '55px',
+  backdropFilter: 'blur(3px)',
   border: '3px solid #ffffff33',
   boxShadow: 'rgb(0 0 0 / 55%) 0px 20px 68px',
-  backdropFilter: 'blur(3px)',
 }
+
+const Circle: React.FC = ({children}) => (
+  <div
+    style={styles}
+    tw="flex items-center justify-center text-3xl rounded-full cursor-pointer w-14 h-14"
+  >
+    {children}
+  </div>
+)
 
 function draw(node: ComponentChild) {
   const div = document.createElement('div')
@@ -32,8 +35,8 @@ export const ExampleWidgetExtension = createExtension({
       const {monaco, editor} = context
       const {ContentWidgetPositionPreference} = monaco.editor
 
-      const cwNode = draw(<div style={styles}>🦄</div>)
-      const owNode = draw(<div style={styles}>🍻</div>)
+      const cwNode = draw(<Circle>🦄</Circle>)
+      const owNode = draw(<Circle>🍻</Circle>)
 
       const widget = {
         getId: () => 'my.content.widget',
