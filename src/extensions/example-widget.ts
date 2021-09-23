@@ -32,7 +32,6 @@ export const ExampleWidgetExtension = createExtension({
       }
 
       editor.onDidChangeCursorPosition((e) => {
-        console.log('on change cursor position')
         editor.layoutContentWidget(widget)
       })
 
