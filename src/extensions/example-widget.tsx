@@ -14,7 +14,7 @@ const styles: React.CSSProperties = {
 const Circle: React.FC = ({children}) => (
   <div
     style={styles}
-    tw="flex items-center justify-center text-3xl rounded-full cursor-pointer w-14 h-14"
+    tw="flex items-center justify-center text-3xl rounded-full cursor-pointer w-14 h-14 hover:bg-red-500!"
   >
     {children}
   </div>
