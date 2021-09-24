@@ -21,7 +21,11 @@ function create(node: ComponentChild) {
 }
 
 function draw(node: ComponentChild, element: HTMLElement) {
-  render(node, element, element.firstChild as any)
+  try {
+    render(node, element)
+  } catch (err) {
+    console.error(err)
+  }
 }
 
 export const ExampleWidgetExtension = createExtension({
@@ -65,20 +69,33 @@ export const ExampleWidgetExtension = createExtension({
         const word = model.getWordAtPosition(e.position)
         const text = word?.word ?? ''
 
-        let n = parseInt(text)
-        const show = !isNaN(n)
+        let n = parseFloat(text)
+        // const show = !isNaN(n)
 
-        function redraw() {
-          draw(show && <Circle onClick={run}>{n}</Circle>, cwNode)
+        // function redraw() {
+        //   draw(show && <Circle onClick={run}>{n}</Circle>, cwNode)
+        // }
+
+        const line = e.position.lineNumber
+        const content = model.getLineContent(line)
+
+        const pattern =
+          /vec3\((?<x>-?\d+\.?\d*), (?<y>-?\d\.?\d*), (?<z>-?\d\.?\d*)\)/
+
+        const match = content.match(pattern)
+
+        if (match) {
+          const {x, y, z} = match.groups!
+
+          draw(
+            <div tw="flex items-center justify-center w-56 bg-white/10 backdrop-filter backdrop-blur-lg text-3xl px-2 py-2 text-center shadow-carbon">
+              ({x}, {y}, {z})
+            </div>,
+            cwNode
+          )
+        } else {
+          draw(<Circle>🏕</Circle>, cwNode)
         }
-
-        function run() {
-          n++
-          editWord(`${n}`, word!, e.position.lineNumber)
-          redraw()
-        }
-
-        redraw()
 
         editor.layoutContentWidget(widget)
       })

@@ -6,6 +6,7 @@ import {
   VimModeExtension,
   DraculaThemeExtension,
   HTMLPreviewerExtension,
+  ExampleWidgetExtension,
 } from '@totality/extensions'
 
 import {HTMLSample} from 'constants/sample/html.sample'
@@ -14,6 +15,7 @@ const extensions = [
   DraculaThemeExtension,
   VimModeExtension,
   HTMLPreviewerExtension,
+  ExampleWidgetExtension,
 ] as const
 
 export default function HtmlDemo() {
