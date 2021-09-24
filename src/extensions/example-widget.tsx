@@ -88,7 +88,7 @@ export const ExampleWidgetExtension = createExtension({
           const {x, y, z} = match.groups!
 
           draw(
-            <div tw="flex items-center justify-center w-56 bg-white/10 backdrop-filter backdrop-blur-lg text-3xl px-2 py-2 text-center shadow-carbon">
+            <div tw="flex items-center justify-center w-56 bg-white/5 backdrop-filter backdrop-blur-sm text-3xl px-2 py-2 text-center shadow-carbon">
               ({x}, {y}, {z})
             </div>,
             cwNode
