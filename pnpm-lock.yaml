@@ -6,16 +6,16 @@ specifiers:
   '@loadable/component': ^5.15.0
   '@monaco-editor/react': ^4.2.1
   '@prefresh/next': ^1.4.6
-  '@stitches/core': ^1.2.0
-  '@stitches/react': ^1.2.0
+  '@stitches/core': ^1.2.1
+  '@stitches/react': ^1.2.1
   '@stitches/tailwind': ^9.0.0-alpha.8
   '@twind/preact': ^1.0.5
   '@twind/react': ^0.0.4
   '@types/babel__traverse': ^7.14.2
   '@types/loadable__component': ^5.13.4
   '@types/lodash': ^4.14.173
-  '@types/node': ^16.9.2
-  '@types/react': ^17.0.21
+  '@types/node': ^16.9.6
+  '@types/react': ^17.0.24
   '@types/react-cytoscapejs': ^1.2.2
   '@types/tailwindcss': ^2.2.1
   babel-plugin-glsl: ^1.0.0
@@ -33,7 +33,7 @@ specifiers:
   lodash: ^4.17.21
   monaco-editor: ^0.27.0
   monaco-editor-textmate: ^3.0.0
-  monaco-editor-webpack-plugin: ^4.1.1
+  monaco-editor-webpack-plugin: ^4.2.0
   monaco-jsx-highlighter: ^1.1.8
   monaco-textmate: ^3.0.1
   monaco-vim: ^0.1.18
@@ -56,14 +56,14 @@ specifiers:
   react-split-grid: ^1.0.3
   react-ssr-prepass: npm:preact-ssr-prepass@^1.2.0
   realms-shim: ^1.2.2
-  ses: ^0.14.2
+  ses: ^0.14.3
   storeon: ^3.1.4
-  style-loader: ^3.2.1
+  style-loader: ^3.3.0
   tailwindcss: ^2.2.15
   ts-custom-error: ^3.2.0
   twin.macro: ^2.6.2
   twind: ^0.16.16
-  type-fest: ^2.3.3
+  type-fest: ^2.3.4
   typescript: ^4.4.3
   valtio: ^1.2.3
   valtio-yjs: ^0.1.1
@@ -78,11 +78,11 @@ dependencies:
   '@babel/traverse': 7.15.4
   '@loadable/component': 5.15.0_@preact+compat@17.0.2
   '@monaco-editor/react': 4.2.2_c50f17f1e5fa7e4796702a6629b58c6d
-  '@stitches/core': 1.2.0
-  '@stitches/react': 1.2.0_@preact+compat@17.0.2
+  '@stitches/core': 1.2.1
+  '@stitches/react': 1.2.1_@preact+compat@17.0.2
   '@stitches/tailwind': 9.0.0-alpha.8_@preact+compat@17.0.2
   '@twind/preact': 1.0.5_2f3c5c3c68473b233cbb91e954e3e602
-  '@twind/react': 0.0.4_d2cd72bafb4364a3c1aad7eee8d9803d
+  '@twind/react': 0.0.4_c1772a917a6997b90cb5af160637012a
   color2k: 1.2.4
   cytoscape: 3.19.1
   glslCanvas: 0.1.7
@@ -107,17 +107,17 @@ dependencies:
   react-cytoscapejs: 1.2.1_82cb9fd171153d2c613334009d54eb8b
   react-dom: /@preact/compat/17.0.2_preact@10.5.14
   react-error-boundary: 3.1.3_@preact+compat@17.0.2
-  react-monaco-editor: 0.44.0_11ecc7a031cb7de80eb837e8a057d4f1
+  react-monaco-editor: 0.44.0_161bdd98a66aef5f12cad35acf14a4cb
   react-split: 2.0.13_@preact+compat@17.0.2
   react-split-grid: 1.0.3_@preact+compat@17.0.2
   react-ssr-prepass: /preact-ssr-prepass/1.2.0_preact@10.5.14
   realms-shim: 1.2.2
-  ses: 0.14.2
+  ses: 0.14.3
   storeon: 3.1.4_cf9ac77368cb106c5e3bf8ef47049c33
   ts-custom-error: 3.2.0
   twin.macro: 2.7.0
   twind: 0.16.16_typescript@4.4.3
-  type-fest: 2.3.3
+  type-fest: 2.3.4
   valtio: 1.2.3_f8bbe228db671aaaf2aecaab27cb8738
   valtio-yjs: 0.1.1_valtio@1.2.3+yjs@13.5.12
   y-indexeddb: 9.0.6_yjs@13.5.12
@@ -131,8 +131,8 @@ devDependencies:
   '@types/babel__traverse': 7.14.2
   '@types/loadable__component': 5.13.4
   '@types/lodash': 4.14.173
-  '@types/node': 16.9.2
-  '@types/react': 17.0.21
+  '@types/node': 16.9.6
+  '@types/react': 17.0.24
   '@types/react-cytoscapejs': 1.2.2
   '@types/tailwindcss': 2.2.1
   babel-plugin-glsl: 1.0.0
@@ -141,10 +141,10 @@ devDependencies:
   eslint: 7.32.0
   eslint-config-next: 11.1.2_82ad98da5e129ae9d310451a179848d9
   glslify: 7.1.1
-  monaco-editor-webpack-plugin: 4.1.2_monaco-editor@0.27.0
+  monaco-editor-webpack-plugin: 4.2.0_monaco-editor@0.27.0
   next-transpile-modules: 8.0.0
   pnpm: 3.8.1
-  style-loader: 3.2.1
+  style-loader: 3.3.0
   tailwindcss: 2.2.15
   typescript: 4.4.3
 
@@ -569,8 +569,8 @@ packages:
     resolution: {integrity: sha512-Myxw//kzromB9yWgS8qYGuGVf91oBUUJpNvy5eM50sqvmKLbKjwLxohJnkWGTeeI9v9IBMtPLxz5Gc60FIfvCA==}
     dev: true
 
-  /@stitches/core/1.2.0:
-    resolution: {integrity: sha512-UjZHg9aWpqnRGtyewmNFEwtceRAiK7O1CjAGTBtN9bbw2N02SRZFYCTLUMxpFZi4J7juBQJKxbc7yvi+Y4Qg2g==}
+  /@stitches/core/1.2.1:
+    resolution: {integrity: sha512-khmA2qkQt+YWMa3PAG5ybLmc6jSGBfXEvOOsRZV6EgxbN0UTMdvOPMqzouPepo9hsUiPeEtqLzQjKktir6hPaw==}
     dev: false
 
   /@stitches/css/9.0.0-alpha.8:
@@ -580,8 +580,8 @@ packages:
       tslib: 1.14.1
     dev: false
 
-  /@stitches/react/1.2.0_@preact+compat@17.0.2:
-    resolution: {integrity: sha512-GuMh610X3oJB2pdywARg1jccjAEvrDbq4iwy1SernR/4o1FX5SOTJZIjC4CquagZQjL00KFV8Cwfq/12FS6aBg==}
+  /@stitches/react/1.2.1_@preact+compat@17.0.2:
+    resolution: {integrity: sha512-xVnYuU3ZwvI4ghdM5r21hCb4eejkTZQqxm3q5iRTBnrbiG/8jpbEWTi8gXXjZ9X4+PssjuqBrjvPSqAcPvya6w==}
     peerDependencies:
       react: '>= 16.3.0'
     dependencies:
@@ -616,7 +616,7 @@ packages:
       typescript: 4.4.3
     dev: false
 
-  /@twind/react/0.0.4_d2cd72bafb4364a3c1aad7eee8d9803d:
+  /@twind/react/0.0.4_c1772a917a6997b90cb5af160637012a:
     resolution: {integrity: sha512-9MWYud1DmUdiC3JY0RXX11f/4PShqVb1uN5qXUqeA/FRbIy3VMeCv5693nH2pFxhTShGng86/dSmcMv4CwBNbA==}
     engines: {node: '>=10.13'}
     peerDependencies:
@@ -629,7 +629,7 @@ packages:
     dependencies:
       '@emotion/is-prop-valid': 1.1.0
       react: /@preact/compat/17.0.2_preact@10.5.14
-      react-polymorphic-types: 1.1.0_@types+react@17.0.21
+      react-polymorphic-types: 1.1.0_@types+react@17.0.24
       twind: 0.16.16_typescript@4.4.3
       typescript: 4.4.3
     transitivePeerDependencies:
@@ -653,7 +653,7 @@ packages:
   /@types/loadable__component/5.13.4:
     resolution: {integrity: sha512-YhoCCxyuvP2XeZNbHbi8Wb9EMaUJuA2VGHxJffcQYrJKIKSkymJrhbzsf9y4zpTmr5pExAAEh5hbF628PAZ8Dg==}
     dependencies:
-      '@types/react': 17.0.21
+      '@types/react': 17.0.24
     dev: true
 
   /@types/lodash/4.14.173:
@@ -664,8 +664,8 @@ packages:
     resolution: {integrity: sha512-s3nugnZumCC//n4moGGe6tkNMyYEdaDBitVjwPxXmR5lnMG5dHePinH2EdxkG3Rh1ghFHHixAG4NJhpJW1rthQ==}
     dev: false
 
-  /@types/node/16.9.2:
-    resolution: {integrity: sha512-ZHty/hKoOLZvSz6BtP1g7tc7nUeJhoCf3flLjh8ZEv1vFKBWHXcnMbJMyN/pftSljNyy0kNW/UqI3DccnBnZ8w==}
+  /@types/node/16.9.6:
+    resolution: {integrity: sha512-YHUZhBOMTM3mjFkXVcK+WwAcYmyhe1wL4lfqNtzI0b3qAy7yuSetnM7QJazgE5PFmgVTNGiLOgRFfJMqW7XpSQ==}
 
   /@types/parse-json/4.0.0:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
@@ -678,11 +678,11 @@ packages:
     resolution: {integrity: sha512-Z+CeQLw4XyQOrS/SdbcUCdYfWqYmaPS/WT+gNy33KYR09BtVzekx1jeNU5kNDvXCv8/8jGlhSrSk0uO7ocGuFg==}
     dependencies:
       '@types/cytoscape': 3.14.17
-      '@types/react': 17.0.21
+      '@types/react': 17.0.24
     dev: true
 
-  /@types/react/17.0.21:
-    resolution: {integrity: sha512-GzzXCpOthOjXvrAUFQwU/svyxu658cwu00Q9ugujS4qc1zXgLFaO0kS2SLOaMWLt2Jik781yuHCWB7UcYdGAeQ==}
+  /@types/react/17.0.24:
+    resolution: {integrity: sha512-eIpyco99gTH+FTI3J7Oi/OH8MZoFMJuztNRimDOJwH4iGIsKV2qkGnk4M9VzlaVWeEEWLWSQRy0FEA0Kz218cg==}
     dependencies:
       '@types/prop-types': 15.7.4
       '@types/scheduler': 0.16.2
@@ -2771,7 +2771,7 @@ packages:
     resolution: {integrity: sha512-mk0umAQ5lT+CaOJ+Qp01N6kz48sJG2kr2n1rX0koqKf6FIygQV0qLOdN9SCYID4IVeSigDOcPeGLozdMLYfb5g==}
     engines: {node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0}
     dependencies:
-      '@types/node': 16.9.2
+      '@types/node': 16.9.6
       merge-stream: 2.0.0
       supports-color: 8.1.1
     dev: false
@@ -3196,10 +3196,10 @@ packages:
       monaco-textmate: 3.0.1_onigasm@2.2.5
     dev: false
 
-  /monaco-editor-webpack-plugin/4.1.2_monaco-editor@0.27.0:
-    resolution: {integrity: sha512-snmHecygICKT0UlHhva+Cs2WaLPpxy3111xbvInhjjTr5m0xQTFHlmJ2QQDcB14Vzmm7f07uc1TtbvOpmL50BA==}
+  /monaco-editor-webpack-plugin/4.2.0_monaco-editor@0.27.0:
+    resolution: {integrity: sha512-/P3sFiEgBl+Y50he4mbknMhbLJVop5gBUZiPS86SuHUDOOnQiQ5rL1jU5lwt1XKAwMEkhwZbUwqaHxTPkb1Utw==}
     peerDependencies:
-      monaco-editor: 0.25.x || 0.26.x || 0.27.x
+      monaco-editor: 0.25.x || 0.26.x || 0.27.x || 0.28.x
       webpack: ^4.5.0 || 5.x
     dependencies:
       loader-utils: 2.0.0
@@ -4055,13 +4055,13 @@ packages:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
     dev: false
 
-  /react-monaco-editor/0.44.0_11ecc7a031cb7de80eb837e8a057d4f1:
+  /react-monaco-editor/0.44.0_161bdd98a66aef5f12cad35acf14a4cb:
     resolution: {integrity: sha512-GPheXTIpBXpwv857H7/jA8HX5yae4TJ7vFwDJ5iTvy05LxIQTsD3oofXznXGi66lVA93ST/G7wRptEf4CJ9dOg==}
     peerDependencies:
       '@types/react': ^17.x
       react: ^17.x
     dependencies:
-      '@types/react': 17.0.21
+      '@types/react': 17.0.24
       monaco-editor: 0.26.1
       prop-types: 15.7.2
       react: /@preact/compat/17.0.2_preact@10.5.14
@@ -4075,12 +4075,12 @@ packages:
       react: /@preact/compat/17.0.2_preact@10.5.14
     dev: false
 
-  /react-polymorphic-types/1.1.0_@types+react@17.0.21:
+  /react-polymorphic-types/1.1.0_@types+react@17.0.24:
     resolution: {integrity: sha512-RMHYMdiukpyNFeiWEay10e4kiwIlk1VSiIfvVzrimSJ9KVg9B2iNsd6lw2QPG31S2335YuAPnWPalE2w2eh64w==}
     peerDependencies:
       '@types/react': '>=16.8.6'
     dependencies:
-      '@types/react': 17.0.21
+      '@types/react': 17.0.24
     dev: false
 
   /react-refresh/0.8.3:
@@ -4279,8 +4279,8 @@ packages:
       lru-cache: 6.0.0
     dev: true
 
-  /ses/0.14.2:
-    resolution: {integrity: sha512-RKAOt8KxkJJyclwfd0mQ6GtmIyYUOrDew7DwKM6DTWY8f9u1eDJccpHXvxDhpXDcWlJ40dtC/FCx12BFZuGPng==}
+  /ses/0.14.3:
+    resolution: {integrity: sha512-uDNt6UkBsV0h26wpIKJ5bL/UGQt/nFWVyz/8K0mPQ6xA50biwkGe/TCvY7ewL0s3wHbj/tMkjVkaFLiAI3oPmw==}
     dev: false
 
   /setimmediate/1.0.5:
@@ -4576,8 +4576,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /style-loader/3.2.1:
-    resolution: {integrity: sha512-1k9ZosJCRFaRbY6hH49JFlRB0fVSbmnyq1iTPjNxUmGVjBNEmwrrHPenhlp+Lgo51BojHSf6pl2FcqYaN3PfVg==}
+  /style-loader/3.3.0:
+    resolution: {integrity: sha512-szANub7ksJtQioJYtpbWwh1hUl99uK15n5HDlikeCRil/zYMZgSxucHddyF/4A3qJMUiAjPhFowrrQuNMA7jwQ==}
     engines: {node: '>= 12.13.0'}
     peerDependencies:
       webpack: ^5.0.0
@@ -4915,8 +4915,8 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
-  /type-fest/2.3.3:
-    resolution: {integrity: sha512-4r1ygCTovO9M+cJOdhlit7JkDmMgYwOXmttU1Nd/9a5UY8oebN0+wN/b5N5i/f8aQ/pTDS2oQ3CBxnu+/1p4aA==}
+  /type-fest/2.3.4:
+    resolution: {integrity: sha512-2UdQc7cx8F4Ky81Xj7NYQKPhZVtDFbtorrkairIW66rW7xQj5msAhioXa04HqEdP4MD4K2G6QAF7Zyiw/Hju1Q==}
     engines: {node: '>=12.20'}
     dev: false
 
