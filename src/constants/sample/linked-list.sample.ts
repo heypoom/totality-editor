@@ -22,7 +22,7 @@ async function process(k = 6) {
     track(n.toString(), current)
     current = current.next
 
-    await delay(60)
+    await tick()
 
     n++
   }
