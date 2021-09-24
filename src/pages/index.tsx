@@ -7,6 +7,7 @@ import {
   DraculaThemeExtension,
   TypeScriptExtension,
   LinkedListVisualizerExtension,
+  ExampleWidgetExtension,
 } from '@totality/extensions'
 
 import {LinkedListSample} from 'constants/sample/linked-list.sample'
@@ -16,6 +17,7 @@ const extensions = [
   TypeScriptExtension,
   LinkedListVisualizerExtension,
   VimModeExtension,
+  ExampleWidgetExtension,
 ] as const
 
 export default function Article() {
