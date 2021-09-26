@@ -4,11 +4,6 @@ const ctx = canvas.getContext('2d')
 const parse = (input: string) =>
   input.trim().split('\n').map(line => line.split('').map(char => Number(char === '*')))
 
-let TRACK = 0
-
-const hsl = (i = 1, count = 8, s = 90, l = 60) =>
-  \`hsl(\${i * Math.trunc(360 / count)}, \${s}%, \${l}%)\`
-
 const range = (from: number, to: number): number[] => {
   const list: number[] = []
   for (let n = from; n < to; n++) list.push(n)
@@ -30,7 +25,8 @@ function paintCell(row: number, col: number, style: string) {
 function draw(grid: number[][]) {
   for (let row = 0; row < grid.length; row++) {
     for (let col = 0; col < grid[row].length; col++) {
-      paintCell(row, col, grid[row][col] ? '#eb4d4b' : '#ff7979')
+      // paintCell(row, col, grid[row][col] ? '#eb4d4b' : '#ff7979')
+      paintCell(row, col, grid[row][col] === 1 ? '#badc58' : '#6ab04c')
     }
   }
 }
@@ -43,74 +39,97 @@ ctx.fillRect(0, 0, canvas.width, canvas.height)
 // Any live cell with more than three live neighbors dies, as if by overpopulation.
 // Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
 
-async function updateCell(pos: [row: number, col: number], grid: number[][]) {
-  const [row, col] = pos
-  let liveNeighbors = 0
+class World {
+  cells: number[][]
+  future: number[][]
 
-  for (const r of direction) {
-    if (!grid[row + r]) continue
+  constructor(cells: number[][]) {
+    this.cells = cells
+  }
 
-    for (const c of direction) {
-      const cell = grid[row + r][col + c]
-      paintCell(row, col, '#be2edd')
+  static fromText(text: string) {
+    return new World(parse(text))
+  }
 
-      if (grid[row + r][col + c] === undefined) continue
+  async computeCell(pos: [row: number, col: number]) {
+    const [row, col] = pos
+    let liveNeighbors = 0
+  
+    for (const r of direction) {
+      if (!this.cells[row + r]) continue
+  
+      for (const c of direction) {
+        const cell = this.cells[row + r][col + c]
+        if (cell === undefined) continue
+  
+        // await tick() 
+        
+        // paintCell(row + r, col + c, cell ? '#f6e58d' : '#686de0') 
+        // paintCell(row, col, '#be2edd')
+  
+        liveNeighbors += cell
+      }
+    }
+  
+    liveNeighbors -= this.cells[row][col]
 
-      await delay(20)
-      paintCell(row + r, col + c, cell ? '#f6e58d' : '#686de0')
-      await delay(20)
-      paintCell(row + r, col + c, cell ? '#f9ca24' : '#4834d4')
+    // Copy by default.
+    // Cell is alive?
+    if (this.cells[row][col]) {
+      // Death by underpopulation OR overpopulation.
+      const shouldBeDead = liveNeighbors < 2 || liveNeighbors > 3
+      this.future[row][col] = Number(!shouldBeDead) 
+    } else {
+      // Live by reproduction.
+      if (liveNeighbors === 3) this.future[row][col] = 1
+    }
+  
+    // await tick() 
+  
+    paintCell(row, col, this.future[row][col] === 1 ? '#badc58' : '#6ab04c')
 
-      liveNeighbors += cell
+    await tick() 
+  }
+
+  async update() {
+    // Make a copy.
+    this.future = this.cells.map((_, row) => [...this.cells[row]])
+
+    for (let row = 0; row < this.cells.length; row++) {
+      for (let col = 0; col < this.cells[row].length; col++) {
+        await this.computeCell([row, col])
+      }
+    }
+
+    this.cells = this.future
+  }
+
+  async evolve(maxIteration = 1) {
+    for (let iteration = 0; iteration <= maxIteration; iteration++) {
+      await this.update() 
+      await draw(this.cells)
     }
   }
-
-  liveNeighbors -= grid[row][col]
-
-  // Cell is alive?
-  if (grid[row][col]) {
-    // Death by underpopulation OR overpopulation.
-    const shouldBeDead = liveNeighbors < 2 || liveNeighbors > 3
-    grid[row][col] = Number(!shouldBeDead) 
-  } else {
-    // Live by reproduction.
-    if (liveNeighbors === 3) grid[row][col] = 1
-  }
-
-  delay(200)
-
-  paintCell(row, col, grid[row][col] ? '#f9ca24' : '#4834d4')
-
-  return grid
 }
 
-async function update(grid: number[][]) {
-  for (let row = 0; row < grid.length; row++) {
-    for (let col = 0; col < grid[row].length; col++) {
-      await updateCell([row, col], grid)
-    }
-  }
-}
+// Any live cell with fewer than two live neighbors dies, as if caused by under population.
+// Any live cell with two or three live neighbors lives on to the next generation.
+// Any live cell with more than three live neighbors dies, as if by overpopulation.
+// Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
 
-async function animate(grid, maxIter = 10) {
-  for (let iter = 0; iter < maxIter; iter++) {
-    draw(grid)
-    await update(grid)
-    await delay(200)
-  }
-}
-
-const grid = parse(\`
+const pattern = \`
 .....
-..*..
-.*.*.
-..*..
 .....
-\`)
+.***.
+.....
+.....
+\`
 
 async function main() {
-  await draw(grid)
-  await update(grid)
+  const world = World.fromText(pattern)
+
+  await draw(world.cells)
+  await world.evolve(1000)
 }
 
 main()
