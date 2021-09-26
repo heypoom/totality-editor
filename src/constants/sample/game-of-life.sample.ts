@@ -1,4 +1,4 @@
-export const BrokenGameOfLife = `
+export const GameOfLife = `
 const ctx = canvas.getContext('2d')
 
 const parse = (input: string) =>
@@ -14,8 +14,8 @@ const range = (from: number, to: number): number[] => {
 const irange = (from: number, to: number) => range(from, to + 1)
 const direction = irange(-1, 1)
 
-const SIZE = 50
-const PADDING = 80
+const SIZE = 40
+const PADDING = 50
 
 function paintCell(row: number, col: number, style: string) {
   ctx.fillStyle = style
@@ -87,8 +87,6 @@ class World {
     // await tick() 
   
     paintCell(row, col, this.future[row][col] === 1 ? '#badc58' : '#6ab04c')
-
-    await delay(5)
   }
 
   async update() {
@@ -107,6 +105,7 @@ class World {
   async evolve(maxIteration = 1) {
     for (let iteration = 0; iteration <= maxIteration; iteration++) {
       await this.update() 
+      await delay(120)
       await draw(this.cells)
     }
   }
@@ -118,11 +117,19 @@ class World {
 // Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
 
 const pattern = \`
-.....
-.....
-.OOO.
-.....
-.....
+..OOO...OOO..
+.............
+O....O.O....O
+O....O.O....O
+O....O.O....O
+..OOO...OOO..
+.............
+..OOO...OOO..
+O....O.O....O
+O....O.O....O
+O....O.O....O
+.............
+..OOO...OOO..
 \`
 
 async function main() {
