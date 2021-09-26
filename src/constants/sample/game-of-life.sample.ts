@@ -106,7 +106,6 @@ class World {
     for (let iteration = 0; iteration <= maxIteration; iteration++) {
       await this.update() 
       await delay(120)
-      await draw(this.cells)
     }
   }
 }
