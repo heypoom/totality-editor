@@ -11,6 +11,7 @@ export interface RunnerState {
   id: string
   compiled: string
   error: Error | null
+  live: boolean
 }
 
 export interface RunnerEvents {
@@ -23,5 +24,6 @@ export interface RunnerEvents {
 
   // Setters
   'runner/inject-global': Record<string, unknown>
+  'runner/toggle-live-evaluation': void
   'runner/set': Partial<RunnerState>
 }

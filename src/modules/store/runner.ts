@@ -20,6 +20,7 @@ export const runnerModule: StoreModule = (store) => {
       id: runnerId,
       compiled: '',
       error: null,
+      live: true,
     },
   }))
 
@@ -56,6 +57,10 @@ export const runnerModule: StoreModule = (store) => {
 
   store.on('runner/inject-global', (s, globals) => {
     runner.injectGlobal(globals)
+  })
+
+  store.on('runner/toggle-live-evaluation', (s) => {
+    return set(s, {live: !s.runner.live})
   })
 
   store.on('runner/set', (s, data) => set(s, data))

@@ -1,4 +1,4 @@
-import 'twin.macro'
+import tw from 'twin.macro'
 import React, {useReducer} from 'react'
 
 import {Totality} from '@totality/core'
@@ -20,7 +20,7 @@ const extensions = [
 ] as const
 
 export default function CanvasDemo() {
-  const [isLiveLayout, toggle] = useReducer((s) => !s, true)
+  const [isLiveLayout, toggleLayout] = useReducer((s) => !s, true)
 
   return (
     <div
@@ -29,7 +29,7 @@ export default function CanvasDemo() {
     >
       <button
         tw="absolute z-10 bg-red-500 bottom-5 right-5 px-3 py-1 text-white shadow-lg"
-        onClick={toggle}
+        onClick={toggleLayout}
       >
         toggle layout
       </button>
@@ -39,6 +39,7 @@ export default function CanvasDemo() {
         code={CanvasSample}
         path="canvas.tsx"
         extensions={extensions}
+        persist
         {...(isLiveLayout && {
           layout: 'visual-in-background',
           options: {

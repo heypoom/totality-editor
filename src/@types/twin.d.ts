@@ -1,11 +1,10 @@
 import 'twin.macro'
+import {TwStyle} from 'twin.macro'
 
 import {stitches} from '../stitches.config'
 
-type K = typeof stitches
-
 declare module 'react' {
-  type CSSProp = Partial<CSSProperties> & Record<string, Partial<CSSProperties>>
+  type CSSProp = any
 
   interface HTMLAttributes<T> extends DOMAttributes<T> {
     css?: CSSProp
