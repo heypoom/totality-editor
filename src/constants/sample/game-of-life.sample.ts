@@ -88,7 +88,7 @@ class World {
   
     paintCell(row, col, this.future[row][col] === 1 ? '#badc58' : '#6ab04c')
 
-    await tick() 
+    await delay(5)
   }
 
   async update() {
