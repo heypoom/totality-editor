@@ -2,7 +2,7 @@ export const BrokenGameOfLife = `
 const ctx = canvas.getContext('2d')
 
 const parse = (input: string) =>
-  input.trim().split('\n').map(line => line.split('').map(char => Number(char === '*')))
+  input.trim().split('\n').map(line => line.split('').map(char => Number(char === 'O')))
 
 const range = (from: number, to: number): number[] => {
   const list: number[] = []
@@ -120,7 +120,7 @@ class World {
 const pattern = \`
 .....
 .....
-.***.
+.OOO.
 .....
 .....
 \`
