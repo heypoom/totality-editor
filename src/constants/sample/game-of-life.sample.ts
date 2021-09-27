@@ -8,7 +8,7 @@ const FILL_COLOR = '#badc58'
 const ctx = canvas.getContext('2d')
 
 const parse = (input: string) =>
-  input.trim().split('\n').map(line => line.split('').map(char => Number(char === 'O')))
+  input.trim().split('\\n').map(line => line.split('').map(char => Number(char === 'O')))
 
 const hsl = (i = 1, count = 8, s = 90, l = 60) =>
   \`hsl(\${i * Math.trunc(360 / count)}, \${s}%, \${l}%)\`

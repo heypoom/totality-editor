@@ -10,7 +10,7 @@ import {
   CanvasRendererExtension,
 } from '@totality/extensions'
 
-import {CanvasSample} from 'constants/sample/canvas.sample'
+import {GameOfLife} from 'constants/sample/game-of-life.sample'
 
 const extensions = [
   DraculaThemeExtension,
@@ -36,7 +36,7 @@ export default function CanvasDemo() {
 
       <Totality
         height="100vh"
-        code={CanvasSample}
+        code={GameOfLife}
         path="canvas.tsx"
         extensions={extensions}
         persist
