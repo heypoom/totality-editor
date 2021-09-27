@@ -1,8 +1,17 @@
 export const GameOfLife = `
+const SIZE = 30
+const PADDING = 10
+
+const CLEAR_COLOR = '#efefef'
+const FILL_COLOR = '#badc58'
+
 const ctx = canvas.getContext('2d')
 
 const parse = (input: string) =>
   input.trim().split('\n').map(line => line.split('').map(char => Number(char === 'O')))
+
+const hsl = (i = 1, count = 8, s = 90, l = 60) =>
+  \`hsl(\${i * Math.trunc(360 / count)}, \${s}%, \${l}%)\`
 
 const range = (from: number, to: number): number[] => {
   const list: number[] = []
@@ -11,27 +20,36 @@ const range = (from: number, to: number): number[] => {
   return list
 }
 
+const setOpacity = (hex: string, alpha: number) => 
+  \`\${hex}\${Math.floor(alpha * 255).toString(16).padStart(2, "0")}\`
+
 const irange = (from: number, to: number) => range(from, to + 1)
 const direction = irange(-1, 1)
-
-const SIZE = 40
-const PADDING = 50
 
 function paintCell(row: number, col: number, style: string) {
   ctx.fillStyle = style
   ctx.fillRect((col * SIZE) + PADDING, (row * SIZE) + PADDING, SIZE, SIZE)
 }
 
-function draw(grid: number[][]) {
-  for (let row = 0; row < grid.length; row++) {
-    for (let col = 0; col < grid[row].length; col++) {
-      // paintCell(row, col, grid[row][col] ? '#eb4d4b' : '#ff7979')
-      paintCell(row, col, grid[row][col] === 1 ? '#badc58' : '#6ab04c')
+function clearBuffer(rows: number, cols: number, clearColor = CLEAR_COLOR) {
+  for (const row of range(0, rows)) {
+    for (const col of range(0, cols)) {
+      paintCell(row, col, clearColor)
     }
   }
 }
 
-ctx.fillStyle = '#2d2d30'
+
+function draw(grid: number[][], style = FILL_COLOR) {
+  for (const row of range(0, grid.length)) {
+    for (const col of range(0, grid[0].length)) {
+      const cell = grid[row][col]
+      if (cell) paintCell(row, col, style)
+    }
+  }
+}
+
+ctx.fillStyle = CLEAR_COLOR
 ctx.fillRect(0, 0, canvas.width, canvas.height)
 
 // Any live cell with fewer than two live neighbors dies, as if caused by under population.
@@ -42,6 +60,11 @@ ctx.fillRect(0, 0, canvas.width, canvas.height)
 class World {
   cells: number[][]
   future: number[][]
+
+  // Store the frame snapshots
+  snapshots: number[][][]
+
+  frameDelay = 100
 
   constructor(cells: number[][]) {
     this.cells = cells
@@ -62,10 +85,10 @@ class World {
         const cell = this.cells[row + r][col + c]
         if (cell === undefined) continue
   
-        // await tick() 
-        
         // paintCell(row + r, col + c, cell ? '#f6e58d' : '#686de0') 
+        // await delay(0)
         // paintCell(row, col, '#be2edd')
+        // await delay(0)
   
         liveNeighbors += cell
       }
@@ -85,8 +108,7 @@ class World {
     }
   
     // await tick() 
-  
-    paintCell(row, col, this.future[row][col] === 1 ? '#badc58' : '#6ab04c')
+    // paintCell(row, col, this.future[row][col] === 1 ? '#badc58' : '#6ab04c')
   }
 
   async update() {
@@ -103,9 +125,29 @@ class World {
   }
 
   async evolve(maxIteration = 1) {
+    this.snapshots = []
+
+    const maxRow = this.cells.length 
+    const maxCol = this.cells[0].length
+
     for (let iteration = 0; iteration <= maxIteration; iteration++) {
-      await this.update() 
-      await delay(120)
+      await this.update()
+
+      clearBuffer(maxRow, maxCol)
+
+      for (let s = 1; s <= this.snapshots.length; s++) {
+        draw(this.snapshots[s - 1], setOpacity(FILL_COLOR, 0.05 * s))
+      }
+
+      draw(this.cells)
+
+      await delay(this.frameDelay)
+
+      // Insert new snapshots.
+      this.snapshots.push(this.cells)
+
+      // Remove the oldest snapshot.
+      if (this.snapshots.length > 5) this.snapshots.shift()
     }
   }
 }
@@ -116,25 +158,28 @@ class World {
 // Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
 
 const pattern = \`
-..OOO...OOO..
-.............
-O....O.O....O
-O....O.O....O
-O....O.O....O
-..OOO...OOO..
-.............
-..OOO...OOO..
-O....O.O....O
-O....O.O....O
-O....O.O....O
-.............
-..OOO...OOO..
+.O.............
+..O............
+OOO............
+...............
+........O......
+.........O.....
+.......OOO.....
+...............
+........O......
+.........O.....
+.......OOO.....
+...............
+.O.............
+..O............
+OOO............
+...............
 \`
 
 async function main() {
   const world = World.fromText(pattern)
+  world.frameDelay = 50
 
-  await draw(world.cells)
   await world.evolve(1000)
 }
 
