@@ -2,7 +2,6 @@ import Realm from 'realms-shim'
 
 import {Run, RunHandlers, RunHandlerMap, IRealm} from '@types'
 
-import {store} from 'modules/store'
 import {ExecutionAbortedError} from 'errors/ExecutionAbortedError'
 
 export class JSRunner {
