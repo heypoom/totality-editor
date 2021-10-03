@@ -2,7 +2,12 @@ const withPreact = require('next-plugin-preact')
 const path = require('path')
 const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin')
 
-const config = withPreact({
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
+})
+
+/** @type {import('next').NextConfig} */
+const config = {
   reactStrictMode: true,
   webpack5: true,
   webpack: (config) => {
@@ -51,6 +56,6 @@ const config = withPreact({
 
     return config
   },
-})
+}
 
-module.exports = config
+module.exports = withBundleAnalyzer(withPreact(config))

@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prebuild": "[[ $CI = true ]] && npx pnpm@3 install -r --store=node_modules/.pnpm-store || echo skipping pnpm install."
+    "prebuild": "[[ $CI = true ]] && npx pnpm@3 install -r --store=node_modules/.pnpm-store || echo skipping pnpm install.",
+    "analyze": "BUNDLE_ANALYZE=browser ANALYZE=true next build",
+    "analyze:server": "BUNDLE_ANALYZE=server ANALYZE=true next build"
   },
   "dependencies": {
     "@babel/parser": "^7.15.7",
