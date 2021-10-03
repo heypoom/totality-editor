@@ -65,6 +65,7 @@
     "yjs": "^13.5.12"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^11.1.2",
     "@prefresh/next": "^1.4.6",
     "@types/babel__traverse": "^7.14.2",
     "@types/loadable__component": "^5.13.4",
